@@ -9,6 +9,7 @@ enum Api {
   GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
+  GetVerifyCode = '/captchaImage',
 }
 
 /**
@@ -52,4 +53,11 @@ export function testRetry() {
       },
     },
   );
+}
+
+/**
+ * 获取验证码
+ */
+export function getCodeImg() {
+  return defHttp.get({ url: Api.GetVerifyCode });
 }

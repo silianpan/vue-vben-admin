@@ -96,6 +96,7 @@ export default {
 
     userName: 'Username',
     password: 'Password',
+    verifyCode: 'Verification Code',
     confirmPassword: 'Confirm Password',
     email: 'Email',
     smsCode: 'SMS code',

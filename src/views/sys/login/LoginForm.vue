@@ -8,10 +8,10 @@
     v-show="getShow"
     @keypress.enter="handleLogin"
   >
-    <FormItem name="account" class="enter-x">
+    <FormItem name="username" class="enter-x">
       <Input
         size="large"
-        v-model:value="formData.account"
+        v-model:value="formData.username"
         :placeholder="t('sys.login.userName')"
         class="fix-auto-fill"
       />
@@ -24,6 +24,24 @@
         :placeholder="t('sys.login.password')"
       />
     </FormItem>
+
+    <ARow class="enter-x">
+      <ACol :span="16">
+        <FormItem>
+          <Input
+            size="large"
+            v-model:value="formData.code"
+            :placeholder="t('sys.login.verifyCode')"
+            class="fix-auto-fill"
+          />
+        </FormItem>
+      </ACol>
+      <ACol :span="8">
+        <FormItem :style="{ 'text-align': 'right' }">
+          <img class="getCaptcha" :src="codeUrl" @click="getCode" />
+        </FormItem>
+      </ACol>
+    </ARow>
 
     <ARow class="enter-x">
       <ACol :span="12">
@@ -81,8 +99,9 @@
     </div>
   </Form>
 </template>
+
 <script lang="ts" setup>
-  import { reactive, ref, unref, computed } from 'vue';
+  import { reactive, ref, unref, computed, onMounted } from 'vue';
 
   import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
   import {
@@ -102,6 +121,8 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   //import { onKeyStroke } from '@vueuse/core';
 
+  import { getCodeImg } from '/@/api/sys/user';
+
   const ACol = Col;
   const ARow = Row;
   const FormItem = Form.Item;
@@ -117,10 +138,13 @@
   const formRef = ref();
   const loading = ref(false);
   const rememberMe = ref(false);
+  const codeUrl = ref('');
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    username: 'admin',
+    password: 'Asdf!@#45',
+    code: '',
+    uuid: '',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -129,6 +153,10 @@
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
 
+  onMounted(() => {
+    getCode();
+  });
+
   async function handleLogin() {
     const data = await validForm();
     if (!data) return;
@@ -136,7 +164,7 @@
       loading.value = true;
       const userInfo = await userStore.login({
         password: data.password,
-        username: data.account,
+        username: data.username,
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
@@ -155,5 +183,12 @@
     } finally {
       loading.value = false;
     }
+  }
+
+  // 获取验证码
+  async function getCode() {
+    const res = await getCodeImg();
+    codeUrl.value = 'data:image/gif;base64,' + res.img;
+    formData.uuid = res.uuid;
   }
 </script>
