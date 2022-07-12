@@ -27,7 +27,7 @@
 
     <ARow class="enter-x">
       <ACol :span="16">
-        <FormItem>
+        <FormItem name="code">
           <Input
             size="large"
             v-model:value="formData.code"
@@ -122,6 +122,7 @@
   //import { onKeyStroke } from '@vueuse/core';
 
   import { getCodeImg } from '/@/api/sys/user';
+  import { encrypt } from '/@/utils/jsencrypt';
 
   const ACol = Col;
   const ARow = Row;
@@ -142,7 +143,7 @@
 
   const formData = reactive({
     username: 'admin',
-    password: 'Asdf!@#45',
+    password: 'admin123123',
     code: '',
     uuid: '',
   });
@@ -163,8 +164,11 @@
     try {
       loading.value = true;
       const userInfo = await userStore.login({
-        password: data.password,
+        password: encrypt(data.password),
         username: data.username,
+        code: data.code,
+        uuid: formData.uuid,
+        rememberMe: rememberMe.value,
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
@@ -192,3 +196,11 @@
     formData.uuid = res.uuid;
   }
 </script>
+
+<style lang="less">
+  .getCaptcha {
+    display: block;
+    width: 100%;
+    height: 40px;
+  }
+</style>

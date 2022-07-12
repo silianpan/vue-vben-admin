@@ -86,6 +86,8 @@ export const useUserStore = defineStore({
       params: LoginParams & {
         goHome?: boolean;
         mode?: ErrorMessageMode;
+        uuid?: string;
+        rememberMe?: boolean;
       },
     ): Promise<GetUserInfoModel | null> {
       try {

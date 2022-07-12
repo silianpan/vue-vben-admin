@@ -62,6 +62,7 @@ specifiers:
   husky: ^7.0.4
   inquirer: ^8.2.2
   intro.js: ^5.1.0
+  jsencrypt: ^3.2.1
   less: ^4.1.2
   lint-staged: 12.3.7
   lodash-es: ^4.17.21
@@ -135,6 +136,7 @@ dependencies:
   dayjs: registry.npmmirror.com/dayjs/1.11.3
   echarts: registry.npmmirror.com/echarts/5.3.3
   intro.js: registry.npmmirror.com/intro.js/5.1.0
+  jsencrypt: registry.npmmirror.com/jsencrypt/3.2.1
   lodash-es: registry.npmmirror.com/lodash-es/4.17.21
   mockjs: registry.npmmirror.com/mockjs/1.1.0
   nprogress: registry.npmmirror.com/nprogress/0.2.0
@@ -8189,6 +8191,12 @@ packages:
     dependencies:
       argparse: registry.npmmirror.com/argparse/2.0.1
     dev: true
+
+  registry.npmmirror.com/jsencrypt/3.2.1:
+    resolution: {integrity: sha512-k1sD5QV0KPn+D8uG9AdGzTQuamt82QZ3A3l6f7TRwMU6Oi2Vg0BsL+wZIQBONcraO1pc78ExMdvmBBJ8WhNYUA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/jsencrypt/-/jsencrypt-3.2.1.tgz}
+    name: jsencrypt
+    version: 3.2.1
+    dev: false
 
   registry.npmmirror.com/jsesc/0.5.0:
     resolution: {integrity: sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/jsesc/-/jsesc-0.5.0.tgz}
