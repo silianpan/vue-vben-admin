@@ -35,8 +35,9 @@ export interface RetryRequest {
 export interface Result<T = any> {
   code: number;
   type: 'success' | 'error' | 'warning';
-  message: string;
-  result: T;
+  msg: string;
+  // 此字段暂无用，因为会存在其他字段，如分页字段rows
+  data: T;
 }
 
 // multipart/form-data: upload file
