@@ -17,10 +17,28 @@ const scopeComplete = execSync('git status --porcelain || true')
   ?.match(/src%%((\w|-)*)/)?.[1]
   ?.replace(/s$/, '');
 
+// emojis like "✅ ", "😂 ", ...
+const matchAnyEmojiWithSpaceAfter =
+  /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])\s/;
+const matchOptionalTicketNumberWithSpaceAfter = /(?:\[(T-\d+)\]\s)?/; // "[T-4605] ", "[T-1]"
+const subjectThatDontStartWithBracket = /([^\[].+)/; // "Add tests" but don't allow "[ Add tests"
+
 /** @type {import('cz-git').UserConfig} */
 module.exports = {
   ignores: [(commit) => commit.includes('init')],
   extends: ['@commitlint/config-conventional'],
+  parserPreset: {
+    parserOpts: {
+      headerPattern: new RegExp(
+        '^' +
+          matchAnyEmojiWithSpaceAfter.source +
+          matchOptionalTicketNumberWithSpaceAfter.source +
+          subjectThatDontStartWithBracket.source +
+          '$',
+      ),
+      headerCorrespondence: ['type', 'ticket', 'subject'],
+    },
+  },
   rules: {
     'body-leading-blank': [2, 'always'],
     'footer-leading-blank': [1, 'always'],
@@ -47,6 +65,30 @@ module.exports = {
         'workflow',
         'types',
         'release',
+        '🎉',
+        '✨',
+        '🐞',
+        '📃',
+        '🌈',
+        '🦄',
+        '🎈',
+        '🧪',
+        '🔧',
+        '🐎',
+        '🐳',
+        '↩',
+        // '🎉 init',
+        // '✨ feat',
+        // '🐞 fix',
+        // '📃 docs',
+        // '🌈 style',
+        // '🦄 refactor',
+        // '🎈 perf',
+        // '🧪 test',
+        // '🔧 build',
+        // '🐎 ci',
+        // '🐳 chore',
+        // '↩ revert',
       ],
     ],
   },
