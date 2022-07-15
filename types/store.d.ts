@@ -1,6 +1,5 @@
 import { ErrorTypeEnum } from '/@/enums/exceptionEnum';
 import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
-import { RoleInfo } from '/@/api/sys/model/userModel';
 
 // Lock screen information
 export interface LockInfo {
@@ -31,13 +30,25 @@ export interface ErrorLogInfo {
 }
 
 export interface UserInfo {
-  userId: string | number;
-  username: string;
-  realName: string;
-  avatar: string;
-  desc?: string;
   homePath?: string;
-  roles: RoleInfo[];
+  user: UserObj;
+  roles: string[];
+  posts: string[];
+  permissions: string[];
+}
+
+export interface UserObj {
+  userName: string;
+  nickName: string;
+  email: string;
+  phonenumber: string;
+  sex: string;
+  status: string;
+  dept: DeptInfo;
+}
+
+interface DeptInfo {
+  deptName: string;
 }
 
 export interface BeforeMiniState {
