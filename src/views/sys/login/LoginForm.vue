@@ -179,6 +179,7 @@
         });
       }
     } catch (error) {
+      getCode();
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
