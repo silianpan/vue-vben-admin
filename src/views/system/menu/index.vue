@@ -31,6 +31,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, nextTick } from 'vue';
+  import { listToTree } from '/@/utils/helper/treeHelper';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getMenuList } from '/@/api/demo/system';
@@ -39,6 +40,7 @@
   import MenuDrawer from './MenuDrawer.vue';
 
   import { columns, searchFormSchema } from './menu.data';
+  import { AppRouteRecordRaw } from '/@/router/types';
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -47,7 +49,14 @@
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({
         title: '菜单列表',
-        api: getMenuList,
+        api: () =>
+          getMenuList().then((res) =>
+            listToTree(res as unknown as AppRouteRecordRaw[], {
+              id: 'menuId',
+              children: 'children',
+              pid: 'parentId',
+            }),
+          ),
         columns,
         formConfig: {
           labelWidth: 120,
