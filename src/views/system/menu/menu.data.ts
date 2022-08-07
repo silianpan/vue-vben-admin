@@ -79,15 +79,21 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'type',
+    field: 'menuId',
+    show: false,
+    label: '菜单ID',
+    component: 'Input',
+  },
+  {
+    field: 'menuType',
     label: '菜单类型',
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
       options: [
-        { label: '目录', value: '0' },
-        { label: '菜单', value: '1' },
-        { label: '按钮', value: '2' },
+        { label: '目录', value: 'M' },
+        { label: '菜单', value: 'C' },
+        { label: '按钮', value: 'F' },
       ],
     },
     colProps: { lg: 24, md: 24 },
@@ -100,21 +106,21 @@ export const formSchema: FormSchema[] = [
   },
 
   {
-    field: 'parentMenu',
+    field: 'parentId',
     label: '上级菜单',
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
         label: 'menuName',
-        key: 'id',
-        value: 'id',
+        key: 'menuId',
+        value: 'menuId',
       },
       getPopupContainer: () => document.body,
     },
   },
 
   {
-    field: 'orderNo',
+    field: 'orderNum',
     label: '排序',
     component: 'InputNumber',
     required: true,
@@ -128,7 +134,7 @@ export const formSchema: FormSchema[] = [
   },
 
   {
-    field: 'routePath',
+    field: 'path',
     label: '路由地址',
     component: 'Input',
     required: true,
@@ -141,7 +147,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => isMenu(values.type),
   },
   {
-    field: 'permission',
+    field: 'perms',
     label: '权限标识',
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
@@ -165,32 +171,46 @@ export const formSchema: FormSchema[] = [
     defaultValue: '0',
     componentProps: {
       options: [
-        { label: '否', value: '0' },
-        { label: '是', value: '1' },
+        { label: '是', value: '0' },
+        { label: '否', value: '1' },
       ],
     },
     ifShow: ({ values }) => !isButton(values.type),
   },
 
   {
-    field: 'keepalive',
+    field: 'isCache',
     label: '是否缓存',
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
       options: [
-        { label: '否', value: '0' },
-        { label: '是', value: '1' },
+        { label: '是', value: '0' },
+        { label: '否', value: '1' },
       ],
     },
     ifShow: ({ values }) => isMenu(values.type),
   },
 
   {
-    field: 'show',
+    field: 'visible',
     label: '是否显示',
     component: 'RadioButtonGroup',
     defaultValue: '0',
+    componentProps: {
+      options: [
+        { label: '是', value: '0' },
+        { label: '否', value: '1' },
+      ],
+    },
+    ifShow: ({ values }) => !isButton(values.type),
+  },
+
+  {
+    field: 'isApp',
+    label: '是否开放App菜单',
+    component: 'RadioButtonGroup',
+    defaultValue: '1',
     componentProps: {
       options: [
         { label: '是', value: '0' },

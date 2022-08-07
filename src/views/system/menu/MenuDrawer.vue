@@ -16,7 +16,9 @@
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuList, addMenu, updateMenu } from '/@/api/demo/system';
+  import { listToTree } from '/@/utils/helper/treeHelper';
+  import { AppRouteRecordRaw } from '/@/router/types';
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -44,8 +46,14 @@
         }
         const treeData = await getMenuList();
         updateSchema({
-          field: 'parentMenu',
-          componentProps: { treeData },
+          field: 'parentId',
+          componentProps: {
+            treeData: listToTree(treeData as unknown as AppRouteRecordRaw[], {
+              id: 'menuId',
+              children: 'children',
+              pid: 'parentId',
+            }),
+          },
         });
       });
 
@@ -57,6 +65,11 @@
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
+          if (!unref(isUpdate)) {
+            await addMenu(values);
+          } else {
+            await updateMenu(values);
+          }
           closeDrawer();
           emit('success');
         } finally {

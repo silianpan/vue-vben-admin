@@ -30,11 +30,11 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, nextTick } from 'vue';
+  import { defineComponent } from 'vue';
   import { listToTree } from '/@/utils/helper/treeHelper';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuList, delMenu } from '/@/api/demo/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
@@ -47,7 +47,7 @@
     components: { BasicTable, MenuDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload, expandAll }] = useTable({
+      const [registerTable, { reload }] = useTable({
         title: '菜单列表',
         api: () =>
           getMenuList().then((res) =>
@@ -94,6 +94,9 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        delMenu(record.menuId).then((_) => {
+          handleSuccess();
+        });
       }
 
       function handleSuccess() {
@@ -102,7 +105,7 @@
 
       function onFetchSuccess() {
         // 演示默认展开所有表项
-        nextTick(expandAll);
+        // nextTick(expandAll);
       }
 
       return {

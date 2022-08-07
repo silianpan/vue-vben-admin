@@ -34,29 +34,35 @@ export interface AccountListItem {
 }
 
 export interface DeptListItem {
-  id: string;
-  orderNo: string;
+  deptId: number;
+  deptName: string;
+  orderNum: number;
   createTime: string;
-  remark: string;
   status: number;
 }
 
 export interface MenuListItem {
-  id: string;
-  orderNo: string;
+  menuId: number;
+  menuName: string;
+  orderNum: number;
   createTime: string;
   status: number;
   icon: string;
   component: string;
-  permission: string;
+  perms: string;
+  isApp: number;
+  isExt: number;
+  parentId: number;
+  menuType: string;
+  visible: number;
 }
 
 export interface RoleListItem {
-  id: string;
+  roleId: number;
   roleName: string;
-  roleValue: string;
+  roleKey: string;
   status: number;
-  orderNo: string;
+  roleSort: number;
   createTime: string;
 }
 
