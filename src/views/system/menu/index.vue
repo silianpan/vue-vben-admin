@@ -47,10 +47,10 @@
     components: { BasicTable, MenuDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
+      const [registerTable, { reload, getForm }] = useTable({
         title: '菜单列表',
         api: () =>
-          getMenuList().then((res) =>
+          getMenuList(getForm().getFieldsValue()).then((res) =>
             listToTree(res as unknown as AppRouteRecordRaw[], {
               id: 'menuId',
               children: 'children',
