@@ -60,8 +60,16 @@
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '账号列表',
-        api: getAccountList,
-        rowKey: 'id',
+        api: () => {
+          return getAccountList().then((res) => {
+            console.log('res', res);
+            return {
+              items: res.rows,
+              total: res.total,
+            };
+          });
+        },
+        rowKey: 'userId',
         columns,
         formConfig: {
           labelWidth: 120,

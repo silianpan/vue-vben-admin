@@ -156,6 +156,8 @@ export interface ContextMenuOptions {
 
 export interface TreeItem extends TreeDataItem {
   icon?: any;
+  id?: number;
+  label?: string;
 }
 
 export interface TreeActionItem {

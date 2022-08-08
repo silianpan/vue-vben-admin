@@ -5,12 +5,12 @@ import { FormSchema } from '/@/components/Table';
 export const columns: BasicColumn[] = [
   {
     title: '用户名',
-    dataIndex: 'account',
+    dataIndex: 'userName',
     width: 120,
   },
   {
     title: '昵称',
-    dataIndex: 'nickname',
+    dataIndex: 'nickName',
     width: 120,
   },
   {
@@ -19,18 +19,17 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: '部门',
+    dataIndex: 'dept.deptName',
+  },
+  {
+    title: '状态',
+    dataIndex: 'status',
+  },
+  {
     title: '创建时间',
     dataIndex: 'createTime',
     width: 180,
-  },
-  {
-    title: '角色',
-    dataIndex: 'role',
-    width: 200,
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
   },
 ];
 
