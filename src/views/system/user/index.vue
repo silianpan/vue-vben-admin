@@ -50,6 +50,7 @@
 
   import { columns, searchFormSchema } from './account.data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { BasicPageParams } from '/@/api/model/baseModel';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -58,16 +59,19 @@
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
-      const [registerTable, { reload, updateTableDataRecord }] = useTable({
+      const [registerTable, { reload, updateTableDataRecord, getForm }] = useTable({
         title: '账号列表',
-        api: () => {
-          return getAccountList().then((res) => {
-            console.log('res', res);
-            return {
-              items: res.rows,
-              total: res.total,
-            };
-          });
+        api: (info) =>
+          getAccountList(info).then((res) => ({
+            items: res.rows,
+            total: res.total,
+          })),
+        beforeFetch: (info: BasicPageParams) => {
+          return {
+            pageNum: info.page,
+            pageSize: info.pageSize,
+            ...getForm().getFieldsValue(),
+          };
         },
         rowKey: 'userId',
         columns,
