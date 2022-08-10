@@ -18,7 +18,6 @@
   import { CollapseContainer } from '/@/components/Container';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { PageWrapper } from '/@/components/Page';
-  import { isAccountExist } from '/@/api/demo/system';
 
   const schemas: FormSchema[] = [
     {
@@ -188,17 +187,17 @@
           required: true,
           message: '请输入数据',
         },
-        {
-          validator(_, value) {
-            return new Promise((resolve, reject) => {
-              isAccountExist(value)
-                .then(() => resolve())
-                .catch((err) => {
-                  reject(err.message || '验证失败');
-                });
-            });
-          },
-        },
+        // {
+        //   validator(_, value) {
+        //     return new Promise((resolve, reject) => {
+        //       isAccountExist(value)
+        //         .then(() => resolve())
+        //         .catch((err) => {
+        //           reject(err.message || '验证失败');
+        //         });
+        //     });
+        //   },
+        // },
       ],
     },
   ];

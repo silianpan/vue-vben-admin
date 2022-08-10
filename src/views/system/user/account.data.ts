@@ -1,4 +1,4 @@
-import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
+import { getAllRoleList } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
@@ -50,6 +50,12 @@ export const searchFormSchema: FormSchema[] = [
 
 export const accountFormSchema: FormSchema[] = [
   {
+    field: 'userId',
+    label: '用户ID',
+    component: 'InputNumber',
+    show: false,
+  },
+  {
     field: 'userName',
     label: '用户名',
     component: 'Input',
@@ -59,17 +65,17 @@ export const accountFormSchema: FormSchema[] = [
         required: true,
         message: '请输入用户名',
       },
-      {
-        validator(_, value) {
-          return new Promise((resolve, reject) => {
-            isAccountExist(value)
-              .then(() => resolve())
-              .catch((err) => {
-                reject(err.message || '验证失败');
-              });
-          });
-        },
-      },
+      // {
+      //   validator(_, value) {
+      //     return new Promise((resolve, reject) => {
+      //       isAccountExist(value)
+      //         .then(() => resolve())
+      //         .catch((err) => {
+      //           reject(err.message || '验证失败');
+      //         });
+      //     });
+      //   },
+      // },
     ],
   },
   {

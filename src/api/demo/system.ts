@@ -21,7 +21,7 @@ enum Api {
   MenuList = '/system/menu/list',
   AddMenu = '/system/menu',
   RolePageList = '/system/getRoleListByPage',
-  GetAllRoleList = '/system/getAllRoleList',
+  GetAllRoleList = '/system/role/optionselect',
 }
 
 export const getAccountList = (params?: AccountParams) =>

@@ -21,7 +21,7 @@
   </Select>
 </template>
 <script lang="ts">
-  import { defineComponent, PropType, ref, watchEffect, computed, unref, watch } from 'vue';
+  import { defineComponent, PropType, ref, watchEffect, computed, unref, watch, toRaw } from 'vue';
   import { Select } from 'ant-design-vue';
   import { isFunction } from '/@/utils/is';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
@@ -44,7 +44,9 @@
       value: [Array, Object, String, Number],
       numberToString: propTypes.bool,
       api: {
-        type: Function as PropType<(arg?: Recordable) => Promise<OptionsItem[]>>,
+        type: Function as PropType<
+          (arg?: Recordable, record?: Recordable) => Promise<OptionsItem[]>
+        >,
         default: null,
       },
       // api params
@@ -105,7 +107,7 @@
         options.value = [];
         try {
           loading.value = true;
-          const res = await api(props.params);
+          const res = await api(props.params, toRaw(unref(attrs)['formValues']['model']));
           if (Array.isArray(res)) {
             options.value = res;
             emitChange();
