@@ -1,6 +1,8 @@
-import { getAllRoleList } from '/@/api/demo/system';
+import { getAllPostList, getAllRoleList } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { Switch } from 'ant-design-vue';
+import { h } from 'vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -20,11 +22,29 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '部门',
-    dataIndex: 'dept.deptName',
+    dataIndex: 'deptId',
+    customRender: ({ record }) => record.dept.deptName,
   },
   {
     title: '状态',
     dataIndex: 'status',
+    customRender: ({ record }) => {
+      return h(Switch, {
+        checked: record.status === '0',
+        checkedChildren: '正常',
+        unCheckedChildren: '停用',
+      });
+    },
+  },
+  {
+    title: '角色',
+    dataIndex: 'roleId',
+    customRender: ({ record }) => record.roleIds && record.roleIds.joins(','),
+  },
+  {
+    title: '岗位',
+    dataIndex: 'postId',
+    customRender: ({ record }) => record.postIds && record.postIds.joins(','),
   },
   {
     title: '创建时间',
@@ -83,32 +103,43 @@ export const accountFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
-    ifShow: false,
+    defaultValue: '123456',
   },
   {
     label: '角色',
-    field: 'role',
+    field: 'roleIds',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
       labelField: 'roleName',
-      valueField: 'roleValue',
+      valueField: 'roleId',
+      mode: 'multiple',
     },
-    required: true,
   },
   {
-    field: 'dept',
+    field: 'deptId',
     label: '所属部门',
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
-        label: 'deptName',
+        label: 'label',
         key: 'id',
         value: 'id',
       },
       getPopupContainer: () => document.body,
     },
     required: true,
+  },
+  {
+    label: '岗位',
+    field: 'postIds',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getAllPostList,
+      labelField: 'postName',
+      valueField: 'postId',
+      mode: 'multiple',
+    },
   },
   {
     field: 'nickName',

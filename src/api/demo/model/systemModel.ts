@@ -6,9 +6,15 @@ export type AccountParams = BasicPageParams & {
 };
 
 export type RoleParams = {
-  userId: number;
+  roleId: number;
+  roleKey: string;
   roleName?: string;
   status?: string;
+};
+
+export type PostParams = {
+  postId: number;
+  postName?: string;
 };
 
 export type RolePageParams = BasicPageParams & RoleParams;
@@ -24,6 +30,8 @@ export type MenuParams = {
 };
 
 export interface AccountListItem {
+  roles: RoleListItem[];
+  posts: PostListItem[];
   userId: number;
   deptId: number;
   userName: string;
@@ -70,6 +78,14 @@ export interface RoleListItem {
   createTime: string;
 }
 
+export interface PostListItem {
+  postId: number;
+  postName: string;
+  postKey: string;
+  status: number;
+  createTime: string;
+}
+
 /**
  * @description: Request list return value
  */
@@ -82,3 +98,5 @@ export type MenuListGetResultModel = BasicFetchResult<MenuListItem>;
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
+
+export type PostListGetResultModel = PostListItem[];

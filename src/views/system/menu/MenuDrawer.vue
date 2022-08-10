@@ -63,8 +63,6 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
           if (!unref(isUpdate)) {
             await addMenu(values);
           } else {

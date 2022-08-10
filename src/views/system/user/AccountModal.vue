@@ -8,7 +8,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptList, addUser, updateUser, getUser } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -34,20 +34,23 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          rowId.value = data.record.id;
+          rowId.value = data.record.userId;
+          const user = await getUser(data.record.userId);
           setFieldsValue({
-            ...data.record,
+            ...user,
+            roleIds: user.roles?.map((item) => item.roleId),
+            postIds: user.posts?.map((item) => item.postId),
           });
         }
 
         const treeData = await getDeptList();
         updateSchema([
           {
-            field: 'pwd',
+            field: 'password',
             show: !unref(isUpdate),
           },
           {
-            field: 'dept',
+            field: 'deptId',
             componentProps: { treeData },
           },
         ]);
@@ -59,8 +62,11 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (!unref(isUpdate)) {
+            await addUser(values);
+          } else {
+            updateUser(values);
+          }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {
