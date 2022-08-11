@@ -20,6 +20,11 @@
                 onClick: handleEdit.bind(null, record),
               },
               {
+                icon: 'clarity:key-line',
+                tooltip: '重置密码',
+                onClick: handleResetPwd.bind(null, record),
+              },
+              {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
                 tooltip: '删除此账号',
@@ -35,6 +40,7 @@
       </template>
     </BasicTable>
     <AccountModal @register="registerModal" @success="handleSuccess" />
+    <ResetPwdModal @register="registerModalResetPwd" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -47,6 +53,7 @@
 
   import { useModal } from '/@/components/Modal';
   import AccountModal from './AccountModal.vue';
+  import ResetPwdModal from './ResetPwdModal.vue';
 
   import { columns, searchFormSchema } from './account.data';
   import { useGo } from '/@/hooks/web/usePage';
@@ -54,10 +61,11 @@
 
   export default defineComponent({
     name: 'AccountManagement',
-    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, DeptTree, AccountModal, ResetPwdModal, TableAction },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
+      const [registerModalResetPwd, { openModal: openModalResetPwd }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord, getForm }] = useTable({
         title: '账号列表',
@@ -109,9 +117,16 @@
         });
       }
 
+      function handleResetPwd(record: Recordable) {
+        openModalResetPwd(true, {
+          record,
+          isUpdate: true,
+        });
+      }
+
       function handleDelete(record: Recordable) {
         console.log(record);
-        delUser(record.menuId).then((_) => {
+        delUser(record.userId).then((_) => {
           handleSuccess({ isUpdate: false, values: record });
         });
       }
@@ -139,8 +154,10 @@
       return {
         registerTable,
         registerModal,
+        registerModalResetPwd,
         handleCreate,
         handleEdit,
+        handleResetPwd,
         handleDelete,
         handleSuccess,
         handleSelect,

@@ -161,3 +161,34 @@ export const accountFormSchema: FormSchema[] = [
     component: 'InputTextArea',
   },
 ];
+
+export const resetPwdFormSchema: FormSchema[] = [
+  {
+    field: 'userId',
+    label: '用户ID',
+    component: 'InputNumber',
+    show: false,
+    required: true,
+  },
+  {
+    field: 'userName',
+    label: '用户名',
+    component: 'Input',
+    required: true,
+    componentProps: {
+      disabled: true,
+    },
+  },
+  {
+    field: 'newPassword',
+    label: '密码',
+    component: 'InputPassword',
+    required: true,
+  },
+  {
+    field: 'confirmPassword',
+    label: '密码',
+    component: 'InputPassword',
+    required: true,
+  },
+];

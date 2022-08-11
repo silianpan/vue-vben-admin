@@ -23,6 +23,7 @@ enum Api {
   MenuList = '/system/menu/list',
   AddMenu = '/system/menu',
   AddUser = '/system/user',
+  ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/getRoleListByPage',
   GetAllRoleList = '/system/role/optionselect',
   GetAllPostList = '/system/post/optionselect',
@@ -70,6 +71,11 @@ export const delUser = (userId: Number) => {
 // 根据userId获取用户
 export const getUser = (userId: Number) => {
   return defHttp.get<AccountListItem>({ url: Api.AddUser + '/' + userId });
+};
+
+// 修改密码
+export const resetUserPwd = (userId: number, password: string) => {
+  return defHttp.put<void>({ url: Api.ResetUserPwd, data: { userId, password } });
 };
 
 export const getRoleListByPage = (params?: RolePageParams) =>
