@@ -36,16 +36,16 @@ export const columns: BasicColumn[] = [
       });
     },
   },
-  {
-    title: '角色',
-    dataIndex: 'roleId',
-    customRender: ({ record }) => record.roleIds && record.roleIds.joins(','),
-  },
-  {
-    title: '岗位',
-    dataIndex: 'postId',
-    customRender: ({ record }) => record.postIds && record.postIds.joins(','),
-  },
+  // {
+  //   title: '角色',
+  //   dataIndex: 'roleId',
+  //   customRender: ({ record }) => record.roles?.joins(','),
+  // },
+  // {
+  //   title: '岗位',
+  //   dataIndex: 'postId',
+  //   customRender: ({ record }) => record.posts?.joins(','),
+  // },
   {
     title: '创建时间',
     dataIndex: 'createTime',
@@ -79,7 +79,7 @@ export const accountFormSchema: FormSchema[] = [
     field: 'userName',
     label: '用户名',
     component: 'Input',
-    helpMessage: ['本字段演示异步验证', '不能输入带有admin的用户名'],
+    helpMessage: ['用户名要求', '用户名不能重名'],
     rules: [
       {
         required: true,
