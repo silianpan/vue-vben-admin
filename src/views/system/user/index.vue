@@ -9,11 +9,11 @@
         <template v-if="column.key === 'action'">
           <TableAction
             :actions="[
-              {
-                icon: 'clarity:info-standard-line',
-                tooltip: '查看用户详情',
-                onClick: handleView.bind(null, record),
-              },
+              // {
+              //   icon: 'clarity:info-standard-line',
+              //   tooltip: '查看用户详情',
+              //   onClick: handleView.bind(null, record),
+              // },
               {
                 icon: 'clarity:note-edit-line',
                 tooltip: '编辑用户资料',
@@ -56,14 +56,12 @@
   import ResetPwdModal from './ResetPwdModal.vue';
 
   import { columns, searchFormSchema } from './account.data';
-  import { useGo } from '/@/hooks/web/usePage';
   import { BasicPageParams } from '/@/api/model/baseModel';
 
   export default defineComponent({
     name: 'AccountManagement',
     components: { BasicTable, PageWrapper, DeptTree, AccountModal, ResetPwdModal, TableAction },
     setup() {
-      const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const [registerModalResetPwd, { openModal: openModalResetPwd }] = useModal();
       const searchInfo = reactive<Recordable>({});
@@ -147,9 +145,9 @@
         reload();
       }
 
-      function handleView(record: Recordable) {
-        go('/system/account_detail/' + record.id);
-      }
+      // function handleView(record: Recordable) {
+      //   go('/system/account_detail/' + record.id);
+      // }
 
       return {
         registerTable,
@@ -161,7 +159,6 @@
         handleDelete,
         handleSuccess,
         handleSelect,
-        handleView,
         searchInfo,
       };
     },
