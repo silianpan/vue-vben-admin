@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import { createModalSlot } from './createCreateSlot';
 import { getSlotPayload } from './getSlotPayload';
 import { locationMatcher } from './locationMatcher';
@@ -49,7 +49,7 @@ export function createModal(
         slotVnMap: {},
       };
     },
-    render(createElement) {
+    render() {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this;
       if (firstRender) {
@@ -91,7 +91,7 @@ export function createModal(
         }
       };
       const createSlot = createModalSlot(
-        createElement,
+        h,
         self.$data.slotVnMap,
         self.$data.confirmLoading,
         handleClose,
@@ -112,7 +112,7 @@ export function createModal(
       if (footer && footer.template) {
         children.push(createSlot(footer, footerSlotName));
       }
-      return createElement(
+      return h(
         Modal,
         {
           props: {

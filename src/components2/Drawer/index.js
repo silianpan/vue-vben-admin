@@ -5,8 +5,8 @@ import { createDrawerSlot, createModalSlot } from './createCreateSlot';
 import { locationMatcher } from './locationMatcher';
 import { setGlobalHeader } from './setGlobalHeader';
 import { modifyOptions } from './modifyOptions';
-import event from 'tiny-emitter/instance';
 import {
+  event,
   VCDM_OPEN_DRAWER,
   VCDM_OPEN_MODAL,
   listen,

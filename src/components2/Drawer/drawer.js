@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import { createDrawerSlot } from './createCreateSlot';
 import { getSlotPayload } from './getSlotPayload';
 import { locationMatcher } from './locationMatcher';
@@ -43,7 +43,7 @@ export function createDrawer(
         slotVnMap: {},
       };
     },
-    render(createElement) {
+    render() {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this;
       if (firstRender) {
@@ -74,7 +74,7 @@ export function createDrawer(
           afterClose && (await afterClose({ payload, slotPayload }));
         }, 400);
       };
-      const createSlot = createDrawerSlot(createElement, self.$data.slotVnMap, handleClose);
+      const createSlot = createDrawerSlot(h, self.$data.slotVnMap, handleClose);
       const children = [];
       // 如果传了内容
       if (content && content.template) {
@@ -86,7 +86,7 @@ export function createDrawer(
         children.push(createSlot(title, titleSlotName));
         drawerProps.title && delete drawerProps.title;
       }
-      return createElement(
+      return h(
         Drawer,
         {
           props: {
