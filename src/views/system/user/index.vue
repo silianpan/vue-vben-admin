@@ -44,7 +44,7 @@
   </PageWrapper>
 </template>
 <script lang="ts">
-  import { defineComponent, reactive, getCurrentInstance } from 'vue';
+  import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { delUser, getAccountList } from '/@/api/demo/system';
@@ -62,7 +62,6 @@
     name: 'AccountManagement',
     components: { BasicTable, PageWrapper, DeptTree, AccountModal, ResetPwdModal, TableAction },
     setup() {
-      const { proxy } = getCurrentInstance() as any;
       const [registerModal, { openModal }] = useModal();
       const [registerModalResetPwd, { openModal: openModalResetPwd }] = useModal();
       const searchInfo = reactive<Recordable>({});
@@ -110,24 +109,9 @@
 
       function handleEdit(record: Recordable) {
         // console.log(record);
-        // openModal(true, {
-        //   record,
-        //   isUpdate: true,
-        // });
-        proxy.$createAntdDrawer({
-          stopPropagation: true,
-          drawerProps: {
-            title: '保证金退还详情',
-            width: '60%',
-            maskClosable: true,
-          },
-          content: {
-            template: AccountModal,
-            props: {
-              record,
-              isUpdate: true,
-            },
-          },
+        openModal(true, {
+          record,
+          isUpdate: true,
         });
       }
 
