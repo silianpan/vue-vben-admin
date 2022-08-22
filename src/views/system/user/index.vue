@@ -57,6 +57,7 @@
 
   import { columns, searchFormSchema } from './account.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
+  import { createBasicDrawer } from '/@/components/Drawer';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -102,9 +103,10 @@
       });
 
       function handleCreate() {
-        openModal(true, {
+        /* openModal(true, {
           isUpdate: false,
-        });
+        }); */
+        createBasicDrawer({});
       }
 
       function handleEdit(record: Recordable) {
