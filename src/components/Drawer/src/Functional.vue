@@ -3,7 +3,8 @@
   import { Drawer } from 'ant-design-vue';
 
   export default defineComponent({
-    setup() {
+    setup(props, { slots }) {
+      console.log('props', props);
       const visible = ref<boolean>(true);
 
       const afterVisibleChange = (bool: boolean) => {
@@ -16,7 +17,11 @@
             visible={visible.value}
             title="Basic Modal"
             onAfterVisibleChange={afterVisibleChange}
-          />
+          >
+            {{
+              default: () => slots.default?.(),
+            }}
+          </Drawer>
         );
       };
     },

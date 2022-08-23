@@ -1,16 +1,19 @@
 import type { DrawerProps } from './typing';
 import BasicDrawer from './Functional.vue';
 import { isClient } from '/@/utils/is';
-import { createVNode, render } from 'vue';
+import { createVNode, render, VNodeChild } from 'vue';
 
 let instance: ReturnType<typeof createVNode> | null = null;
-export function createBasicDrawer(options: DrawerProps) {
+export function createBasicDrawer(
+  options: DrawerProps,
+  content: string | VNodeChild | JSX.Element,
+) {
   if (!isClient) return;
   const propsData: Partial<DrawerProps> = {};
   const container = document.createElement('div');
   Object.assign(propsData, {}, options);
 
-  instance = createVNode(BasicDrawer, propsData);
+  instance = createVNode(BasicDrawer, propsData, content);
   render(instance, container);
   document.body.appendChild(container);
   return instance.component?.exposed;

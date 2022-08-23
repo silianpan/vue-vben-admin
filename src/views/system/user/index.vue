@@ -43,7 +43,7 @@
     <ResetPwdModal @register="registerModalResetPwd" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts">
+<script lang="tsx">
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
@@ -106,7 +106,12 @@
         /* openModal(true, {
           isUpdate: false,
         }); */
-        createBasicDrawer({});
+        createBasicDrawer(
+          {},
+          {
+            default: () => <h2>111</h2>,
+          },
+        );
       }
 
       function handleEdit(record: Recordable) {
