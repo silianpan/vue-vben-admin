@@ -15,7 +15,6 @@
   import DrawerHeader from './components/DrawerHeader.vue';
   import DrawerFooter from './components/DrawerFooter.vue';
   import { ScrollContainer } from '/@/components/Container';
-  import { useDesign } from '/@/hooks/web/useDesign';
   import { isFunction, isNumber } from '/@/utils/is';
   import { DrawerInstance, DrawerProps } from './typing';
   import { deepMerge } from '/@/utils';
@@ -28,8 +27,8 @@
       const propsRef = ref<Partial<Nullable<DrawerProps>>>(null);
 
       const { t } = useI18n();
-      const { prefixVar, prefixCls } = useDesign('basic-drawer');
-      console.log(prefixVar, prefixCls);
+      const prefixVar = 'vben';
+      const prefixCls = 'basic-drawer';
 
       function setDrawerProps(props: Partial<DrawerProps>): void {
         // Keep the last setDrawerProps
