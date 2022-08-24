@@ -74,6 +74,7 @@ export interface DrawerProps extends DrawerFooterProps {
   loading?: boolean;
   showDetailBack?: boolean;
   visible?: boolean;
+  loadingText?: string;
   /**
    * Built-in ScrollContainer component configuration
    * @type ScrollContainerOptions
@@ -127,7 +128,7 @@ export interface DrawerProps extends DrawerFooterProps {
    * The title for Drawer.
    * @type any (string | slot)
    */
-  title?: VNodeChild | JSX.Element;
+  title?: string | VNodeChild | JSX.Element;
   /**
    * The class name of the container of the Drawer dialog.
    * @type string
