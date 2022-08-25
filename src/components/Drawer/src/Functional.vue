@@ -28,7 +28,7 @@
 
       const { t } = useI18n();
       const prefixVar = 'vben';
-      const prefixCls = 'basic-drawer';
+      const prefixCls = `${prefixVar}-basic-drawer`;
 
       function setDrawerProps(props: Partial<DrawerProps>): void {
         // Keep the last setDrawerProps
