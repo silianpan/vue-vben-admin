@@ -108,16 +108,18 @@
         }); */
         createBasicDrawer(
           {
-            title: '新增用户',
+            isDetail: true,
           },
           {
+            title: () => <h2>222</h2>,
             default: () => <h2>111</h2>,
-            titleToolbar: () => (
+            /* titleToolbar: () => (
               <a-button-group>
                 <a-button type="primary">新增</a-button>
                 <a-button type="danger">删除</a-button>
               </a-button-group>
-            ),
+            ), */
+            titleToolbar: () => '1111111',
           },
         );
       }

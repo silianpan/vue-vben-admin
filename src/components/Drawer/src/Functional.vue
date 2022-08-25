@@ -147,7 +147,7 @@
           <Drawer class={prefixCls} onClose={onClose} {...getBindValues} visible={visibleRef.value}>
             {{
               title: () =>
-                slots.title ? (
+                slots.title && !slots.titleToolbar ? (
                   slots.title?.()
                 ) : (
                   <DrawerHeader
