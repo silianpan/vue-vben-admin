@@ -29,7 +29,6 @@
 
       const { t } = useI18n();
       const { prefixVar, prefixCls } = useDesign('basic-drawer');
-      console.log(prefixVar, prefixCls);
 
       function setDrawerProps(props: Partial<DrawerProps>): void {
         // Keep the last setDrawerProps
