@@ -105,8 +105,8 @@
 
       function handleCreate() {
         /* openModal(true, {
-      isUpdate: false,
-    }); */
+          isUpdate: false,
+        }); */
         createBasicDrawer(
           {
             isDetail: true,
