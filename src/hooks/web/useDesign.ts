@@ -1,8 +1,10 @@
 import { useAppProviderContext } from '/@/components/Application';
+import { prefixCls } from '/@/settings/designSetting';
 // import { computed } from 'vue';
 // import { lowerFirst } from 'lodash-es';
-export function useDesign(scope: string) {
+export function useDesign(scope: string, prefixClsParam: string = prefixCls) {
   const values = useAppProviderContext();
+  const prefixClsRet = values.prefixCls || prefixClsParam;
   // const $style = cssModule ? useCssModule() : {};
 
   // const style: Record<string, string> = {};
@@ -15,8 +17,8 @@ export function useDesign(scope: string) {
   // }
   return {
     // prefixCls: computed(() => `${values.prefixCls}-${scope}`),
-    prefixCls: `${values.prefixCls}-${scope}`,
-    prefixVar: values.prefixCls,
+    prefixCls: `${prefixClsRet}-${scope}`,
+    prefixVar: prefixClsRet,
     // style,
   };
 }

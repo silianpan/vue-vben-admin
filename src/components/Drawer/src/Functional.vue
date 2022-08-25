@@ -19,6 +19,7 @@
   import { DrawerInstance, DrawerProps } from './typing';
   import { deepMerge } from '/@/utils';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useDesign } from '/@/hooks/web/useDesign';
 
   export default defineComponent({
     setup(props, { slots, emit }) {
@@ -27,8 +28,7 @@
       const propsRef = ref<Partial<Nullable<DrawerProps>>>(null);
 
       const { t } = useI18n();
-      const prefixVar = 'vben';
-      const prefixCls = `${prefixVar}-basic-drawer`;
+      const { prefixVar, prefixCls } = useDesign('basic-drawer');
       console.log(prefixVar, prefixCls);
 
       function setDrawerProps(props: Partial<DrawerProps>): void {
