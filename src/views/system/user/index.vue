@@ -107,9 +107,17 @@
           isUpdate: false,
         }); */
         createBasicDrawer(
-          {},
+          {
+            title: '新增用户',
+          },
           {
             default: () => <h2>111</h2>,
+            titleToolbar: () => (
+              <a-button-group>
+                <a-button type="primary">新增</a-button>
+                <a-button type="danger">删除</a-button>
+              </a-button-group>
+            ),
           },
         );
       }

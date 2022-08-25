@@ -29,6 +29,7 @@
       const { t } = useI18n();
       const prefixVar = 'vben';
       const prefixCls = `${prefixVar}-basic-drawer`;
+      console.log(prefixVar, prefixCls);
 
       function setDrawerProps(props: Partial<DrawerProps>): void {
         // Keep the last setDrawerProps
@@ -158,24 +159,91 @@
                     {{ titleToolbar: () => slots.titleToolbar?.() }}
                   </DrawerHeader>
                 ),
+              default: () => (
+                <ScrollContainer
+                  style={getScrollContentStyle}
+                  loading={getLoading}
+                  loading-tip={loadingText || t('common.loadingText')}
+                >
+                  {{ default: () => slots.default?.() }}
+                </ScrollContainer>
+              ),
+              footer: () => (
+                <DrawerFooter onClose={onClose} onOk={handleOk} height={getFooterHeight.value}>
+                  {/* {Object.keys(slots).map((item) => {
+                  return {
+                    [item]: () => slots[item]?.(),
+                  };
+                })} */}
+                </DrawerFooter>
+              ),
             }}
-            <ScrollContainer
-              style={getScrollContentStyle}
-              loading={getLoading}
-              loading-tip={loadingText || t('common.loadingText')}
-            >
-              {{ default: () => slots.default?.() }}
-            </ScrollContainer>
-            <DrawerFooter onClose={onClose} onOk={handleOk} height={getFooterHeight.value}>
-              {/* {Object.keys(slots).map((item) => {
-                return {
-                  [item]: () => slots[item]?.(),
-                };
-              })} */}
-            </DrawerFooter>
           </Drawer>
         );
       };
     },
   });
 </script>
+
+<style lang="less">
+  @header-height: 60px;
+  @detail-header-height: 40px;
+  @prefix-cls: ~'@{namespace}-basic-drawer';
+  @prefix-cls-detail: ~'@{namespace}-basic-drawer__detail';
+
+  .@{prefix-cls} {
+    .ant-drawer-wrapper-body {
+      overflow: hidden;
+    }
+
+    .ant-drawer-close {
+      &:hover {
+        color: @error-color;
+      }
+    }
+
+    .ant-drawer-body {
+      height: calc(100% - @header-height);
+      padding: 0;
+      background-color: @component-background;
+
+      .scrollbar__wrap {
+        padding: 16px !important;
+        margin-bottom: 0 !important;
+      }
+
+      > .scrollbar > .scrollbar__bar.is-horizontal {
+        display: none;
+      }
+    }
+  }
+
+  .@{prefix-cls-detail} {
+    position: absolute;
+
+    .ant-drawer-header {
+      width: 100%;
+      height: @detail-header-height;
+      padding: 0;
+      border-top: 1px solid @border-color-base;
+      box-sizing: border-box;
+    }
+
+    .ant-drawer-title {
+      height: 100%;
+    }
+
+    .ant-drawer-close {
+      height: @detail-header-height;
+      line-height: @detail-header-height;
+    }
+
+    .scrollbar__wrap {
+      padding: 0 !important;
+    }
+
+    .ant-drawer-body {
+      height: calc(100% - @detail-header-height);
+    }
+  }
+</style>
