@@ -10,6 +10,7 @@
         <ArrowLeftOutlined :class="`${prefixCls}__back`" />
       </span>
       <span v-if="title">{{ title }}</span>
+      <slot v-else name="title"></slot>
     </span>
 
     <span :class="`${prefixCls}__toolbar`">
@@ -49,6 +50,7 @@
 <style lang="less">
   @prefix-cls: ~'@{namespace}-basic-drawer-header';
   @footer-height: 60px;
+
   .@{prefix-cls} {
     display: flex;
     height: 100%;

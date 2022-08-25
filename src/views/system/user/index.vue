@@ -58,6 +58,7 @@
   import { columns, searchFormSchema } from './account.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
   import { createBasicDrawer } from '/@/components/Drawer';
+  import Button, { ButtonGroup } from 'ant-design-vue/es/button';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -104,22 +105,22 @@
 
       function handleCreate() {
         /* openModal(true, {
-          isUpdate: false,
-        }); */
+      isUpdate: false,
+    }); */
         createBasicDrawer(
           {
             isDetail: true,
+            showDetailBack: true,
           },
           {
-            title: () => <h2>222</h2>,
+            title: () => '新增用户',
             default: () => <h2>111</h2>,
-            /* titleToolbar: () => (
-              <a-button-group>
-                <a-button type="primary">新增</a-button>
-                <a-button type="danger">删除</a-button>
-              </a-button-group>
-            ), */
-            titleToolbar: () => '1111111',
+            titleToolbar: () => (
+              <ButtonGroup>
+                <Button type="primary">新增</Button>
+                <Button danger>删除</Button>
+              </ButtonGroup>
+            ),
           },
         );
       }

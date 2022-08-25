@@ -155,7 +155,7 @@
                     showDetailBack={showDetailBack}
                     onClose={onClose}
                   >
-                    {{ titleToolbar: () => slots.titleToolbar?.() }}
+                    {{ titleToolbar: () => slots.titleToolbar?.(), title: () => slots.title?.() }}
                   </DrawerHeader>
                 ),
               default: () => (
