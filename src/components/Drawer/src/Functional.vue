@@ -160,8 +160,8 @@
                 ),
               default: () => (
                 <ScrollContainer
-                  style={getScrollContentStyle}
-                  loading={getLoading}
+                  style={getScrollContentStyle.value}
+                  loading={getLoading.value}
                   loading-tip={loadingText || t('common.loadingText')}
                 >
                   {{ default: () => slots.default?.() }}

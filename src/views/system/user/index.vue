@@ -54,6 +54,7 @@
   import { useModal } from '/@/components/Modal';
   import AccountModal from './AccountModal.vue';
   import ResetPwdModal from './ResetPwdModal.vue';
+  import AccountForm from './AccountForm.vue';
 
   import { columns, searchFormSchema } from './account.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
@@ -114,7 +115,13 @@
           },
           {
             title: () => '新增用户',
-            default: () => <h2>111</h2>,
+            /* default: () => (
+              <ButtonGroup>
+                <Button type="primary">新增</Button>
+                <Button danger>删除</Button>
+              </ButtonGroup>
+            ), */
+            default: () => <AccountForm />,
             titleToolbar: () => (
               <ButtonGroup>
                 <Button type="primary">新增</Button>
