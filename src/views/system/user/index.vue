@@ -119,6 +119,8 @@
             showFooter: true,
             showOkBtn: true,
             showCancelBtn: true,
+            footerHeight: 60,
+            width: '50%',
           },
           {
             title: () => '新增用户',
