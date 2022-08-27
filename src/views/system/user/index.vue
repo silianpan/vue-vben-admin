@@ -112,6 +112,9 @@
           {
             isDetail: true,
             showDetailBack: true,
+            showFooter: true,
+            showOkBtn: true,
+            showCancelBtn: true,
           },
           {
             title: () => '新增用户',

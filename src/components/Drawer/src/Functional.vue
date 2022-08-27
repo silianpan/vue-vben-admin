@@ -130,7 +130,15 @@
         },
       );
 
-      const { visible, isDetail, showDetailBack, loadingText } = unref(getProps);
+      const {
+        visible,
+        isDetail,
+        showDetailBack,
+        loadingText,
+        showFooter,
+        showOkBtn,
+        showCancelBtn,
+      } = unref(getProps);
       const { title } = unref(getMergeProps);
 
       watch(
@@ -168,13 +176,14 @@
                 </ScrollContainer>
               ),
               footer: () => (
-                <DrawerFooter onClose={onClose} onOk={handleOk} height={getFooterHeight.value}>
-                  {/* {Object.keys(slots).map((item) => {
-                  return {
-                    [item]: () => slots[item]?.(),
-                  };
-                })} */}
-                </DrawerFooter>
+                <DrawerFooter
+                  onClose={onClose}
+                  onOk={handleOk}
+                  height={getFooterHeight.value}
+                  showFooter={showFooter}
+                  showOkBtn={showOkBtn}
+                  showCancelBtn={showCancelBtn}
+                ></DrawerFooter>
               ),
             }}
           </Drawer>
