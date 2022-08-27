@@ -4,6 +4,7 @@
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增账号</a-button>
+        <a-button type="primary" @click="handleCreateBasicDrawer">函数式Drawer</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -105,9 +106,12 @@
       });
 
       function handleCreate() {
-        /* openModal(true, {
+        openModal(true, {
           isUpdate: false,
-        }); */
+        });
+      }
+
+      function handleCreateBasicDrawer() {
         createBasicDrawer(
           {
             isDetail: true,
@@ -182,6 +186,7 @@
         registerModal,
         registerModalResetPwd,
         handleCreate,
+        handleCreateBasicDrawer,
         handleEdit,
         handleResetPwd,
         handleDelete,
