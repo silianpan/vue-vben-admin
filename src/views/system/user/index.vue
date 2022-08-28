@@ -118,12 +118,6 @@
           },
           {
             title: () => '新增用户',
-            /* default: () => (
-            <ButtonGroup>
-              <Button type="primary">新增</Button>
-              <Button danger>删除</Button>
-            </ButtonGroup>
-          ), */
             default: () => <AccountForm />,
             titleToolbar: () => (
               <ButtonGroup>
