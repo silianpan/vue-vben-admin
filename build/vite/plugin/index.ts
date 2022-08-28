@@ -15,6 +15,7 @@ import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
+import { configSingleHMRConfig } from './singleHMR';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -63,6 +64,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   // vite-plugin-theme
   vitePlugins.push(configThemePlugin(isBuild));
+
+  // singleHMR: 解决热更新Cannot access before initialization
+  vitePlugins.push(configSingleHMRConfig());
 
   // The following plugins only work in the production environment
   if (isBuild) {

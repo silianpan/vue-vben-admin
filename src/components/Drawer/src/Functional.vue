@@ -151,7 +151,7 @@
 
       return () => {
         return (
-          <Drawer class={prefixCls} onClose={onClose} {...getBindValues} visible={visibleRef.value}>
+          <Drawer class={prefixCls} onClose={onClose} {...getBindValues.value}>
             {{
               title: () =>
                 slots.title && !slots.titleToolbar ? (
@@ -177,6 +177,7 @@
               ),
               footer: () => (
                 <DrawerFooter
+                  {...getBindValues.value}
                   onClose={onClose}
                   onOk={handleOk}
                   height={getFooterHeight.value}
