@@ -130,15 +130,7 @@
         },
       );
 
-      const {
-        visible,
-        isDetail,
-        showDetailBack,
-        loadingText,
-        showFooter,
-        showOkBtn,
-        showCancelBtn,
-      } = unref(getProps);
+      const { visible, isDetail, showDetailBack, loadingText } = unref(getProps);
       const { title } = unref(getMergeProps);
 
       watch(
@@ -154,9 +146,7 @@
           <Drawer class={prefixCls} onClose={onClose} {...getBindValues.value}>
             {{
               title: () =>
-                slots.title && !slots.titleToolbar ? (
-                  slots.title?.()
-                ) : (
+                slots.titleToolbar ? (
                   <DrawerHeader
                     title={title as string}
                     isDetail={isDetail}
@@ -165,26 +155,27 @@
                   >
                     {{ titleToolbar: () => slots.titleToolbar?.(), title: () => slots.title?.() }}
                   </DrawerHeader>
+                ) : (
+                  slots.title?.()
                 ),
               default: () => (
-                <ScrollContainer
-                  style={getScrollContentStyle.value}
-                  loading={getLoading.value}
-                  loading-tip={loadingText || t('common.loadingText')}
-                >
-                  {{ default: () => slots.default?.() }}
-                </ScrollContainer>
-              ),
-              footer: () => (
-                <DrawerFooter
-                  {...getBindValues.value}
-                  onClose={onClose}
-                  onOk={handleOk}
-                  height={getFooterHeight.value}
-                  showFooter={showFooter}
-                  showOkBtn={showOkBtn}
-                  showCancelBtn={showCancelBtn}
-                ></DrawerFooter>
+                <>
+                  <ScrollContainer
+                    style={getScrollContentStyle.value}
+                    loading={getLoading.value}
+                    loading-tip={loadingText || t('common.loadingText')}
+                  >
+                    {{ default: () => slots.default?.() }}
+                  </ScrollContainer>
+                  <DrawerFooter
+                    onClose={onClose}
+                    onOk={handleOk}
+                    {...getBindValues.value}
+                    height={getFooterHeight.value}
+                  >
+                    {slots.footer ? { footer: () => slots.footer?.() } : ''}
+                  </DrawerFooter>
+                </>
               ),
             }}
           </Drawer>
