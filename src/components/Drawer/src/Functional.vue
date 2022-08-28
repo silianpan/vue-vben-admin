@@ -20,8 +20,12 @@
   import { deepMerge } from '/@/utils';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { basicProps } from './props';
 
   export default defineComponent({
+    inheritAttrs: false,
+    props: basicProps,
+    emits: ['visible-change', 'ok', 'close', 'register'],
     setup(props, { slots, emit }) {
       const visibleRef = ref(true);
       const attrs = useAttrs();
