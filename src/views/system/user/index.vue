@@ -115,6 +115,12 @@
         createBasicDrawer(
           {
             width: '50%',
+            onClose: (e?: Event) => {
+              console.log('onClose', e);
+            },
+            onOk: (e?: Event) => {
+              console.log('onOk', e);
+            },
           },
           {
             title: () => '新增用户',
