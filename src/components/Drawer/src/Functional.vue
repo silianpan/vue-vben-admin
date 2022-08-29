@@ -60,6 +60,10 @@
           return;
         }
         visibleRef.value = false;
+        // 删除整个容器
+        setTimeout(() => {
+          document.body.removeChild(props.getContainer);
+        }, 400);
       }
 
       const getMergeProps = computed((): DrawerProps => {
