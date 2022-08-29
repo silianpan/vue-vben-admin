@@ -1,12 +1,13 @@
 import type { DrawerProps } from './typing';
 import BasicDrawer from './Functional.vue';
 import { isClient } from '/@/utils/is';
-import { createVNode, render, VNodeChild } from 'vue';
+import { createVNode, mergeProps, render, VNodeChild } from 'vue';
 
 let instance: ReturnType<typeof createVNode> | null = null;
 export function createBasicDrawer(
   options: DrawerProps,
   content: string | VNodeChild | JSX.Element,
+  wait = false,
 ) {
   if (!isClient) return;
   const propsData: Partial<DrawerProps> = {};
@@ -20,7 +21,35 @@ export function createBasicDrawer(
   );
 
   instance = createVNode(BasicDrawer, propsData, content);
-  render(instance, container);
-  document.body.appendChild(container);
-  return instance.component?.exposed;
+  function open() {
+    instance!.props = mergeProps(instance!.props || {}, {
+      visible: true,
+    });
+    render(instance, container);
+    if (wait) {
+      setTimeout(() => {
+        document.body.appendChild(container);
+      }, 0);
+    } else {
+      document.body.appendChild(container);
+    }
+  }
+  function close() {
+    instance!.props = mergeProps(instance!.props || {}, {
+      visible: false,
+    });
+    render(null, container);
+    if (wait) {
+      setTimeout(() => {
+        document.body.removeChild(container);
+      }, 0);
+    } else {
+      document.body.removeChild(container);
+    }
+  }
+  return {
+    vm: instance.component?.exposed,
+    open,
+    close,
+  };
 }
