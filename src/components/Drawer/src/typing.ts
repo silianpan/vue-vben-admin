@@ -27,47 +27,47 @@ export type UseDrawerReturnType = [RegisterFn, ReturnMethods];
 export type UseDrawerInnerReturnType = [RegisterFn, ReturnInnerMethods];
 
 export interface DrawerFooterProps {
-  showOkBtn: boolean;
-  showCancelBtn: boolean;
+  showOkBtn?: boolean;
+  showCancelBtn?: boolean;
   /**
    * Text of the Cancel button
    * @default 'cancel'
    * @type string
    */
-  cancelText: string;
+  cancelText?: string;
   /**
    * Text of the OK button
    * @default 'OK'
    * @type string
    */
-  okText: string;
+  okText?: string;
 
   /**
    * Button type of the OK button
    * @default 'primary'
    * @type string
    */
-  okType: 'primary' | 'danger' | 'dashed' | 'ghost' | 'default';
+  okType?: 'primary' | 'danger' | 'dashed' | 'ghost' | 'default';
   /**
    * The ok button props, follow jsx rules
    * @type object
    */
-  okButtonProps: { props: ButtonProps; on: {} };
+  okButtonProps?: { props: ButtonProps; on: {} };
 
   /**
    * The cancel button props, follow jsx rules
    * @type object
    */
-  cancelButtonProps: { props: ButtonProps; on: {} };
+  cancelButtonProps?: { props: ButtonProps; on: {} };
   /**
    * Whether to apply loading visual effect for OK button or not
    * @default false
    * @type boolean
    */
-  confirmLoading: boolean;
+  confirmLoading?: boolean;
 
-  showFooter: boolean;
-  footerHeight: string | number;
+  showFooter?: boolean;
+  footerHeight?: string | number;
 }
 export interface DrawerProps extends DrawerFooterProps {
   isDetail?: boolean;
@@ -186,6 +186,7 @@ export interface DrawerProps extends DrawerFooterProps {
    * Specify a callback that will be called when a user clicks mask, close button or Cancel button.
    */
   onClose?: (e?: Event) => void;
+  onOk?: (e?: Event) => void;
 }
 export interface DrawerActionType {
   scrollBottom: () => void;

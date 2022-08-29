@@ -112,7 +112,7 @@
       }
 
       function handleCreateBasicDrawer() {
-        createBasicDrawer(
+        const obj = createBasicDrawer(
           {
             width: '50%',
             onClose: (e?: Event) => {
@@ -133,6 +133,10 @@
             ),
           },
         );
+        obj!.open();
+        setTimeout(() => {
+          obj!.close();
+        }, 5000);
       }
 
       function handleEdit(record: Recordable) {
