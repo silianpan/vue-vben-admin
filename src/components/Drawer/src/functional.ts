@@ -11,7 +11,13 @@ export function createBasicDrawer(
   if (!isClient) return;
   const propsData: Partial<DrawerProps> = {};
   const container = document.createElement('div');
-  Object.assign(propsData, {}, options);
+  Object.assign(
+    propsData,
+    {
+      getContainer: container,
+    },
+    options,
+  );
 
   instance = createVNode(BasicDrawer, propsData, content);
   render(instance, container);
