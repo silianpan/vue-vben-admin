@@ -45,7 +45,7 @@
   </PageWrapper>
 </template>
 <script lang="tsx">
-  import { defineComponent, reactive } from 'vue';
+  import { defineComponent, reactive, ref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { delUser, getAccountList } from '/@/api/demo/system';
@@ -112,6 +112,7 @@
       }
 
       function handleCreateBasicDrawer() {
+        const accountFormRef = ref(null);
         const obj = createBasicDrawer(
           {
             width: '50%',
@@ -119,12 +120,13 @@
               console.log('onClose', e);
             },
             onOk: (e?: Event) => {
-              console.log('onOk', e);
+              console.log('onOk', e, accountFormRef);
+              /* accountFormRef?.value.handleSubmit(); */
             },
           },
           {
             title: () => '新增用户',
-            default: () => <AccountForm />,
+            default: () => <AccountForm ref={accountFormRef} />,
             titleToolbar: () => (
               <ButtonGroup>
                 <Button type="primary">新增</Button>

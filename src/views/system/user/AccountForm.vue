@@ -2,10 +2,10 @@
   <BasicForm @register="registerForm" />
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref, onMounted } from 'vue';
+  import { defineComponent, ref, unref, onMounted } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList, getUser } from '/@/api/demo/system';
+  import { getDeptList, getUser, addUser, updateUser } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'AccountForm',
@@ -15,11 +15,11 @@
       record: { type: Object, default: () => {} },
     },
     emits: ['success', 'register'],
-    setup(props) {
+    setup(props, { emit }) {
       const isUpdate = ref(true);
       const rowId = ref('');
 
-      const [registerForm, { updateSchema, resetFields, setFieldsValue }] = useForm({
+      const [registerForm, { updateSchema, resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 24 },
         schemas: accountFormSchema,
@@ -57,9 +57,20 @@
         ]);
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增账号' : '编辑账号'));
+      async function handleSubmit() {
+        try {
+          const values = await validate();
+          if (!unref(isUpdate)) {
+            await addUser(values);
+          } else {
+            updateUser(values);
+          }
+          emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
+        } finally {
+        }
+      }
 
-      return { registerForm, getTitle };
+      return { registerForm, handleSubmit };
     },
   });
 </script>
