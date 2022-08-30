@@ -134,9 +134,6 @@
           },
         );
         obj!.open();
-        setTimeout(() => {
-          obj!.close();
-        }, 5000);
       }
 
       function handleEdit(record: Recordable) {
