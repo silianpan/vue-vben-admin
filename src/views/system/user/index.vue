@@ -45,7 +45,7 @@
   </PageWrapper>
 </template>
 <script lang="tsx">
-  import { defineComponent, reactive, ref } from 'vue';
+  import { defineComponent, reactive, ref, unref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { delUser, getAccountList } from '/@/api/demo/system';
@@ -59,7 +59,7 @@
 
   import { columns, searchFormSchema } from './account.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
-  import { createBasicDrawer } from '/@/components/Drawer';
+  import { createBasicDrawer, DrawerFooterAction } from '/@/components/Drawer';
   import Button, { ButtonGroup } from 'ant-design-vue/es/button';
 
   export default defineComponent({
@@ -112,7 +112,7 @@
       }
 
       function handleCreateBasicDrawer() {
-        const accountFormRef = ref(null);
+        const accountFormRef = ref<DrawerFooterAction>({});
         const obj = createBasicDrawer(
           {
             width: '50%',
@@ -121,7 +121,7 @@
             },
             onOk: (e?: Event) => {
               console.log('onOk', e, accountFormRef);
-              /* accountFormRef?.value.handleSubmit(); */
+              unref(accountFormRef).handleSubmit();
             },
           },
           {

@@ -193,3 +193,7 @@ export interface DrawerActionType {
   scrollTo: (to: number) => void;
   getScrollWrap: () => Element | null;
 }
+// 表单提交
+export interface DrawerFooterAction {
+  handleSubmit: Function;
+}
