@@ -112,7 +112,7 @@
       }
 
       function handleCreateBasicDrawer() {
-        const accountFormRef = ref<DrawerFooterAction>({});
+        const accountFormRef = ref<Nullable<DrawerFooterAction>>(null);
         const obj = createBasicDrawer(
           {
             width: '50%',
@@ -121,7 +121,7 @@
             },
             onOk: (e?: Event) => {
               console.log('onOk', e, accountFormRef);
-              unref(accountFormRef).handleSubmit();
+              unref(accountFormRef)?.handleSubmit();
             },
           },
           {
