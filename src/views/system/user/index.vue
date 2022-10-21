@@ -52,6 +52,7 @@
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
+  import { useMessage } from '/@/hooks/web/useMessage';
   import { useModal } from '/@/components/Modal';
   import AccountModal from './AccountModal.vue';
   import ResetPwdModal from './ResetPwdModal.vue';
@@ -66,6 +67,7 @@
     name: 'AccountManagement',
     components: { BasicTable, PageWrapper, DeptTree, AccountModal, ResetPwdModal, TableAction },
     setup() {
+      const { createMessage } = useMessage();
       const [registerModal, { openModal }] = useModal();
       const [registerModalResetPwd, { openModal: openModalResetPwd }] = useModal();
       const searchInfo = reactive<Recordable>({});
@@ -119,9 +121,16 @@
             onClose: (e?: Event) => {
               console.log('onClose', e);
             },
-            onOk: (e?: Event) => {
+            onOk: async (e?: Event) => {
               console.log('onOk', e, accountFormRef);
-              unref(accountFormRef)?.handleSubmit();
+              // 调用提交
+              await unref(accountFormRef)?.handleSubmit();
+              // 关闭drawer
+              obj!.close();
+              // 提示成功
+              createMessage.success('新增成功');
+              // 刷新表格
+              reload();
             },
           },
           {
