@@ -39,15 +39,27 @@
   import RoleDrawer from './RoleDrawer.vue';
 
   import { columns, searchFormSchema } from './role.data';
+  import { BasicPageParams } from '/@/api/model/baseModel';
 
   export default defineComponent({
     name: 'RoleManagement',
     components: { BasicTable, RoleDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
+      const [registerTable, { reload, getForm }] = useTable({
         title: '角色列表',
-        api: getRoleListByPage,
+        api: (info) =>
+          getRoleListByPage(info).then((res) => ({
+            items: res.rows,
+            total: res.total,
+          })),
+        beforeFetch: (info: BasicPageParams) => {
+          return {
+            pageNum: info.page,
+            pageSize: info.pageSize,
+            ...getForm().getFieldsValue(),
+          };
+        },
         columns,
         formConfig: {
           labelWidth: 120,

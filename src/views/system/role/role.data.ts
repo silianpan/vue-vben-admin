@@ -7,18 +7,23 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 export const columns: BasicColumn[] = [
   {
-    title: '角色名称',
+    title: '角色编号',
+    dataIndex: 'roleId',
+    width: 60,
+  },
+  {
+    title: '角色名',
     dataIndex: 'roleName',
     width: 200,
   },
   {
-    title: '角色值',
-    dataIndex: 'roleValue',
+    title: '权限标识',
+    dataIndex: 'roleKey',
     width: 180,
   },
   {
     title: '排序',
-    dataIndex: 'orderNo',
+    dataIndex: 'roleSort',
     width: 50,
   },
   {
@@ -30,15 +35,15 @@ export const columns: BasicColumn[] = [
         record.pendingStatus = false;
       }
       return h(Switch, {
-        checked: record.status === '1',
+        checked: record.status === '0',
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? '1' : '0';
+          const newStatus = checked ? '0' : '1';
           const { createMessage } = useMessage();
-          setRoleStatus(record.id, newStatus)
+          setRoleStatus(record.roleId, newStatus)
             .then(() => {
               record.status = newStatus;
               createMessage.success(`已成功修改角色状态`);
@@ -57,10 +62,6 @@ export const columns: BasicColumn[] = [
     title: '创建时间',
     dataIndex: 'createTime',
     width: 180,
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
   },
 ];
 
@@ -88,15 +89,21 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'roleName',
-    label: '角色名称',
+    label: '角色名',
     required: true,
     component: 'Input',
   },
   {
-    field: 'roleValue',
-    label: '角色值',
+    field: 'roleKey',
+    label: '权限标识',
     required: true,
     component: 'Input',
+  },
+  {
+    field: 'roleSort',
+    label: '排序',
+    required: true,
+    component: 'InputNumber',
   },
   {
     field: 'status',
