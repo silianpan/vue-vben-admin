@@ -10,12 +10,15 @@
     <BasicForm @register="registerForm">
       <template #menu="{ model, field }">
         <BasicTree
+          v-if="model[field]"
           v-model:value="model[field]"
           :treeData="treeData"
+          :checkedKeys="checkedKeys"
           :fieldNames="{ title: 'menuName', key: 'menuId' }"
           checkable
           toolbar
           title="菜单分配"
+          ref="menuTreeRef"
         />
       </template>
     </BasicForm>
@@ -26,9 +29,9 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
+  import { BasicTree, TreeActionType, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { addRole, getMenuList, getRoleMenuTreeSelect, updateRole } from '/@/api/demo/system';
   import { listToTree } from '/@/utils/helper/treeHelper';
 
   export default defineComponent({
@@ -38,6 +41,8 @@
     setup(_, { emit }) {
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
+      const checkedKeys = ref<number[]>([]);
+      const menuTreeRef = ref<Nullable<TreeActionType>>(null);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
@@ -60,6 +65,10 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          const { roleId } = data.record;
+          const roleMenus = await getRoleMenuTreeSelect(roleId);
+          checkedKeys.value = roleMenus.checkedKeys;
+          data.record.menu = roleMenus.checkedKeys;
           setFieldsValue({
             ...data.record,
           });
@@ -73,7 +82,12 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
-          console.log(values);
+          values.menuIds = unref(menuTreeRef)?.getCheckedKeys();
+          if (!unref(isUpdate)) {
+            await addRole(values);
+          } else {
+            await updateRole(values);
+          }
           closeDrawer();
           emit('success');
         } finally {
@@ -87,6 +101,8 @@
         getTitle,
         handleSubmit,
         treeData,
+        checkedKeys,
+        menuTreeRef,
       };
     },
   });

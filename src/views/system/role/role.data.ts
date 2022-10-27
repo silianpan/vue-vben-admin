@@ -88,6 +88,12 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
+    field: 'roleId',
+    label: '角色ID',
+    component: 'InputNumber',
+    show: false,
+  },
+  {
     field: 'roleName',
     label: '角色名',
     required: true,

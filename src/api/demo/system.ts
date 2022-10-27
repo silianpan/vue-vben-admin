@@ -12,6 +12,8 @@ import {
   MenuListItem,
   PostListGetResultModel,
   AccountListItem,
+  RoleMenuSelectItem,
+  RoleListItem,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -21,8 +23,10 @@ enum Api {
   DeptList = '/system/dept/treeselect',
   setRoleStatus = '/system/role/changeStatus',
   MenuList = '/system/menu/list',
+  RoleMenuTreeSelect = '/system/menu/roleMenuTreeselect',
   AddMenu = '/system/menu',
   AddUser = '/system/user',
+  AddRole = '/system/role',
   ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/role/list',
   GetAllRoleList = '/system/role/optionselect',
@@ -68,9 +72,29 @@ export const delUser = (userId: Number) => {
   return defHttp.delete<void>({ url: Api.AddUser + '/' + userId });
 };
 
+// 新增角色
+export const addRole = (data: RoleListItem) => {
+  return defHttp.post<void>({ url: Api.AddRole, data });
+};
+
+// 修改角色
+export const updateRole = (data: RoleListItem) => {
+  return defHttp.put<void>({ url: Api.AddRole, data });
+};
+
+// 删除角色
+export const delRole = (roleId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddRole + '/' + roleId });
+};
+
 // 根据userId获取用户
 export const getUser = (userId: Number) => {
   return defHttp.get<AccountListItem>({ url: Api.AddUser + '/' + userId });
+};
+
+// 根据roleId获取选中菜单
+export const getRoleMenuTreeSelect = (roleId: Number) => {
+  return defHttp.get<RoleMenuSelectItem>({ url: Api.RoleMenuTreeSelect + '/' + roleId });
 };
 
 // 修改密码
