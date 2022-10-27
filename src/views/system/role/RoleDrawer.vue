@@ -10,7 +10,6 @@
     <BasicForm @register="registerForm">
       <template #menu="{ model, field }">
         <BasicTree
-          v-if="model[field]"
           v-model:value="model[field]"
           :treeData="treeData"
           :checkedKeys="checkedKeys"
