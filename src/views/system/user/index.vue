@@ -5,6 +5,7 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增账号</a-button>
         <a-button type="primary" @click="handleCreateBasicDrawer">函数式Drawer</a-button>
+        <a-button type="primary" @click="handleCreateBasicModal">函数式Modal</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -53,7 +54,7 @@
   import DeptTree from './DeptTree.vue';
 
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { useModal } from '/@/components/Modal';
+  import { useModal, createBasicModal } from '/@/components/Modal';
   import AccountModal from './AccountModal.vue';
   import ResetPwdModal from './ResetPwdModal.vue';
   import AccountForm from './AccountForm.vue';
@@ -113,6 +114,7 @@
         });
       }
 
+      /* 函数式Drawer */
       function handleCreateBasicDrawer() {
         const accountFormRef = ref<Nullable<DrawerFooterAction>>(null);
         const obj = createBasicDrawer(
@@ -142,6 +144,25 @@
                 <Button danger>删除</Button>
               </ButtonGroup>
             ),
+          },
+        );
+        obj!.open();
+      }
+
+      /* 函数式Modal */
+      function handleCreateBasicModal() {
+        const accountFormRef = ref<Nullable<DrawerFooterAction>>(null);
+        const obj = createBasicModal(
+          {
+            helpMessage: ['提示1', '提示2'],
+            useWrapper: true,
+            loading: true,
+            showOkBtn: true,
+            showCancelBtn: true,
+          },
+          {
+            title: () => '新增用户',
+            default: () => <AccountForm ref={accountFormRef} />,
           },
         );
         obj!.open();
@@ -195,6 +216,7 @@
         registerModalResetPwd,
         handleCreate,
         handleCreateBasicDrawer,
+        handleCreateBasicModal,
         handleEdit,
         handleResetPwd,
         handleDelete,

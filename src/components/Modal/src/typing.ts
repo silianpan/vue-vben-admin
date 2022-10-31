@@ -50,11 +50,11 @@ export interface ModalProps {
   loading: boolean;
   loadingTip?: string;
 
-  wrapperProps: Omit<ModalWrapperProps, 'loading'>;
+  wrapperProps?: Omit<ModalWrapperProps, 'loading'>;
 
   showOkBtn: boolean;
   showCancelBtn: boolean;
-  closeFunc: () => Promise<any>;
+  closeFunc?: () => Promise<any>;
 
   /**
    * Specify a function that will be called when modal is closed completely.
