@@ -155,13 +155,27 @@
         const obj = createBasicModal(
           {
             helpMessage: ['提示1', '提示2'],
+            title: '新增用户',
             useWrapper: true,
             loading: true,
             showOkBtn: true,
             showCancelBtn: true,
+            onClose: (e?: Event) => {
+              console.log('onClose', e);
+            },
+            onOk: async (e?: Event) => {
+              console.log('onOk', e, accountFormRef);
+              // 调用提交
+              await unref(accountFormRef)?.handleSubmit();
+              // 关闭drawer
+              obj!.close();
+              // 提示成功
+              createMessage.success('新增成功');
+              // 刷新表格
+              reload();
+            },
           },
           {
-            title: () => '新增用户',
             default: () => <AccountForm ref={accountFormRef} />,
           },
         );

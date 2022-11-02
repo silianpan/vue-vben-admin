@@ -42,7 +42,7 @@ export interface ModalProps {
   defaultFullscreen?: boolean;
   visible?: boolean;
   // 温馨提醒信息
-  helpMessage: string | string[];
+  helpMessage?: string | string[];
 
   // 是否使用modalWrapper
   useWrapper: boolean;
@@ -194,6 +194,8 @@ export interface ModalProps {
    * @type number
    */
   zIndex?: number;
+  onClose?: (e?: Event) => void;
+  onOk?: (e?: Event) => void;
 }
 
 export interface ModalWrapperProps {

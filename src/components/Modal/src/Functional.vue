@@ -170,8 +170,16 @@
         handleFullScreen(e);
       }
 
-      const { canFullscreen, helpMessage, useWrapper, loading, loadingTip, minHeight } =
-        unref(getProps);
+      const {
+        canFullscreen,
+        helpMessage,
+        useWrapper,
+        loading,
+        loadingTip,
+        minHeight,
+        wrapperFooterOffset,
+        footer,
+      } = unref(getProps);
       const { title } = unref(getMergeProps);
 
       return () => {
@@ -212,7 +220,7 @@
               default: () => (
                 <ModalWrapper
                   useWrapper={useWrapper}
-                  /* footerOffset={wrapperFooterOffset} */
+                  footerOffset={wrapperFooterOffset}
                   fullScreen={fullScreenRef.value}
                   ref={modalWrapperRef}
                   loading={loading}
@@ -220,7 +228,7 @@
                   minHeight={minHeight}
                   height={getWrapperHeight.value}
                   visible={visibleRef.value}
-                  /* modalFooterHeight={footer !== undefined && !footer ? 0 : undefined} */
+                  modalFooterHeight={footer !== undefined && !footer ? 0 : undefined}
                   onExtHeight={handleExtHeight}
                   onHeightChange={handleHeightChange}
                 >
