@@ -75,6 +75,11 @@ export interface RoleMenuSelectItem {
   menus: TreeItem[];
 }
 
+export interface RoleDeptSelectItem {
+  checkedKeys: number[];
+  depts: TreeItem[];
+}
+
 export interface RoleListItem {
   roleId: number;
   roleName: string;
@@ -82,6 +87,11 @@ export interface RoleListItem {
   status: number;
   roleSort: number;
   createTime: string;
+  deptIds: [number];
+  dataScope: string;
+  admin: boolean;
+  deptCheckStrictly: boolean;
+  menuCheckStrictly: boolean;
 }
 
 export interface PostListItem {

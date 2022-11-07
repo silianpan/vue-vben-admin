@@ -13,6 +13,7 @@ import {
   PostListGetResultModel,
   AccountListItem,
   RoleMenuSelectItem,
+  RoleDeptSelectItem,
   RoleListItem,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
@@ -21,9 +22,11 @@ enum Api {
   AccountList = '/system/user/list',
   IsAccountExist = '/system/accountExist',
   DeptList = '/system/dept/treeselect',
-  setRoleStatus = '/system/role/changeStatus',
+  UpdateRoleStatus = '/system/role/changeStatus',
+  UpdateRoleDataScope = '/system/role/dataScope',
   MenuList = '/system/menu/list',
   RoleMenuTreeSelect = '/system/menu/roleMenuTreeselect',
+  RoleDeptTreeSelect = '/system/dept/roleDeptTreeselect',
   AddMenu = '/system/menu',
   AddUser = '/system/user',
   AddRole = '/system/role',
@@ -97,6 +100,16 @@ export const getRoleMenuTreeSelect = (roleId: Number) => {
   return defHttp.get<RoleMenuSelectItem>({ url: Api.RoleMenuTreeSelect + '/' + roleId });
 };
 
+// 根据roleId获取选中部门
+export const getRoleDeptTreeSelect = (roleId: Number) => {
+  return defHttp.get<RoleDeptSelectItem>({ url: Api.RoleDeptTreeSelect + '/' + roleId });
+};
+
+// 分配数据权限
+export const setRoleDataScope = (data: RoleListItem) => {
+  return defHttp.put<void>({ url: Api.UpdateRoleDataScope, data });
+};
+
 // 修改密码
 export const resetUserPwd = (userId: number, password: string) => {
   return defHttp.put<void>({ url: Api.ResetUserPwd, data: { userId, password } });
@@ -112,7 +125,7 @@ export const getAllPostList = (params?: RoleParams) =>
   defHttp.get<PostListGetResultModel>({ url: Api.GetAllPostList, params });
 
 export const setRoleStatus = (roleId: number, status: string) =>
-  defHttp.put({ url: Api.setRoleStatus, data: { roleId, status } });
+  defHttp.put({ url: Api.UpdateRoleStatus, data: { roleId, status } });
 
 export const isAccountExist = (account: string) =>
   defHttp.post({ url: Api.IsAccountExist, params: { account } }, { errorMessageMode: 'none' });

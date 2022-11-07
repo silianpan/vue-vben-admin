@@ -13,6 +13,10 @@
                 onClick: handleEdit.bind(null, record),
               },
               {
+                icon: 'clarity:lock-line',
+                onClick: handleEditDataScope.bind(null, record),
+              },
+              {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
                 popConfirm: {
@@ -29,22 +33,26 @@
     <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="tsx">
+  import { defineComponent, ref, unref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { delRole, getRoleListByPage } from '/@/api/demo/system';
 
-  import { useDrawer } from '/@/components/Drawer';
+  import { DrawerFooterAction, useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
+  import RoleDataPermForm from './RoleDataPermForm.vue';
 
   import { columns, searchFormSchema } from './role.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
+  import { createBasicModal } from '/@/components/Modal';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'RoleManagement',
     components: { BasicTable, RoleDrawer, TableAction },
     setup() {
+      const { createMessage } = useMessage();
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload, getForm }] = useTable({
         title: '角色列表',
@@ -91,8 +99,36 @@
         });
       }
 
+      function handleEditDataScope(record: Recordable) {
+        const formRef = ref<Nullable<DrawerFooterAction>>(null);
+        const obj = createBasicModal(
+          {
+            helpMessage: ['提示1', '提示2'],
+            title: '新增用户',
+            useWrapper: true,
+            loading: true,
+            showOkBtn: true,
+            showCancelBtn: true,
+            onClose: () => {},
+            onOk: async () => {
+              // 调用提交
+              await unref(formRef)?.handleSubmit();
+              // 关闭drawer
+              obj!.close();
+              // 提示成功
+              createMessage.success('新增成功');
+              // 刷新表格
+              reload();
+            },
+          },
+          {
+            default: () => <RoleDataPermForm record={record} ref={formRef} />,
+          },
+        );
+        obj!.open();
+      }
+
       function handleDelete(record: Recordable) {
-        console.log(record);
         delRole(record.roleId).then((_) => {
           handleSuccess();
         });
@@ -107,6 +143,7 @@
         registerDrawer,
         handleCreate,
         handleEdit,
+        handleEditDataScope,
         handleDelete,
         handleSuccess,
       };
