@@ -12,7 +12,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '排序',
-    dataIndex: 'orderNo',
+    dataIndex: 'orderNum',
     width: 50,
   },
   {
@@ -67,13 +67,13 @@ export const formSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'parentDept',
+    field: 'parentId',
     label: '上级部门',
     component: 'TreeSelect',
 
     componentProps: {
       fieldNames: {
-        label: 'deptName',
+        label: 'label',
         key: 'id',
         value: 'id',
       },
@@ -82,7 +82,7 @@ export const formSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'orderNo',
+    field: 'orderNum',
     label: '排序',
     component: 'InputNumber',
     required: true,

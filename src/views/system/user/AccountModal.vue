@@ -8,7 +8,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList, addUser, updateUser, getUser } from '/@/api/demo/system';
+  import { getDeptTreeSelect, addUser, updateUser, getUser } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -43,7 +43,7 @@
           });
         }
 
-        const treeData = await getDeptList();
+        const treeData = await getDeptTreeSelect();
         updateSchema([
           {
             field: 'password',

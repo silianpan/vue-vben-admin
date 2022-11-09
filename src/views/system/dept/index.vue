@@ -34,11 +34,13 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getDeptList } from '/@/api/demo/system';
+  import { listToTree } from '/@/utils/helper/treeHelper';
 
   import { useModal } from '/@/components/Modal';
   import DeptModal from './DeptModal.vue';
 
   import { columns, searchFormSchema } from './dept.data';
+  import { TreeItem } from '/@/components/Tree';
 
   export default defineComponent({
     name: 'DeptManagement',
@@ -47,7 +49,15 @@
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '部门列表',
-        api: getDeptList,
+        api: () =>
+          new Promise(async (resolve) => {
+            const res = listToTree((await getDeptList()) as any as TreeItem[], {
+              id: 'deptId',
+              children: 'children',
+              pid: 'parentId',
+            });
+            resolve(res);
+          }),
         columns,
         formConfig: {
           labelWidth: 120,

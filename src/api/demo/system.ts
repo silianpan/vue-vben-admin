@@ -21,7 +21,9 @@ import { defHttp } from '/@/utils/http/axios';
 enum Api {
   AccountList = '/system/user/list',
   IsAccountExist = '/system/accountExist',
-  DeptList = '/system/dept/treeselect',
+  DeptList = '/system/dept/list',
+  AddDept = '/system/dept',
+  DeptTreeSelect = '/system/dept/treeselect',
   UpdateRoleStatus = '/system/role/changeStatus',
   UpdateRoleDataScope = '/system/role/dataScope',
   MenuList = '/system/menu/list',
@@ -42,8 +44,26 @@ export const getAccountList = (params?: AccountParams) =>
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
 
+export const getDeptTreeSelect = (params?: DeptListItem) =>
+  defHttp.get<DeptListGetResultModel>({ url: Api.DeptTreeSelect, params });
+
 export const getMenuList = (params?: MenuParams) =>
   defHttp.get<MenuListGetResultModel>({ url: Api.MenuList, params });
+
+// 新增部门
+export const addDept = (data: DeptListItem) => {
+  return defHttp.post<void>({ url: Api.AddDept, data });
+};
+
+// 修改部门
+export const updateDept = (data: DeptListItem) => {
+  return defHttp.put<void>({ url: Api.AddDept, data });
+};
+
+// 删除部门
+export const delDept = (deptId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddDept + '/' + deptId });
+};
 
 // 新增菜单
 export const addMenu = (data: MenuListItem) => {

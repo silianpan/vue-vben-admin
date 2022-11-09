@@ -5,7 +5,7 @@
   import { defineComponent, ref, unref, onMounted } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList, getUser, addUser, updateUser } from '/@/api/demo/system';
+  import { getDeptTreeSelect, getUser, addUser, updateUser } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'AccountForm',
@@ -44,7 +44,7 @@
         }
 
         /* 部门树 */
-        const treeData = await getDeptList();
+        const treeData = await getDeptTreeSelect();
         updateSchema([
           {
             field: 'password',
