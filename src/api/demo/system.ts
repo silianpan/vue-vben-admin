@@ -18,6 +18,9 @@ import {
   PostPageListGetResultModel,
   PostPageParams,
   PostListItem,
+  DictTypePageListGetResultModel,
+  DictTypePageParams,
+  DictTypeListItem,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -36,9 +39,11 @@ enum Api {
   AddUser = '/system/user',
   AddRole = '/system/role',
   AddPost = '/system/post',
+  AddDictType = '/system/dict/type',
   ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/role/list',
   PostPageList = '/system/post/list',
+  DictTypePageList = '/system/dict/type/list',
   GetAllRoleList = '/system/role/optionselect',
   GetAllPostList = '/system/post/optionselect',
 }
@@ -130,6 +135,21 @@ export const delPost = (postId: Number) => {
   return defHttp.delete<void>({ url: Api.AddPost + '/' + postId });
 };
 
+// 新增字典类型
+export const addDictType = (data: DictTypeListItem) => {
+  return defHttp.post<void>({ url: Api.AddDictType, data });
+};
+
+// 修改字典类型
+export const updateDictType = (data: DictTypeListItem) => {
+  return defHttp.put<void>({ url: Api.AddDictType, data });
+};
+
+// 删除字典类型
+export const delDictType = (dictId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddDictType + '/' + dictId });
+};
+
 // 根据userId获取用户
 export const getUser = (userId: Number) => {
   return defHttp.get<AccountListItem>({ url: Api.AddUser + '/' + userId });
@@ -163,6 +183,9 @@ export const getAllRoleList = (params?: RoleParams) =>
 
 export const getPostListByPage = (params?: PostPageParams) =>
   defHttp.get<PostPageListGetResultModel>({ url: Api.PostPageList, params });
+
+export const getDictTypeListByPage = (params?: DictTypePageParams) =>
+  defHttp.get<DictTypePageListGetResultModel>({ url: Api.DictTypePageList, params });
 
 export const getAllPostList = (params?: RoleParams) =>
   defHttp.get<PostListGetResultModel>({ url: Api.GetAllPostList, params });

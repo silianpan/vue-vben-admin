@@ -18,9 +18,16 @@ export type PostParams = {
   postName?: string;
 };
 
+export type DictTypeParams = {
+  dictId: number;
+  dictName?: string;
+};
+
 export type RolePageParams = BasicPageParams & RoleParams;
 
 export type PostPageParams = BasicPageParams & PostParams;
+
+export type DictTypePageParams = BasicPageParams & DictTypeParams;
 
 export type DeptParams = {
   deptName?: string;
@@ -104,6 +111,14 @@ export interface PostListItem {
   createTime: string;
 }
 
+export interface DictTypeListItem {
+  dictId: number;
+  dictName: string;
+  dictType: string;
+  status: number;
+  createTime: string;
+}
+
 /**
  * @description: Request list return value
  */
@@ -116,6 +131,8 @@ export type MenuListGetResultModel = BasicFetchResult<MenuListItem>;
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 
 export type PostPageListGetResultModel = BasicFetchResult<PostListItem>;
+
+export type DictTypePageListGetResultModel = BasicFetchResult<DictTypeListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
 
