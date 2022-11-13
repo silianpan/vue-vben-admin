@@ -152,3 +152,66 @@ export const formSchema: FormSchema[] = [
     component: 'InputTextArea',
   },
 ];
+
+export const formSchemaDictData: FormSchema[] = [
+  {
+    field: 'dictCode',
+    label: '字典数据ID',
+    component: 'InputNumber',
+    show: false,
+  },
+  {
+    field: 'dictType',
+    label: '字典类型',
+    required: true,
+    component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
+  },
+  {
+    field: 'dictLabel',
+    label: '字典标签',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'dictValue',
+    label: '字典键值',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'dictSort',
+    label: '排序',
+    required: true,
+    component: 'InputNumber',
+  },
+  {
+    field: 'status',
+    label: '状态',
+    component: 'RadioButtonGroup',
+    defaultValue: '0',
+    componentProps: {
+      options: [
+        { label: '启用', value: '0' },
+        { label: '停用', value: '1' },
+      ],
+    },
+  },
+  {
+    field: 'listClass',
+    label: '表格回显样式',
+    component: 'Input',
+  },
+  {
+    field: 'cssClass',
+    label: '样式属性（其他样式扩展）',
+    component: 'Input',
+  },
+  {
+    label: '备注',
+    field: 'remark',
+    component: 'InputTextArea',
+  },
+];

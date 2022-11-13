@@ -40,7 +40,7 @@
         }"
       >
         <template #toolbar>
-          <a-button type="primary" @click="handleCreateDictData">新增字典数据</a-button>
+          <a-button type="primary" @click="handleCreateDictData(record)">新增字典数据</a-button>
         </template>
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
@@ -71,10 +71,16 @@
   import { defineComponent, ref, unref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { delDictType, getDictTypeListByPage, getDictDataList } from '/@/api/demo/system';
+  import {
+    delDictType,
+    getDictTypeListByPage,
+    getDictDataList,
+    delDictData,
+  } from '/@/api/demo/system';
 
   import { DrawerFooterAction } from '/@/components/Drawer';
   import DictTypeForm from './DictTypeForm.vue';
+  import DictDataForm from './DictDataForm.vue';
 
   import { columns, searchFormSchema, columnsDictData } from './dict.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
@@ -118,7 +124,7 @@
         },
       });
 
-      function listDictData(record: Recordable) {
+      async function listDictData(record: Recordable) {
         return getDictDataList(record.dictType).then((res) => ({
           items: res,
         }));
@@ -190,7 +196,7 @@
         reload();
       }
 
-      function handleCreateDictData() {
+      function handleCreateDictData(dictTypeRecord: Recordable) {
         const formRef = ref<Nullable<DrawerFooterAction>>(null);
         const obj = createBasicModal(
           {
@@ -212,7 +218,13 @@
             },
           },
           {
-            default: () => <DictTypeForm isUpdate={false} ref={formRef} />,
+            default: () => (
+              <DictDataForm
+                record={{ dictType: dictTypeRecord.dictType }}
+                isUpdate={false}
+                ref={formRef}
+              />
+            ),
           },
         );
         obj!.open();
@@ -240,16 +252,20 @@
             },
           },
           {
-            default: () => <DictTypeForm record={record} isUpdate ref={formRef} />,
+            default: () => <DictDataForm record={record} isUpdate ref={formRef} />,
           },
         );
         obj!.open();
       }
 
       function handleDeleteDictData(record: Recordable) {
-        delDictType(record.dictId).then((_) => {
-          handleSuccess();
+        delDictData(record.dictCode).then((_) => {
+          handleSuccessDictData();
         });
+      }
+
+      function handleSuccessDictData() {
+        reload();
       }
 
       return {
@@ -261,6 +277,7 @@
         handleEditDictData,
         handleDeleteDictData,
         handleSuccess,
+        handleSuccessDictData,
         columnsDictData,
         listDictData,
       };
