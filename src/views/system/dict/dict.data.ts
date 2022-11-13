@@ -10,17 +10,17 @@ export const columns: BasicColumn[] = [
   {
     title: '字典名称',
     dataIndex: 'dictName',
-    width: 200,
+    width: 120,
   },
   {
     title: '字典类型',
     dataIndex: 'dictType',
-    width: 200,
+    width: 120,
   },
   {
     title: '状态',
     dataIndex: 'status',
-    width: 120,
+    width: 100,
     customRender: ({ record }) => {
       return record.status === '0' ? '已启用' : '已停用';
     },
@@ -33,8 +33,59 @@ export const columns: BasicColumn[] = [
   {
     title: '备注',
     dataIndex: 'remark',
-    width: 200,
+    width: 100,
   },
+];
+
+export const columnsDictData: BasicColumn[] = [
+  {
+    title: '字典编码',
+    dataIndex: 'dictCode',
+    width: 60,
+  },
+  {
+    title: '字典标签',
+    dataIndex: 'dictLabel',
+    width: 100,
+  },
+  {
+    title: '字典键值',
+    dataIndex: 'dictValue',
+    width: 100,
+  },
+  {
+    title: '字典排序',
+    dataIndex: 'dictSort',
+    width: 60,
+  },
+  {
+    title: '状态',
+    dataIndex: 'status',
+    width: 80,
+    customRender: ({ record }) => {
+      return record.status === '0' ? '已启用' : '已停用';
+    },
+  },
+  {
+    title: '表格回显样式',
+    dataIndex: 'listClass',
+    width: 80,
+  },
+  {
+    title: '样式属性（其他样式扩展）',
+    dataIndex: 'cssClass',
+    width: 80,
+  },
+  // {
+  //   title: '创建时间',
+  //   dataIndex: 'createTime',
+  //   width: 180,
+  // },
+  // {
+  //   title: '备注',
+  //   dataIndex: 'remark',
+  //   width: 200,
+  // },
 ];
 
 export const searchFormSchema: FormSchema[] = [

@@ -21,6 +21,7 @@ import {
   DictTypePageListGetResultModel,
   DictTypePageParams,
   DictTypeListItem,
+  DictDataListItem,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -40,6 +41,8 @@ enum Api {
   AddRole = '/system/role',
   AddPost = '/system/post',
   AddDictType = '/system/dict/type',
+  AddDictData = '/system/dict/data',
+  DictDataList = '/system/dict/data/list',
   ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/role/list',
   PostPageList = '/system/post/list',
@@ -148,6 +151,26 @@ export const updateDictType = (data: DictTypeListItem) => {
 // 删除字典类型
 export const delDictType = (dictId: Number) => {
   return defHttp.delete<void>({ url: Api.AddDictType + '/' + dictId });
+};
+
+// 列表字典数据
+export const getDictDataList = (dictType: String) => {
+  return defHttp.get<DictDataListItem>({ url: Api.AddDictData + '/type/' + dictType });
+};
+
+// 新增字典数据
+export const addDictData = (data: DictDataListItem) => {
+  return defHttp.post<void>({ url: Api.AddDictData, data });
+};
+
+// 修改字典数据
+export const updateDictData = (data: DictDataListItem) => {
+  return defHttp.put<void>({ url: Api.AddDictData, data });
+};
+
+// 删除字典数据
+export const delDictData = (dictCode: Number) => {
+  return defHttp.delete<void>({ url: Api.AddDictData + '/' + dictCode });
 };
 
 // 根据userId获取用户

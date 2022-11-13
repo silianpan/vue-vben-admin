@@ -119,6 +119,18 @@ export interface DictTypeListItem {
   createTime: string;
 }
 
+export interface DictDataListItem {
+  dictCode: number;
+  dictLabel: string;
+  dictValue: string;
+  dictSort: number;
+  status: number;
+  listClass: string;
+  cssClass: string;
+  createTime: string;
+  remark: string;
+}
+
 /**
  * @description: Request list return value
  */
