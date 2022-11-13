@@ -15,6 +15,9 @@ import {
   RoleMenuSelectItem,
   RoleDeptSelectItem,
   RoleListItem,
+  PostPageListGetResultModel,
+  PostPageParams,
+  PostListItem,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -32,8 +35,10 @@ enum Api {
   AddMenu = '/system/menu',
   AddUser = '/system/user',
   AddRole = '/system/role',
+  AddPost = '/system/post',
   ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/role/list',
+  PostPageList = '/system/post/list',
   GetAllRoleList = '/system/role/optionselect',
   GetAllPostList = '/system/post/optionselect',
 }
@@ -110,6 +115,21 @@ export const delRole = (roleId: Number) => {
   return defHttp.delete<void>({ url: Api.AddRole + '/' + roleId });
 };
 
+// 新增岗位
+export const addPost = (data: PostListItem) => {
+  return defHttp.post<void>({ url: Api.AddPost, data });
+};
+
+// 修改岗位
+export const updatePost = (data: PostListItem) => {
+  return defHttp.put<void>({ url: Api.AddPost, data });
+};
+
+// 删除岗位
+export const delPost = (postId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddPost + '/' + postId });
+};
+
 // 根据userId获取用户
 export const getUser = (userId: Number) => {
   return defHttp.get<AccountListItem>({ url: Api.AddUser + '/' + userId });
@@ -140,6 +160,9 @@ export const getRoleListByPage = (params?: RolePageParams) =>
 
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
+
+export const getPostListByPage = (params?: PostPageParams) =>
+  defHttp.get<PostPageListGetResultModel>({ url: Api.PostPageList, params });
 
 export const getAllPostList = (params?: RoleParams) =>
   defHttp.get<PostListGetResultModel>({ url: Api.GetAllPostList, params });

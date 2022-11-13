@@ -20,6 +20,8 @@ export type PostParams = {
 
 export type RolePageParams = BasicPageParams & RoleParams;
 
+export type PostPageParams = BasicPageParams & PostParams;
+
 export type DeptParams = {
   deptName?: string;
   status?: string;
@@ -112,6 +114,8 @@ export type DeptListGetResultModel = BasicFetchResult<DeptListItem>;
 export type MenuListGetResultModel = BasicFetchResult<MenuListItem>;
 
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
+
+export type PostPageListGetResultModel = BasicFetchResult<PostListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
 
