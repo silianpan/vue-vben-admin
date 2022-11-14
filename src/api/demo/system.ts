@@ -25,6 +25,9 @@ import {
   ConfigPageParams,
   ConfigPageListGetResultModel,
   ConfigListItem,
+  NoticeListItem,
+  NoticePageParams,
+  NoticePageListGetResultModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -46,12 +49,14 @@ enum Api {
   AddDictType = '/system/dict/type',
   AddDictData = '/system/dict/data',
   AddConfig = '/system/config',
+  AddNotice = '/system/notice',
   DictDataList = '/system/dict/data/list',
   ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/role/list',
   PostPageList = '/system/post/list',
   DictTypePageList = '/system/dict/type/list',
   ConfigPageList = '/system/config/list',
+  NoticePageList = '/system/notice/list',
   GetAllRoleList = '/system/role/optionselect',
   GetAllPostList = '/system/post/optionselect',
 }
@@ -198,6 +203,21 @@ export const clearCacheConfig = () => {
   return defHttp.delete<void>({ url: Api.AddConfig + '/clearCache' });
 };
 
+// 新增公告
+export const addNotice = (data: NoticeListItem) => {
+  return defHttp.post<void>({ url: Api.AddNotice, data });
+};
+
+// 修改公告
+export const updateNotice = (data: NoticeListItem) => {
+  return defHttp.put<void>({ url: Api.AddNotice, data });
+};
+
+// 删除公告
+export const delNotice = (noticeId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddNotice + '/' + noticeId });
+};
+
 // 根据userId获取用户
 export const getUser = (userId: Number) => {
   return defHttp.get<AccountListItem>({ url: Api.AddUser + '/' + userId });
@@ -237,6 +257,9 @@ export const getDictTypeListByPage = (params?: DictTypePageParams) =>
 
 export const getConfigListByPage = (params?: ConfigPageParams) =>
   defHttp.get<ConfigPageListGetResultModel>({ url: Api.ConfigPageList, params });
+
+export const getNoticeListByPage = (params?: NoticePageParams) =>
+  defHttp.get<NoticePageListGetResultModel>({ url: Api.NoticePageList, params });
 
 export const getAllPostList = (params?: RoleParams) =>
   defHttp.get<PostListGetResultModel>({ url: Api.GetAllPostList, params });

@@ -30,6 +30,12 @@ export type ConfigParams = {
   configType?: string;
 };
 
+export type NoticeParams = {
+  noticeId: number;
+  noticeTitle?: string;
+  noticeType?: string;
+};
+
 export type RolePageParams = BasicPageParams & RoleParams;
 
 export type PostPageParams = BasicPageParams & PostParams;
@@ -37,6 +43,8 @@ export type PostPageParams = BasicPageParams & PostParams;
 export type DictTypePageParams = BasicPageParams & DictTypeParams;
 
 export type ConfigPageParams = BasicPageParams & ConfigParams;
+
+export type NoticePageParams = BasicPageParams & NoticeParams;
 
 export type DeptParams = {
   deptName?: string;
@@ -150,6 +158,15 @@ export interface ConfigListItem {
   createTime: string;
 }
 
+export interface NoticeListItem {
+  noticeId: number;
+  noticeTitle: string;
+  noticeType: string;
+  status: number;
+  createBy: string;
+  createTime: string;
+}
+
 /**
  * @description: Request list return value
  */
@@ -166,6 +183,8 @@ export type PostPageListGetResultModel = BasicFetchResult<PostListItem>;
 export type DictTypePageListGetResultModel = BasicFetchResult<DictTypeListItem>;
 
 export type ConfigPageListGetResultModel = BasicFetchResult<ConfigListItem>;
+
+export type NoticePageListGetResultModel = BasicFetchResult<NoticeListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
 
