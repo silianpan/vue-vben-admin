@@ -22,6 +22,9 @@ import {
   DictTypePageParams,
   DictTypeListItem,
   DictDataListItem,
+  ConfigPageParams,
+  ConfigPageListGetResultModel,
+  ConfigListItem,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -42,11 +45,13 @@ enum Api {
   AddPost = '/system/post',
   AddDictType = '/system/dict/type',
   AddDictData = '/system/dict/data',
+  AddConfig = '/system/config',
   DictDataList = '/system/dict/data/list',
   ResetUserPwd = '/system/user/resetPwd',
   RolePageList = '/system/role/list',
   PostPageList = '/system/post/list',
   DictTypePageList = '/system/dict/type/list',
+  ConfigPageList = '/system/config/list',
   GetAllRoleList = '/system/role/optionselect',
   GetAllPostList = '/system/post/optionselect',
 }
@@ -173,6 +178,26 @@ export const delDictData = (dictCode: Number) => {
   return defHttp.delete<void>({ url: Api.AddDictData + '/' + dictCode });
 };
 
+// 新增参数
+export const addConfig = (data: ConfigListItem) => {
+  return defHttp.post<void>({ url: Api.AddConfig, data });
+};
+
+// 修改参数
+export const updateConfig = (data: ConfigListItem) => {
+  return defHttp.put<void>({ url: Api.AddConfig, data });
+};
+
+// 删除参数
+export const delConfig = (configId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddConfig + '/' + configId });
+};
+
+// 清理缓存参数
+export const clearCacheConfig = () => {
+  return defHttp.delete<void>({ url: Api.AddConfig + '/clearCache' });
+};
+
 // 根据userId获取用户
 export const getUser = (userId: Number) => {
   return defHttp.get<AccountListItem>({ url: Api.AddUser + '/' + userId });
@@ -209,6 +234,9 @@ export const getPostListByPage = (params?: PostPageParams) =>
 
 export const getDictTypeListByPage = (params?: DictTypePageParams) =>
   defHttp.get<DictTypePageListGetResultModel>({ url: Api.DictTypePageList, params });
+
+export const getConfigListByPage = (params?: ConfigPageParams) =>
+  defHttp.get<ConfigPageListGetResultModel>({ url: Api.ConfigPageList, params });
 
 export const getAllPostList = (params?: RoleParams) =>
   defHttp.get<PostListGetResultModel>({ url: Api.GetAllPostList, params });

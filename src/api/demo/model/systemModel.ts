@@ -23,11 +23,20 @@ export type DictTypeParams = {
   dictName?: string;
 };
 
+export type ConfigParams = {
+  configId: number;
+  configName?: string;
+  configKey?: string;
+  configType?: string;
+};
+
 export type RolePageParams = BasicPageParams & RoleParams;
 
 export type PostPageParams = BasicPageParams & PostParams;
 
 export type DictTypePageParams = BasicPageParams & DictTypeParams;
+
+export type ConfigPageParams = BasicPageParams & ConfigParams;
 
 export type DeptParams = {
   deptName?: string;
@@ -131,6 +140,16 @@ export interface DictDataListItem {
   remark: string;
 }
 
+export interface ConfigListItem {
+  configId: number;
+  configName: string;
+  configKey: string;
+  configValue: string;
+  configType: string;
+  remark: string;
+  createTime: string;
+}
+
 /**
  * @description: Request list return value
  */
@@ -145,6 +164,8 @@ export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 export type PostPageListGetResultModel = BasicFetchResult<PostListItem>;
 
 export type DictTypePageListGetResultModel = BasicFetchResult<DictTypeListItem>;
+
+export type ConfigPageListGetResultModel = BasicFetchResult<ConfigListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
 
