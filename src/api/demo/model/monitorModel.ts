@@ -13,7 +13,7 @@ export type LogininforParams = {
   infoId?: number;
   userName?: string;
   ipaddr?: string;
-  status?: number;
+  status?: string;
   loginTime?: string;
 };
 
@@ -45,7 +45,7 @@ export interface LogininforListItem {
   loginLocation: string;
   browser: string;
   os: string;
-  status: number;
+  status: string;
   msg: string;
   loginTime: string;
 }
