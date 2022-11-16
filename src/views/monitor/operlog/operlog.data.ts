@@ -82,6 +82,12 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { span: 8 },
   },
+  {
+    field: '[beginTime, endTime]',
+    label: '操作时间',
+    component: 'RangePicker',
+    colProps: { span: 8 },
+  },
 ];
 
 export const operSchema: DescItem[] = [

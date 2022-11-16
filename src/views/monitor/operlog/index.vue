@@ -60,10 +60,13 @@
             total: res.total,
           })),
         beforeFetch: (info: BasicPageParams) => {
+          const params = { ...getForm().getFieldsValue() };
+          params['params[beginTime'] = params.beginTime;
+          params['params[endTime]'] = params.endTime;
           return {
             pageNum: info.page,
             pageSize: info.pageSize,
-            ...getForm().getFieldsValue(),
+            ...params,
           };
         },
         columns,
@@ -121,10 +124,9 @@
         obj!.open();
       }
 
-      function handleDelete(record: Recordable) {
-        delOperlog(record.operId).then((_) => {
-          handleSuccess();
-        });
+      async function handleDelete(record: Recordable) {
+        await delOperlog(record.operId);
+        handleSuccess();
       }
 
       function handleSuccess() {
