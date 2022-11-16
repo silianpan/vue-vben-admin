@@ -4,7 +4,7 @@
     title="操作信息"
     :bordered="false"
     :column="3"
-    :data="operData"
+    :data="$props.record"
     :schema="operSchema"
   />
   <Description
@@ -12,14 +12,13 @@
     title="接口信息"
     :bordered="false"
     :column="3"
-    :data="operData"
+    :data="$props.record"
     :schema="interfaceSchema"
   />
 </template>
 <script lang="tsx">
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent } from 'vue';
   import { operSchema, interfaceSchema } from './operlog.data';
-  import { OperlogListItem } from '/@/api/demo/model/monitorModel';
   import { Description } from '/@/components/Description/index';
 
   export default defineComponent({
@@ -28,12 +27,10 @@
     props: {
       record: { type: Object, default: () => {} },
     },
-    setup(props) {
-      const operData = ref<OperlogListItem>(props.record);
+    setup() {
       return {
         operSchema,
         interfaceSchema,
-        operData,
       };
     },
   });
