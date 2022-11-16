@@ -96,18 +96,16 @@
           },
         });
       }
-      function handleExport() {
-        exportOperlog(getForm().getFieldsValue()).then((res) => {
-          console.log('res:', res);
-          const { VITE_GLOB_API_URL } = getAppEnvConfig();
-          downloadByUrl({
-            url: `${VITE_GLOB_API_URL}/common/download?fileName=${encodeURIComponent(
-              res.msg,
-            )}&delete=true`,
-            fileName: res.msg,
-          });
-          createMessage.success('导出成功');
+      async function handleExport() {
+        const res = await exportOperlog(getForm().getFieldsValue());
+        const { VITE_GLOB_API_URL } = getAppEnvConfig();
+        downloadByUrl({
+          url: `${VITE_GLOB_API_URL}/common/download?fileName=${encodeURIComponent(
+            res.msg,
+          )}&delete=true`,
+          fileName: res.msg,
         });
+        createMessage.success('导出成功');
       }
 
       function handleDetail(record: Recordable) {
