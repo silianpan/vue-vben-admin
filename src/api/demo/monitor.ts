@@ -1,9 +1,9 @@
 import {
-  OperlogListGetResultModel,
   OperlogPageListGetResultModel,
   OperlogPageParams,
   OperlogParams,
 } from './model/monitorModel';
+import { Result } from '/#/axios';
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
@@ -23,7 +23,7 @@ export const cleanOperlog = () => {
 
 // 导出操作日志
 export const exportOperlog = (params: OperlogParams) => {
-  return defHttp.get<OperlogListGetResultModel>({ url: Api.AddOperlog + '/export', params });
+  return defHttp.get<Result>({ url: Api.AddOperlog + '/export', params });
 };
 
 // 分页列表

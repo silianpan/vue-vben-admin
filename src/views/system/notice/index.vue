@@ -60,7 +60,7 @@
           };
         },
         columns,
-        formNotice: {
+        formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
         },

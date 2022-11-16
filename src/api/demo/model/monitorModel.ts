@@ -1,7 +1,7 @@
 import { BasicFetchResult, BasicPageParams } from '../../model/baseModel';
 
 export type OperlogParams = {
-  perId: number;
+  perId?: number;
   title?: string;
   businessType?: string;
   requestMethods?: string;
@@ -29,5 +29,3 @@ export interface OperlogListItem {
 }
 
 export type OperlogPageListGetResultModel = BasicFetchResult<OperlogListItem>;
-
-export type OperlogListGetResultModel = OperlogListItem[];

@@ -29,7 +29,7 @@
         treeData.value = (await getDeptTreeSelect()) as unknown as TreeItem[];
       }
 
-      function handleSelect(keys) {
+      function handleSelect(keys: string[]) {
         emit('select', keys[0]);
       }
 
