@@ -9,7 +9,17 @@ export type OperlogParams = {
   operIp?: string;
 };
 
+export type LogininforParams = {
+  infoId?: number;
+  userName?: string;
+  ipaddr?: string;
+  status?: number;
+  loginTime?: string;
+};
+
 export type OperlogPageParams = BasicPageParams & OperlogParams;
+
+export type LogininforPageParams = BasicPageParams & LogininforParams;
 
 export interface OperlogListItem {
   perId: number;
@@ -19,7 +29,7 @@ export interface OperlogListItem {
   operName: string;
   operIp: string;
   operLocation: string;
-  status: string;
+  status: number;
   operTime: string;
   operUrl: string;
   method: string;
@@ -28,4 +38,18 @@ export interface OperlogListItem {
   errorMsg: string;
 }
 
+export interface LogininforListItem {
+  infoId: number;
+  userName: string;
+  ipaddr: string;
+  loginLocation: string;
+  browser: string;
+  os: string;
+  status: number;
+  msg: string;
+  loginTime: string;
+}
+
 export type OperlogPageListGetResultModel = BasicFetchResult<OperlogListItem>;
+
+export type LogininforPageListGetResultModel = BasicFetchResult<LogininforListItem>;
