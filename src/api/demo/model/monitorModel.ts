@@ -118,3 +118,58 @@ export type OnlinePageListGetResultModel = BasicFetchResult<OnlineListItem>;
 export type JobPageListGetResultModel = BasicFetchResult<JobListItem>;
 
 export type JobLogPageListGetResultModel = BasicFetchResult<JobLogListItem>;
+
+interface cpuItem {
+  cpuNum: number;
+  free: number;
+  sys: number;
+  total: number;
+  used: number;
+  wait: number;
+}
+
+interface jvmItem {
+  free: number;
+  home: string;
+  max: number;
+  name: string;
+  runTime: string;
+  startTime: string;
+  total: number;
+  usage: number;
+  used: number;
+  version: string;
+}
+
+interface memItem {
+  free: number;
+  total: number;
+  usage: number;
+  used: number;
+}
+
+interface sysItem {
+  computerIp: string;
+  computerName: string;
+  osArch: string;
+  osName: string;
+  userDir: string;
+}
+
+export interface sysFileItem {
+  dirName: string;
+  free: string;
+  sysTypeName: string;
+  total: string;
+  typeName: string;
+  usage: number;
+  used: string;
+}
+
+export interface ServerItem {
+  cpu: cpuItem;
+  jvm: jvmItem;
+  mem: memItem;
+  sys: sysItem;
+  sysFiles: sysFileItem[];
+}

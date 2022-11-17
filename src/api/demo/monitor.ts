@@ -13,6 +13,7 @@ import {
   OperlogPageListGetResultModel,
   OperlogPageParams,
   OperlogParams,
+  ServerItem,
 } from './model/monitorModel';
 import { Result } from '/#/axios';
 import { defHttp } from '/@/utils/http/axios';
@@ -23,6 +24,7 @@ enum Api {
   AddOnline = '/monitor/online',
   AddJob = '/monitor/job',
   AddJobLog = '/monitor/jobLog',
+  MonitorServer = '/monitor/server',
 }
 
 // 删除操作日志
@@ -109,3 +111,6 @@ export const exportJobLog = (params: JobLogParams) => {
 // 任务日志分页列表
 export const getJobLogListByPage = (params?: JobLogPageParams) =>
   defHttp.get<JobLogPageListGetResultModel>({ url: Api.AddJobLog + '/list', params });
+
+// 服务监控信息
+export const getServer = () => defHttp.get<ServerItem>({ url: Api.MonitorServer });
