@@ -2,6 +2,8 @@ import {
   LogininforPageListGetResultModel,
   LogininforPageParams,
   LogininforParams,
+  OnlinePageListGetResultModel,
+  OnlinePageParams,
   OperlogPageListGetResultModel,
   OperlogPageParams,
   OperlogParams,
@@ -12,6 +14,7 @@ import { defHttp } from '/@/utils/http/axios';
 enum Api {
   AddOperlog = '/monitor/operlog',
   AddLogininfor = '/monitor/logininfor',
+  AddOnline = '/monitor/online',
 }
 
 // 删除操作日志
@@ -51,3 +54,12 @@ export const exportLogininfor = (params: LogininforParams) => {
 // 分页列表
 export const getLogininforListByPage = (params?: LogininforPageParams) =>
   defHttp.get<LogininforPageListGetResultModel>({ url: Api.AddLogininfor + '/list', params });
+
+// 分页列表
+export const getOnlineListByPage = (params?: OnlinePageParams) =>
+  defHttp.get<OnlinePageListGetResultModel>({ url: Api.AddOnline + '/list', params });
+
+// 强制退出
+export const forceLogoutOnline = (tokenId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddOnline + '/' + tokenId });
+};

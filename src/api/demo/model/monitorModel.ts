@@ -17,9 +17,19 @@ export type LogininforParams = {
   loginTime?: string;
 };
 
+export type OnlineParams = {
+  tokenId?: number;
+  userName?: string;
+  ipaddr?: string;
+  loginLocation?: string;
+  loginTime?: string;
+};
+
 export type OperlogPageParams = BasicPageParams & OperlogParams;
 
 export type LogininforPageParams = BasicPageParams & LogininforParams;
+
+export type OnlinePageParams = BasicPageParams & OnlineParams;
 
 export interface OperlogListItem {
   perId: number;
@@ -50,6 +60,19 @@ export interface LogininforListItem {
   loginTime: string;
 }
 
+export interface OnlineListItem {
+  tokenId: number;
+  userName: string;
+  deptName: string;
+  ipaddr: string;
+  loginLocation: string;
+  browser: string;
+  os: string;
+  loginTime: string;
+}
+
 export type OperlogPageListGetResultModel = BasicFetchResult<OperlogListItem>;
 
 export type LogininforPageListGetResultModel = BasicFetchResult<LogininforListItem>;
+
+export type OnlinePageListGetResultModel = BasicFetchResult<OnlineListItem>;
