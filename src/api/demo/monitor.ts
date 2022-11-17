@@ -1,4 +1,7 @@
 import {
+  JobListItem,
+  JobPageListGetResultModel,
+  JobPageParams,
   LogininforPageListGetResultModel,
   LogininforPageParams,
   LogininforParams,
@@ -15,6 +18,7 @@ enum Api {
   AddOperlog = '/monitor/operlog',
   AddLogininfor = '/monitor/logininfor',
   AddOnline = '/monitor/online',
+  AddJob = '/monitor/job',
 }
 
 // 删除操作日志
@@ -32,7 +36,7 @@ export const exportOperlog = (params: OperlogParams) => {
   return defHttp.get<Result>({ url: Api.AddOperlog + '/export', params });
 };
 
-// 分页列表
+// 操作日志分页列表
 export const getOperlogListByPage = (params?: OperlogPageParams) =>
   defHttp.get<OperlogPageListGetResultModel>({ url: Api.AddOperlog + '/list', params });
 
@@ -51,15 +55,34 @@ export const exportLogininfor = (params: LogininforParams) => {
   return defHttp.get<Result>({ url: Api.AddLogininfor + '/export', params });
 };
 
-// 分页列表
+// 登录日志分页列表
 export const getLogininforListByPage = (params?: LogininforPageParams) =>
   defHttp.get<LogininforPageListGetResultModel>({ url: Api.AddLogininfor + '/list', params });
 
-// 分页列表
+// 在线用户分页列表
 export const getOnlineListByPage = (params?: OnlinePageParams) =>
   defHttp.get<OnlinePageListGetResultModel>({ url: Api.AddOnline + '/list', params });
 
-// 强制退出
+// 在线用户强制退出
 export const forceLogoutOnline = (tokenId: Number) => {
   return defHttp.delete<void>({ url: Api.AddOnline + '/' + tokenId });
+};
+
+// 任务分页列表
+export const getJobListByPage = (params?: JobPageParams) =>
+  defHttp.get<JobPageListGetResultModel>({ url: Api.AddJob + '/list', params });
+
+// 新增任务
+export const addJob = (data: JobListItem) => {
+  return defHttp.post<void>({ url: Api.AddJob, data });
+};
+
+// 修改任务
+export const updateJob = (data: JobListItem) => {
+  return defHttp.put<void>({ url: Api.AddJob, data });
+};
+
+// 删除任务
+export const delJob = (jobId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddJob + '/' + jobId });
 };
