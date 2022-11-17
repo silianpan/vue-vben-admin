@@ -76,3 +76,27 @@ export const ERROR_LOG_ROUTE: AppRouteRecordRaw = {
     },
   ],
 };
+
+export const OTHER_ROUTE: AppRouteRecordRaw = {
+  path: '/other',
+  name: 'Other',
+  component: LAYOUT,
+  redirect: '/other/monitor/job/log',
+  meta: {
+    title: 'Other',
+    hideBreadcrumb: true,
+    hideChildrenInMenu: true,
+  },
+  children: [
+    {
+      path: 'monitor/job/log',
+      name: 'JobLog',
+      component: () => import('/@/views/monitor/job/JobLog.vue'),
+      meta: {
+        title: '任务日志',
+        hideBreadcrumb: true,
+        currentActiveMenu: '/system/monitor/job',
+      },
+    },
+  ],
+};

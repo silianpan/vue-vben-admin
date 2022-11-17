@@ -1,5 +1,8 @@
 import {
   JobListItem,
+  JobLogPageListGetResultModel,
+  JobLogPageParams,
+  JobLogParams,
   JobPageListGetResultModel,
   JobPageParams,
   LogininforPageListGetResultModel,
@@ -19,6 +22,7 @@ enum Api {
   AddLogininfor = '/monitor/logininfor',
   AddOnline = '/monitor/online',
   AddJob = '/monitor/job',
+  AddJobLog = '/monitor/jobLog',
 }
 
 // 删除操作日志
@@ -86,3 +90,22 @@ export const updateJob = (data: JobListItem) => {
 export const delJob = (jobId: Number) => {
   return defHttp.delete<void>({ url: Api.AddJob + '/' + jobId });
 };
+
+// 删除任务日志
+export const delJobLog = (jobLogId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddJobLog + '/' + jobLogId });
+};
+
+// 清空任务日志
+export const cleanJobLog = () => {
+  return defHttp.delete<void>({ url: Api.AddJobLog + '/clean' });
+};
+
+// 导出任务日志
+export const exportJobLog = (params: JobLogParams) => {
+  return defHttp.get<Result>({ url: Api.AddJobLog + '/export', params });
+};
+
+// 任务日志分页列表
+export const getJobLogListByPage = (params?: JobLogPageParams) =>
+  defHttp.get<JobLogPageListGetResultModel>({ url: Api.AddJobLog + '/list', params });

@@ -50,7 +50,13 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'jobGroup',
     label: '任务组名',
-    component: 'Input',
+    component: 'Select',
+    componentProps: {
+      options: [
+        { label: '默认', value: 'DEFAULT' },
+        { label: '系统', value: 'SYSTEM' },
+      ],
+    },
     colProps: { span: 8 },
   },
   {
@@ -84,7 +90,14 @@ export const formSchema: FormSchema[] = [
     field: 'jobGroup',
     label: '任务分组',
     required: true,
-    component: 'Input',
+    component: 'Select',
+    defaultValue: 'DEFAULT',
+    componentProps: {
+      options: [
+        { label: '默认', value: 'DEFAULT' },
+        { label: '系统', value: 'SYSTEM' },
+      ],
+    },
   },
   {
     field: 'invokeTarget',

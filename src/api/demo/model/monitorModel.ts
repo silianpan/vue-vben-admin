@@ -32,6 +32,14 @@ export type JobParams = {
   status?: number;
 };
 
+export type JobLogParams = {
+  jobLogId?: number;
+  jobName?: string;
+  jobGroup?: string;
+  status?: number;
+  createTime?: string;
+};
+
 export type OperlogPageParams = BasicPageParams & OperlogParams;
 
 export type LogininforPageParams = BasicPageParams & LogininforParams;
@@ -39,6 +47,8 @@ export type LogininforPageParams = BasicPageParams & LogininforParams;
 export type OnlinePageParams = BasicPageParams & OnlineParams;
 
 export type JobPageParams = BasicPageParams & JobParams;
+
+export type JobLogPageParams = BasicPageParams & JobLogParams;
 
 export interface OperlogListItem {
   perId: number;
@@ -89,6 +99,16 @@ export interface JobListItem {
   status: number;
 }
 
+export interface JobLogListItem {
+  jobLogId: number;
+  jobName: string;
+  jobGroup: string;
+  invokeTarget: string;
+  jobMessage: string;
+  status: number;
+  createTime: string;
+}
+
 export type OperlogPageListGetResultModel = BasicFetchResult<OperlogListItem>;
 
 export type LogininforPageListGetResultModel = BasicFetchResult<LogininforListItem>;
@@ -96,3 +116,5 @@ export type LogininforPageListGetResultModel = BasicFetchResult<LogininforListIt
 export type OnlinePageListGetResultModel = BasicFetchResult<OnlineListItem>;
 
 export type JobPageListGetResultModel = BasicFetchResult<JobListItem>;
+
+export type JobLogPageListGetResultModel = BasicFetchResult<JobLogListItem>;

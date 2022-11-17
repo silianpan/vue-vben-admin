@@ -2,7 +2,7 @@
   <BasicTable @register="registerTable">
     <template #toolbar>
       <a-button type="primary" @click="handleCreate"> 新增任务 </a-button>
-      <a-button type="primary" @click="handleCreate">
+      <a-button type="primary" @click="handleJobLog">
         <ClockCircleOutlined />
         日志
       </a-button>
@@ -32,6 +32,7 @@
 </template>
 <script lang="tsx">
   import { defineComponent, ref, unref } from 'vue';
+  import { router } from '/@/router';
 
   import { ClockCircleOutlined } from '@ant-design/icons-vue';
 
@@ -149,12 +150,17 @@
         reload();
       }
 
+      function handleJobLog() {
+        router.push('/other/monitor/job/log');
+      }
+
       return {
         registerTable,
         handleCreate,
         handleEdit,
         handleDelete,
         handleSuccess,
+        handleJobLog,
       };
     },
   });
