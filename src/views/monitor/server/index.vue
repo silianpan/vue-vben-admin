@@ -192,7 +192,7 @@
   } from 'ant-design-vue';
   import Icon from '/@/components/icon';
   import { getServer } from '/@/api/demo/monitor';
-  import { ServerItem, sysFileItem } from '/@/api/demo/model/monitorModel';
+  import { ServerItem, SysFileItem } from '/@/api/demo/model/monitorModel';
 
   export default defineComponent({
     name: 'Server',
@@ -211,7 +211,7 @@
       const loading = ref<boolean>(true);
       const server = ref<ServerItem>({});
       const memData = ref([]);
-      const sysData = ref<sysFileItem[]>([]);
+      const sysData = ref<SysFileItem[]>([]);
       const memColumns = ref([
         {
           title: '属性',

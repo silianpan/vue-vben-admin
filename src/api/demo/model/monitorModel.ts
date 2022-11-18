@@ -119,7 +119,7 @@ export type JobPageListGetResultModel = BasicFetchResult<JobListItem>;
 
 export type JobLogPageListGetResultModel = BasicFetchResult<JobLogListItem>;
 
-interface cpuItem {
+interface CpuItem {
   cpuNum: number;
   free: number;
   sys: number;
@@ -128,7 +128,7 @@ interface cpuItem {
   wait: number;
 }
 
-interface jvmItem {
+interface JvmItem {
   free: number;
   home: string;
   max: number;
@@ -141,14 +141,14 @@ interface jvmItem {
   version: string;
 }
 
-interface memItem {
+interface MemItem {
   free: number;
   total: number;
   usage: number;
   used: number;
 }
 
-interface sysItem {
+interface SysItem {
   computerIp: string;
   computerName: string;
   osArch: string;
@@ -156,7 +156,7 @@ interface sysItem {
   userDir: string;
 }
 
-export interface sysFileItem {
+export interface SysFileItem {
   dirName: string;
   free: string;
   sysTypeName: string;
@@ -167,9 +167,34 @@ export interface sysFileItem {
 }
 
 export interface ServerItem {
-  cpu: cpuItem;
-  jvm: jvmItem;
-  mem: memItem;
-  sys: sysItem;
-  sysFiles: sysFileItem[];
+  cpu: CpuItem;
+  jvm: JvmItem;
+  mem: MemItem;
+  sys: SysItem;
+  sysFiles: SysFileItem[];
+}
+
+interface CommandItem {
+  name: string;
+  value: string;
+}
+
+interface CacheInfoItem {
+  redis_version: string;
+  redis_mode: string;
+  tcp_port: string;
+  connected_clients: string;
+  uptime_in_days: string;
+  used_memory_human: string;
+  used_cpu_user_children: string;
+  maxmemory_human: string;
+  aof_enabled: string;
+  rdb_last_bgsave_status: string;
+  instantaneous_input_kbps: string;
+}
+
+export interface CacheItem {
+  commandStats: CommandItem[];
+  dbSize: number;
+  info: CacheInfoItem;
 }

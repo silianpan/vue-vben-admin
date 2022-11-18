@@ -25,6 +25,7 @@ enum Api {
   AddJob = '/monitor/job',
   AddJobLog = '/monitor/jobLog',
   MonitorServer = '/monitor/server',
+  MonitorCache = '/monitor/cache',
 }
 
 // 删除操作日志
@@ -114,3 +115,5 @@ export const getJobLogListByPage = (params?: JobLogPageParams) =>
 
 // 服务监控信息
 export const getServer = () => defHttp.get<ServerItem>({ url: Api.MonitorServer });
+// 缓存监控信息
+export const getCache = () => defHttp.get<CacheItem>({ url: Api.MonitorCache });
