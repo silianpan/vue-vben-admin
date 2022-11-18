@@ -1,5 +1,7 @@
 import {
   CacheItem,
+  CodeGenPageListGetResultModel,
+  CodeGenPageParams,
   JobListItem,
   JobLogPageListGetResultModel,
   JobLogPageParams,
@@ -27,6 +29,7 @@ enum Api {
   AddJobLog = '/monitor/jobLog',
   MonitorServer = '/monitor/server',
   MonitorCache = '/monitor/cache',
+  AddCodeGen = '/tool/gen',
 }
 
 // 删除操作日志
@@ -118,3 +121,12 @@ export const getJobLogListByPage = (params?: JobLogPageParams) =>
 export const getServer = () => defHttp.get<ServerItem>({ url: Api.MonitorServer });
 // 缓存监控信息
 export const getCache = () => defHttp.get<CacheItem>({ url: Api.MonitorCache });
+
+// 代码生成分页列表
+export const getCodeGenListByPage = (params?: CodeGenPageParams) =>
+  defHttp.get<CodeGenPageListGetResultModel>({ url: Api.AddCodeGen + '/list', params });
+
+// 删除代码生成
+export const delCodeGen = (tableId: Number) => {
+  return defHttp.delete<void>({ url: Api.AddCodeGen + '/' + tableId });
+};

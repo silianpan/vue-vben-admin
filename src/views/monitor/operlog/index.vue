@@ -61,7 +61,7 @@
           })),
         beforeFetch: (info: BasicPageParams) => {
           const params = { ...getForm().getFieldsValue() };
-          params['params[beginTime'] = params.beginTime;
+          params['params[beginTime]'] = params.beginTime;
           params['params[endTime]'] = params.endTime;
           return {
             pageNum: info.page,

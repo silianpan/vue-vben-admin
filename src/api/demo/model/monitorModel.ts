@@ -40,6 +40,15 @@ export type JobLogParams = {
   createTime?: string;
 };
 
+export type CodeGenParams = {
+  tableId?: number;
+  tableName?: string;
+  tableComment?: string;
+  className?: number;
+  createTime?: string;
+  updateTime?: string;
+};
+
 export type OperlogPageParams = BasicPageParams & OperlogParams;
 
 export type LogininforPageParams = BasicPageParams & LogininforParams;
@@ -49,6 +58,8 @@ export type OnlinePageParams = BasicPageParams & OnlineParams;
 export type JobPageParams = BasicPageParams & JobParams;
 
 export type JobLogPageParams = BasicPageParams & JobLogParams;
+
+export type CodeGenPageParams = BasicPageParams & CodeGenParams;
 
 export interface OperlogListItem {
   perId: number;
@@ -109,6 +120,15 @@ export interface JobLogListItem {
   createTime: string;
 }
 
+export type CodeGenListItem = {
+  tableId: number;
+  tableName: string;
+  tableComment: string;
+  className: number;
+  createTime: string;
+  updateTime: string;
+};
+
 export type OperlogPageListGetResultModel = BasicFetchResult<OperlogListItem>;
 
 export type LogininforPageListGetResultModel = BasicFetchResult<LogininforListItem>;
@@ -118,6 +138,8 @@ export type OnlinePageListGetResultModel = BasicFetchResult<OnlineListItem>;
 export type JobPageListGetResultModel = BasicFetchResult<JobListItem>;
 
 export type JobLogPageListGetResultModel = BasicFetchResult<JobLogListItem>;
+
+export type CodeGenPageListGetResultModel = BasicFetchResult<CodeGenListItem>;
 
 interface CpuItem {
   cpuNum: number;

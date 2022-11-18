@@ -1,13 +1,17 @@
 <template>
   <BasicTable @register="registerTable">
     <template #toolbar>
-      <a-button type="primary" danger @click="handleClean"> 清空 </a-button>
-      <a-button type="primary" @click="handleExport"> 导出 </a-button>
+      <a-button type="primary" @click="handleCreate"> 导入 </a-button>
+      <a-button type="primary" @click="handleCreate"> 生成 </a-button>
     </template>
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'action'">
         <TableAction
           :actions="[
+            {
+              icon: 'clarity:note-edit-line',
+              onClick: handleEdit.bind(null, record),
+            },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
@@ -24,31 +28,27 @@
   </BasicTable>
 </template>
 <script lang="tsx">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref, unref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import {
-    cleanLogininfor,
-    delLogininfor,
-    getLogininforListByPage,
-    exportLogininfor,
-  } from '/@/api/demo/monitor';
+  import { delCodeGen, getCodeGenListByPage } from '/@/api/demo/monitor';
 
-  import { columns, searchFormSchema } from './logininfor.data';
+  import { DrawerFooterAction } from '/@/components/Drawer';
+
+  import { columns, searchFormSchema } from './gen.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
+  import { createBasicModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { downloadByUrl } from '/@/utils/file/download';
-  import { getAppEnvConfig } from '/@/utils/env';
 
   export default defineComponent({
-    name: 'LogininforManagement',
+    name: 'CodeGenManagement',
     components: { BasicTable, TableAction },
     setup() {
-      const { createConfirm, createMessage } = useMessage();
+      const { createMessage } = useMessage();
       const [registerTable, { reload, getForm }] = useTable({
-        title: '登录日志列表',
+        title: '代码生成列表',
         api: (info) =>
-          getLogininforListByPage(info).then((res) => ({
+          getCodeGenListByPage(info).then((res) => ({
             items: res.rows,
             total: res.total,
           })),
@@ -80,32 +80,38 @@
         },
       });
 
-      function handleClean() {
-        createConfirm({
-          iconType: 'warning',
-          title: '清理登录日志',
-          content: '是否确认清理全部登录日志？',
-          onOk: async () => {
-            await cleanLogininfor();
-            createMessage.success('清理成功');
-            handleSuccess();
+      function handleCreate() {}
+
+      function handleEdit(record: Recordable) {
+        const formRef = ref<Nullable<DrawerFooterAction>>(null);
+        const obj = createBasicModal(
+          {
+            title: '编辑代码生成',
+            useWrapper: true,
+            loading: true,
+            showOkBtn: true,
+            showCancelBtn: true,
+            onClose: () => {},
+            onOk: async () => {
+              // 调用提交
+              await unref(formRef)?.handleSubmit();
+              // 关闭drawer
+              obj!.close();
+              // 提示成功
+              createMessage.success('新增成功');
+              // 刷新表格
+              reload();
+            },
           },
-        });
-      }
-      async function handleExport() {
-        const res = await exportLogininfor(getForm().getFieldsValue());
-        const { VITE_GLOB_API_URL } = getAppEnvConfig();
-        downloadByUrl({
-          url: `${VITE_GLOB_API_URL}/common/download?fileName=${encodeURIComponent(
-            res.msg,
-          )}&delete=true`,
-          fileName: res.msg,
-        });
-        createMessage.success('导出成功');
+          {
+            default: () => <PostForm record={record} isUpdate ref={formRef} />,
+          },
+        );
+        obj!.open();
       }
 
       async function handleDelete(record: Recordable) {
-        await delLogininfor(record.operId);
+        await delCodeGen(record.tableId);
         handleSuccess();
       }
 
@@ -115,8 +121,8 @@
 
       return {
         registerTable,
-        handleClean,
-        handleExport,
+        handleCreate,
+        handleEdit,
         handleDelete,
         handleSuccess,
       };
