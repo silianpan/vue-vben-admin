@@ -191,6 +191,7 @@ interface CacheInfoItem {
   aof_enabled: string;
   rdb_last_bgsave_status: string;
   instantaneous_input_kbps: string;
+  instantaneous_output_kbps: string;
 }
 
 export interface CacheItem {

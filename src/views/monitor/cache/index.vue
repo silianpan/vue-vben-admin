@@ -88,7 +88,7 @@
     setup() {
       const loading = ref<boolean>(true);
       const cache = ref<CacheItem>({});
-      const usedmemory = ref({});
+      const usedmemory = ref([]);
 
       onMounted(async () => {
         const res = await getCache();
@@ -143,10 +143,10 @@
             },
             statistic: {
               content: {
-                formatter: ({ percent }) => `内存消耗: ${percent}K`,
+                formatter: (record) => `内存消耗: ${record?.percent}K`,
                 style: {
                   color: 'rgba(0,0,0,0.65)',
-                  fontSize: 24,
+                  fontSize: '24',
                 },
               },
             },

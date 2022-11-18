@@ -1,4 +1,5 @@
 import {
+  CacheItem,
   JobListItem,
   JobLogPageListGetResultModel,
   JobLogPageParams,
