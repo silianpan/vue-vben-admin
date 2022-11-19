@@ -1,6 +1,6 @@
 <template>
   <a-card :bordered="false">
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs v-model:activeKey="activeKey" style="margin-bottom: 56px">
       <a-tab-pane key="1" tab="基本信息" force-render>
         <BasicInfoForm :info="info" />
       </a-tab-pane>
@@ -11,10 +11,18 @@
         <GenInfoForm :info="info" :tables="tables" />
       </a-tab-pane>
     </a-tabs>
+    <FooterToolbar>
+      <a-space>
+        <a-button type="primary" @click="handleSubmit"> 保存 </a-button>
+        <a-button type="dashed" @click="handleCancel"> 取消 </a-button>
+      </a-space>
+    </FooterToolbar>
   </a-card>
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
+  import { Button, Space } from 'ant-design-vue';
+  import FooterToolbar from '/@/components/FooterToolbar/index.vue';
   import BasicInfoForm from './BasicInfoForm.vue';
   import FieldInfoTable from './FieldInfoTable.vue';
   import GenInfoForm from './GenInfoForm.vue';
@@ -35,9 +43,12 @@
       BasicInfoForm,
       FieldInfoTable,
       GenInfoForm,
+      FooterToolbar,
       ATabs: Tabs,
       ATabPane: TabPane,
       ACard: Card,
+      AButton: Button,
+      ASpace: Space,
     },
     setup() {
       const route = useRoute();
@@ -59,11 +70,17 @@
         info.value = res.info;
         tables.value = res.tables;
       });
+
+      async function handleSubmit() {}
+      async function handleCancel() {}
+
       return {
         activeKey: ref('2'),
         rows,
         info,
         tables,
+        handleSubmit,
+        handleCancel,
       };
     },
   });
