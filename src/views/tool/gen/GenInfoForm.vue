@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted } from 'vue';
+  import { defineComponent, nextTick, watchEffect } from 'vue';
   import { Divider } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { genInfoFormSchema, otherInfoFormSchema, relaInfoFormSchema } from './gen.data';
@@ -16,40 +16,39 @@
     name: 'GenInfoForm',
     components: { BasicForm, ADivider: Divider },
     props: {
-      record: { type: Object, default: () => {} },
+      info: { type: Object, default: () => {} },
+      tables: { type: Array, default: () => [] },
     },
     setup(props) {
       const [register, { setFieldsValue }] = useForm({
         labelWidth: 120,
         schemas: genInfoFormSchema,
-        actionColOptions: {
-          span: 24,
-        },
+        showActionButtonGroup: false,
       });
       const [registerOther, { setFieldsValue: setFieldsValueOther }] = useForm({
         labelWidth: 120,
         schemas: otherInfoFormSchema,
-        actionColOptions: {
-          span: 24,
-        },
+        showActionButtonGroup: false,
       });
       const [registerRela, { setFieldsValue: setFieldsValueRela }] = useForm({
         labelWidth: 120,
         schemas: relaInfoFormSchema,
-        actionColOptions: {
-          span: 24,
-        },
+        showActionButtonGroup: false,
       });
 
-      onMounted(async () => {
-        setFieldsValue({
-          ...props.record,
-        });
-        setFieldsValueOther({
-          ...props.record,
-        });
-        setFieldsValueRela({
-          ...props.record,
+      nextTick(() => {
+        watchEffect(() => {
+          if (props.info) {
+            setFieldsValue({
+              ...props.info,
+            });
+            setFieldsValueOther({
+              ...props.info,
+            });
+            setFieldsValueRela({
+              ...props.info,
+            });
+          }
         });
       });
 

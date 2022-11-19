@@ -98,5 +98,15 @@ export const OTHER_ROUTE: AppRouteRecordRaw = {
         currentActiveMenu: '/system/monitor/job',
       },
     },
+    {
+      path: 'gen/edit/:tableId',
+      name: 'CodeEdit',
+      component: () => import('/@/views/tool/gen/GenEdit.vue'),
+      meta: {
+        title: '生成配置',
+        hideBreadcrumb: true,
+        currentActiveMenu: '/system/tool/gen',
+      },
+    },
   ],
 };

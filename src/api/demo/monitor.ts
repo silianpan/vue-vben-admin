@@ -1,5 +1,6 @@
 import {
   CacheItem,
+  CodeGenEditItem,
   CodeGenPageListGetResultModel,
   CodeGenPageParams,
   JobListItem,
@@ -130,3 +131,7 @@ export const getCodeGenListByPage = (params?: CodeGenPageParams) =>
 export const delCodeGen = (tableId: Number) => {
   return defHttp.delete<void>({ url: Api.AddCodeGen + '/' + tableId });
 };
+
+// 获取代码生成表格
+export const getCodeGenTable = (tableId: string) =>
+  defHttp.get<CodeGenEditItem>({ url: Api.AddCodeGen + '/' + tableId });

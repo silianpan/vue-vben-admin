@@ -163,9 +163,14 @@ export const delDictType = (dictId: Number) => {
   return defHttp.delete<void>({ url: Api.AddDictType + '/' + dictId });
 };
 
+// 列表字典类型选择
+export const getDictTypeSelect = () => {
+  return defHttp.get<DictTypeListItem[]>({ url: Api.AddDictType + '/optionselect' });
+};
+
 // 列表字典数据
 export const getDictDataList = (dictType: String) => {
-  return defHttp.get<DictDataListItem>({ url: Api.AddDictData + '/type/' + dictType });
+  return defHttp.get<DictDataListItem[]>({ url: Api.AddDictData + '/type/' + dictType });
 };
 
 // 新增字典数据

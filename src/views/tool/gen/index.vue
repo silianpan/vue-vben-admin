@@ -28,23 +28,19 @@
   </BasicTable>
 </template>
 <script lang="tsx">
-  import { defineComponent, ref, unref } from 'vue';
+  import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { delCodeGen, getCodeGenListByPage } from '/@/api/demo/monitor';
 
-  import { DrawerFooterAction } from '/@/components/Drawer';
-
   import { columns, searchFormSchema } from './gen.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
-  import { createBasicModal } from '/@/components/Modal';
-  import { useMessage } from '/@/hooks/web/useMessage';
+  import { router } from '/@/router';
 
   export default defineComponent({
     name: 'CodeGenManagement',
     components: { BasicTable, TableAction },
     setup() {
-      const { createMessage } = useMessage();
       const [registerTable, { reload, getForm }] = useTable({
         title: '代码生成列表',
         api: (info) =>
@@ -83,31 +79,7 @@
       function handleCreate() {}
 
       function handleEdit(record: Recordable) {
-        const formRef = ref<Nullable<DrawerFooterAction>>(null);
-        const obj = createBasicModal(
-          {
-            title: '编辑代码生成',
-            useWrapper: true,
-            loading: true,
-            showOkBtn: true,
-            showCancelBtn: true,
-            onClose: () => {},
-            onOk: async () => {
-              // 调用提交
-              await unref(formRef)?.handleSubmit();
-              // 关闭drawer
-              obj!.close();
-              // 提示成功
-              createMessage.success('新增成功');
-              // 刷新表格
-              reload();
-            },
-          },
-          {
-            default: () => <PostForm record={record} isUpdate ref={formRef} />,
-          },
-        );
-        obj!.open();
+        router.push('/other/gen/edit/' + record.tableId);
       }
 
       async function handleDelete(record: Recordable) {

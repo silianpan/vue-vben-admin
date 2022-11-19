@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted } from 'vue';
+  import { defineComponent, nextTick, watchEffect } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { basicInfoFormSchema } from './gen.data';
 
@@ -11,20 +11,21 @@
     name: 'BasicInfoForm',
     components: { BasicForm },
     props: {
-      record: { type: Object, default: () => {} },
+      info: { type: Object, default: () => {} },
     },
     setup(props) {
       const [register, { setFieldsValue }] = useForm({
         labelWidth: 120,
         schemas: basicInfoFormSchema,
-        actionColOptions: {
-          span: 24,
-        },
+        showActionButtonGroup: false,
       });
 
-      onMounted(async () => {
-        setFieldsValue({
-          ...props.record,
+      nextTick(() => {
+        watchEffect(() => {
+          props.info &&
+            setFieldsValue({
+              ...props.info,
+            });
         });
       });
 

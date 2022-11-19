@@ -221,3 +221,101 @@ export interface CacheItem {
   dbSize: number;
   info: CacheInfoItem;
 }
+
+// 生成代码
+export type CodeGenInfoItem = {
+  // 基本信息
+  tableName: string;
+  tableComment: string;
+  className: number;
+  functionAuthor: string;
+  remark: string;
+  // 生成信息
+  tplCategory: string;
+  packageName: string;
+  moduleName: string;
+  businessName: string;
+  functionName: string;
+  parentMenuId: string;
+  genType: string;
+  genPath: string;
+  // 其他信息
+  treeCode: string;
+  treeParentCode: string;
+  treeName: string;
+  subTableName: string;
+  subTableFkName: string;
+};
+
+export type CodeGenRowItem = {
+  capJavaField: string;
+  columnComment: string;
+  columnId: number;
+  columnName: string;
+  columnType: string;
+  createBy: string;
+  createTime: string;
+  dictType: string;
+  edit: boolean;
+  htmlType: string;
+  increment: boolean;
+  insert: boolean;
+  isEdit: string | boolean;
+  isIncrement: string | boolean;
+  isInsert: string | boolean;
+  isList: string | boolean;
+  isPk: string | boolean;
+  isQuery: string | boolean;
+  isRequired: string | boolean;
+  javaField: string;
+  javaType: string;
+  list: boolean;
+  params: object;
+  pk: boolean;
+  query: boolean;
+  queryType: string;
+  remark: string;
+  required: boolean;
+  searchValue: string;
+  sort: number;
+  superColumn: boolean;
+  tableId: number;
+  updateBy: string;
+  updateTime: string;
+  usableColumn: boolean;
+};
+
+export type CodeGenTableColumnItem = {
+  columnId: number;
+  columnName: string;
+  columnComment: string;
+};
+
+export type CodeGenTableItem = {
+  tableId: number;
+  tableName: string;
+  columns: CodeGenTableColumnItem[];
+  businessName: string;
+  className: string;
+  crud: boolean;
+  functionAuthor: string;
+  functionName: string;
+  moduleName: string;
+  packageName: string;
+  sub: boolean;
+  subTable: string;
+  subTableFkName: string;
+  subTableName: string;
+  tableComment: string;
+  tplCategory: string;
+  tree: boolean;
+  treeCode: string;
+  treeName: string;
+  treeParentCode: string;
+};
+
+export type CodeGenEditItem = {
+  info: CodeGenInfoItem;
+  rows: CodeGenRowItem[];
+  tables: CodeGenTableItem[];
+};
