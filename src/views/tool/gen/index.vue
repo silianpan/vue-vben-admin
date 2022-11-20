@@ -25,6 +25,11 @@
                 confirm: handleDelete.bind(null, record),
               },
             },
+            {
+              icon: 'material-symbols:sync',
+              onClick: handleSyncDb.bind(null, record),
+              tooltip: '同步',
+            },
           ]"
         />
       </template>
@@ -35,18 +40,20 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { delCodeGen, getCodeGenListByPage } from '/@/api/demo/monitor';
+  import { delCodeGen, getCodeGenListByPage, syncDbCodeGen } from '/@/api/demo/monitor';
 
   import { columns, searchFormSchema } from './gen.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
   import { router } from '/@/router';
   import { createBasicDrawer } from '/@/components/Drawer';
   import PreviewCode from './PreviewCode.vue';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'CodeGenManagement',
     components: { BasicTable, TableAction },
     setup() {
+      const { createConfirm, createMessage } = useMessage();
       const [registerTable, { reload, getForm }] = useTable({
         title: '代码生成列表',
         api: (info) =>
@@ -97,6 +104,19 @@
         obj!.open();
       }
 
+      async function handleSyncDb({ tableName }) {
+        createConfirm({
+          iconType: 'warning',
+          title: '确认强制同步数据?',
+          content: '当前同步表名为' + tableName + '的数据',
+          onOk: async () => {
+            await syncDbCodeGen(tableName);
+            createMessage.success('同步成功');
+            handleSuccess();
+          },
+        });
+      }
+
       function handleEdit(record: Recordable) {
         router.push('/other/gen/edit/' + record.tableId);
       }
@@ -117,6 +137,7 @@
         handleDelete,
         handleSuccess,
         handlePreview,
+        handleSyncDb,
       };
     },
   });

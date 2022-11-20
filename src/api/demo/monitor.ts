@@ -144,3 +144,7 @@ export const updateCodeGen = (params: CodeGenEditParams) =>
 // 预览生成代码
 export const previewCodeGen = (tableId: string) =>
   defHttp.get<Object>({ url: Api.AddCodeGen + '/preview/' + tableId });
+
+// 同步生成代码
+export const syncDbCodeGen = (tableName: string) =>
+  defHttp.get<void>({ url: Api.AddCodeGen + '/synchDb/' + tableName });
