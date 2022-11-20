@@ -38,6 +38,7 @@
   import { useRoute } from 'vue-router';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { cloneDeep } from 'lodash-es';
+  import { useTabs } from '/@/hooks/web/useTabs';
 
   export default defineComponent({
     name: 'GenEdit',
@@ -61,6 +62,7 @@
       const fieldInfoTableRef = ref();
       const genInfoFormRef = ref();
       const { createMessage } = useMessage();
+      const { closeCurrent } = useTabs();
 
       onMounted(async () => {
         const res = await getCodeGenTable(route.params?.tableId + '');
@@ -101,7 +103,9 @@
         createMessage.success('更新成功');
         await handleCancel();
       }
-      async function handleCancel() {}
+      async function handleCancel() {
+        closeCurrent();
+      }
 
       return {
         activeKey: ref('2'),
