@@ -1,6 +1,7 @@
 import {
   CacheItem,
   CodeGenEditItem,
+  CodeGenEditParams,
   CodeGenPageListGetResultModel,
   CodeGenPageParams,
   JobListItem,
@@ -135,3 +136,7 @@ export const delCodeGen = (tableId: Number) => {
 // 获取代码生成表格
 export const getCodeGenTable = (tableId: string) =>
   defHttp.get<CodeGenEditItem>({ url: Api.AddCodeGen + '/' + tableId });
+
+// 更新代码生成
+export const updateCodeGen = (params: CodeGenEditParams) =>
+  defHttp.put<void>({ url: Api.AddCodeGen, params });

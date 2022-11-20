@@ -1,9 +1,9 @@
 <template>
-  <BasicForm @register="register" @submit="handleSubmit" />
+  <BasicForm @register="register" />
   <a-divider orientation="left">其他信息</a-divider>
-  <BasicForm @register="registerOther" @submit="handleSubmitOther" />
+  <BasicForm @register="registerOther" />
   <a-divider orientation="left">关联信息</a-divider>
-  <BasicForm @register="registerRela" @submit="handleSubmitRela" />
+  <BasicForm @register="registerRela" />
 </template>
 
 <script lang="ts">
@@ -20,21 +20,23 @@
       tables: { type: Array, default: () => [] },
     },
     setup(props) {
-      const [register, { setFieldsValue }] = useForm({
+      const [register, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
         schemas: genInfoFormSchema,
         showActionButtonGroup: false,
       });
-      const [registerOther, { setFieldsValue: setFieldsValueOther }] = useForm({
-        labelWidth: 120,
-        schemas: otherInfoFormSchema,
-        showActionButtonGroup: false,
-      });
-      const [registerRela, { setFieldsValue: setFieldsValueRela }] = useForm({
-        labelWidth: 120,
-        schemas: relaInfoFormSchema,
-        showActionButtonGroup: false,
-      });
+      const [registerOther, { setFieldsValue: setFieldsValueOther, validate: validateOther }] =
+        useForm({
+          labelWidth: 120,
+          schemas: otherInfoFormSchema,
+          showActionButtonGroup: false,
+        });
+      const [registerRela, { setFieldsValue: setFieldsValueRela, validate: validateRela }] =
+        useForm({
+          labelWidth: 120,
+          schemas: relaInfoFormSchema,
+          showActionButtonGroup: false,
+        });
 
       nextTick(() => {
         watchEffect(() => {
@@ -52,17 +54,22 @@
         });
       });
 
-      function handleSubmit() {}
-      function handleSubmitOther() {}
-      function handleSubmitRela() {}
+      async function handleSubmit() {
+        const res = await validate();
+        const resOther = await validateOther();
+        const resRela = await validateRela();
+        return {
+          ...res,
+          ...resOther,
+          ...resRela,
+        };
+      }
 
       return {
         register,
         registerOther,
         registerRela,
         handleSubmit,
-        handleSubmitOther,
-        handleSubmitRela,
       };
     },
   });

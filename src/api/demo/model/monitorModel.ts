@@ -120,14 +120,14 @@ export interface JobLogListItem {
   createTime: string;
 }
 
-export type CodeGenListItem = {
+export interface CodeGenListItem {
   tableId: number;
   tableName: string;
   tableComment: string;
   className: number;
   createTime: string;
   updateTime: string;
-};
+}
 
 export type OperlogPageListGetResultModel = BasicFetchResult<OperlogListItem>;
 
@@ -223,7 +223,8 @@ export interface CacheItem {
 }
 
 // 生成代码
-export type CodeGenInfoItem = {
+export interface CodeGenInfoItem {
+  tableId: number;
   // 基本信息
   tableName: string;
   tableComment: string;
@@ -245,9 +246,9 @@ export type CodeGenInfoItem = {
   treeName: string;
   subTableName: string;
   subTableFkName: string;
-};
+}
 
-export type CodeGenRowItem = {
+export interface CodeGenRowItem {
   capJavaField: string;
   columnComment: string;
   columnId: number;
@@ -283,15 +284,15 @@ export type CodeGenRowItem = {
   updateBy: string;
   updateTime: string;
   usableColumn: boolean;
-};
+}
 
-export type CodeGenTableColumnItem = {
+export interface CodeGenTableColumnItem {
   columnId: number;
   columnName: string;
   columnComment: string;
-};
+}
 
-export type CodeGenTableItem = {
+export interface CodeGenTableItem {
   tableId: number;
   tableName: string;
   columns: CodeGenTableColumnItem[];
@@ -312,10 +313,22 @@ export type CodeGenTableItem = {
   treeCode: string;
   treeName: string;
   treeParentCode: string;
-};
+}
 
-export type CodeGenEditItem = {
+export interface CodeGenEditItem {
   info: CodeGenInfoItem;
   rows: CodeGenRowItem[];
   tables: CodeGenTableItem[];
-};
+}
+
+interface CodeGenTreeItem {
+  treeCode: string;
+  treeName: string;
+  treeParentCode: string;
+  parentMenuId: number;
+}
+
+export interface CodeGenEditParams extends CodeGenTableItem {
+  params: CodeGenTreeItem;
+  columns: CodeGenRowItem[];
+}

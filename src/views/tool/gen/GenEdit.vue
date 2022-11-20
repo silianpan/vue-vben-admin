@@ -2,13 +2,13 @@
   <a-card :bordered="false">
     <a-tabs v-model:activeKey="activeKey" style="margin-bottom: 56px">
       <a-tab-pane key="1" tab="基本信息" force-render>
-        <BasicInfoForm :info="info" />
+        <BasicInfoForm ref="basicInfoFormRef" :info="info" />
       </a-tab-pane>
       <a-tab-pane key="2" tab="字段信息" force-render>
-        <FieldInfoTable :rows="rows" />
+        <FieldInfoTable ref="fieldInfoTableRef" :rows="rows" />
       </a-tab-pane>
       <a-tab-pane key="3" tab="生成信息" force-render>
-        <GenInfoForm :info="info" :tables="tables" />
+        <GenInfoForm ref="genInfoFormRef" :info="info" :tables="tables" />
       </a-tab-pane>
     </a-tabs>
     <FooterToolbar>
@@ -20,14 +20,14 @@
   </a-card>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, onMounted } from 'vue';
+  import { defineComponent, ref, onMounted, unref } from 'vue';
   import { Button, Space } from 'ant-design-vue';
   import FooterToolbar from '/@/components/FooterToolbar/index.vue';
   import BasicInfoForm from './BasicInfoForm.vue';
   import FieldInfoTable from './FieldInfoTable.vue';
   import GenInfoForm from './GenInfoForm.vue';
 
-  import { getCodeGenTable } from '/@/api/demo/monitor';
+  import { getCodeGenTable, updateCodeGen } from '/@/api/demo/monitor';
   import {
     CodeGenTableItem,
     CodeGenInfoItem,
@@ -36,6 +36,8 @@
 
   import { Tabs, TabPane, Card } from 'ant-design-vue';
   import { useRoute } from 'vue-router';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { cloneDeep } from 'lodash-es';
 
   export default defineComponent({
     name: 'GenEdit',
@@ -55,6 +57,10 @@
       const rows = ref<CodeGenRowItem[]>();
       const info = ref<CodeGenInfoItem>();
       const tables = ref<CodeGenTableItem[]>();
+      const basicInfoFormRef = ref();
+      const fieldInfoTableRef = ref();
+      const genInfoFormRef = ref();
+      const { createMessage } = useMessage();
 
       onMounted(async () => {
         const res = await getCodeGenTable(route.params?.tableId + '');
@@ -71,7 +77,30 @@
         tables.value = res.tables;
       });
 
-      async function handleSubmit() {}
+      async function handleSubmit() {
+        const basicInfo = await unref(basicInfoFormRef).handleSubmit();
+        const genInfo = await unref(genInfoFormRef).handleSubmit();
+        const fieldInfoTable = await unref(fieldInfoTableRef).handleSubmit();
+        const params = { ...basicInfo, ...genInfo };
+        const fieldInfoCopy = cloneDeep(fieldInfoTable);
+        fieldInfoCopy.forEach((e: any) => {
+          e.isInsert = e.isInsert ? '1' : '0';
+          e.isEdit = e.isEdit ? '1' : '0';
+          e.isList = e.isList ? '1' : '0';
+          e.isQuery = e.isQuery ? '1' : '0';
+          e.isRequired = e.isRequired ? '1' : '0';
+        });
+        params.columns = fieldInfoCopy;
+        params.params = {
+          treeCode: params.treeCode,
+          treeName: params.treeName,
+          treeParentCode: params.treeParentCode,
+          parentMenuId: params.parentMenuId,
+        };
+        await updateCodeGen(params);
+        createMessage.success('更新成功');
+        await handleCancel();
+      }
       async function handleCancel() {}
 
       return {
@@ -81,6 +110,9 @@
         tables,
         handleSubmit,
         handleCancel,
+        basicInfoFormRef,
+        fieldInfoTableRef,
+        genInfoFormRef,
       };
     },
   });

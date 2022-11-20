@@ -1,5 +1,5 @@
 <template>
-  <BasicForm @register="register" @submit="handleSubmit" />
+  <BasicForm @register="register" />
 </template>
 
 <script lang="ts">
@@ -14,7 +14,7 @@
       info: { type: Object, default: () => {} },
     },
     setup(props) {
-      const [register, { setFieldsValue }] = useForm({
+      const [register, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
         schemas: basicInfoFormSchema,
         showActionButtonGroup: false,
@@ -29,7 +29,9 @@
         });
       });
 
-      function handleSubmit() {}
+      async function handleSubmit() {
+        return await validate();
+      }
 
       return {
         register,

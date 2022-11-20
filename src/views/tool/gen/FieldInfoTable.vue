@@ -124,8 +124,8 @@
         });
       });
 
-      function handleSubmit() {
-        console.log('data', rowsLocal.value);
+      async function handleSubmit() {
+        return rowsLocal.value;
       }
 
       return {
