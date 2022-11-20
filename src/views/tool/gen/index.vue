@@ -30,6 +30,11 @@
               onClick: handleSyncDb.bind(null, record),
               tooltip: '同步',
             },
+            {
+              icon: 'material-symbols:code',
+              onClick: handleGenCode.bind(null, record),
+              tooltip: '生成代码',
+            },
           ]"
         />
       </template>
@@ -40,7 +45,13 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { delCodeGen, getCodeGenListByPage, syncDbCodeGen } from '/@/api/demo/monitor';
+  import {
+    delCodeGen,
+    getCodeGenListByPage,
+    syncDbCodeGen,
+    genCode,
+    genCodeZip,
+  } from '/@/api/demo/monitor';
 
   import { columns, searchFormSchema } from './gen.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
@@ -48,6 +59,7 @@
   import { createBasicDrawer } from '/@/components/Drawer';
   import PreviewCode from './PreviewCode.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { downloadByData } from '/@/utils/file/download';
 
   export default defineComponent({
     name: 'CodeGenManagement',
@@ -81,7 +93,7 @@
         bordered: true,
         showIndexColumn: false,
         actionColumn: {
-          width: 80,
+          width: 160,
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
@@ -116,6 +128,20 @@
           },
         });
       }
+      async function handleGenCode(record: Recordable) {
+        const tableNames = record.tableName;
+        if (!tableNames) {
+          return createMessage.error('请选择要生成的数据');
+        }
+        if (record.genType === '1') {
+          await genCode(record.tableName);
+          createMessage.success('成功生成到自定义路径：' + record.genPath);
+        } else {
+          const res = await genCodeZip(tableNames);
+          downloadByData(res, 'seal.zip', 'zip');
+          createMessage.success('导出成功');
+        }
+      }
 
       function handleEdit(record: Recordable) {
         router.push('/other/gen/edit/' + record.tableId);
@@ -138,6 +164,7 @@
         handleSuccess,
         handlePreview,
         handleSyncDb,
+        handleGenCode,
       };
     },
   });

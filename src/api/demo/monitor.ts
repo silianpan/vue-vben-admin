@@ -148,3 +148,20 @@ export const previewCodeGen = (tableId: string) =>
 // 同步生成代码
 export const syncDbCodeGen = (tableName: string) =>
   defHttp.get<void>({ url: Api.AddCodeGen + '/synchDb/' + tableName });
+
+// 生成代码（自定义路径）
+export const genCode = (tableName: string) =>
+  defHttp.get<void>({ url: Api.AddCodeGen + '/genCode/' + tableName });
+
+// 代码zip
+export const genCodeZip = (tableNames: string | string[]) =>
+  defHttp.get<BlobPart>(
+    {
+      url: Api.AddCodeGen + '/batchGenCode',
+      params: { tables: tableNames },
+      responseType: 'blob',
+    },
+    {
+      isTransformResponse: false,
+    },
+  );
