@@ -9,6 +9,10 @@
         <TableAction
           :actions="[
             {
+              icon: 'ant-design:eye-outlined',
+              onClick: handlePreview.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
@@ -36,6 +40,8 @@
   import { columns, searchFormSchema } from './gen.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
   import { router } from '/@/router';
+  import { createBasicDrawer } from '/@/components/Drawer';
+  import PreviewCode from './PreviewCode.vue';
 
   export default defineComponent({
     name: 'CodeGenManagement',
@@ -77,6 +83,19 @@
       });
 
       function handleCreate() {}
+      async function handlePreview({ tableId }) {
+        const obj = createBasicDrawer(
+          {
+            title: '预览代码',
+            width: '80%',
+            showOkBtn: false,
+          },
+          {
+            default: () => <PreviewCode tableId={tableId} />,
+          },
+        );
+        obj!.open();
+      }
 
       function handleEdit(record: Recordable) {
         router.push('/other/gen/edit/' + record.tableId);
@@ -97,6 +116,7 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        handlePreview,
       };
     },
   });

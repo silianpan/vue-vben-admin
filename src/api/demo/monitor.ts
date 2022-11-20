@@ -140,3 +140,7 @@ export const getCodeGenTable = (tableId: string) =>
 // 更新代码生成
 export const updateCodeGen = (params: CodeGenEditParams) =>
   defHttp.put<void>({ url: Api.AddCodeGen, params });
+
+// 预览生成代码
+export const previewCodeGen = (tableId: string) =>
+  defHttp.get<Object>({ url: Api.AddCodeGen + '/preview/' + tableId });
