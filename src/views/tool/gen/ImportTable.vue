@@ -30,7 +30,7 @@
         },
         columns: columnsImportTable,
         formConfig: {
-          labelWidth: 120,
+          labelWidth: 60,
           schemas: searchFormSchemaImportTable,
         },
         useSearchForm: true,
