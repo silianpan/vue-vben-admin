@@ -2,7 +2,7 @@
   <BasicTable @register="registerTable">
     <template #toolbar>
       <a-button type="primary" @click="handleCreate"> 导入 </a-button>
-      <a-button type="primary" @click="handleCreate"> 生成 </a-button>
+      <a-button type="primary" @click="handleGenCode"> 生成 </a-button>
     </template>
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'action'">
@@ -60,13 +60,14 @@
   import PreviewCode from './PreviewCode.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { downloadByData } from '/@/utils/file/download';
+  import { isEmpty } from '/@/utils/is';
 
   export default defineComponent({
     name: 'CodeGenManagement',
     components: { BasicTable, TableAction },
     setup() {
       const { createConfirm, createMessage } = useMessage();
-      const [registerTable, { reload, getForm }] = useTable({
+      const [registerTable, { reload, getForm, getSelectRows }] = useTable({
         title: '代码生成列表',
         api: (info) =>
           getCodeGenListByPage(info).then((res) => ({
@@ -92,6 +93,9 @@
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
+        rowSelection: {
+          type: 'checkbox',
+        },
         actionColumn: {
           width: 160,
           title: '操作',
@@ -129,8 +133,10 @@
         });
       }
       async function handleGenCode(record: Recordable) {
-        const tableNames = record.tableName;
-        if (!tableNames) {
+        const selectRows = getSelectRows();
+        const selectTableNames = selectRows.map((item) => item.tableName);
+        const tableNames = record.tableName || selectTableNames.join();
+        if (isEmpty(tableNames)) {
           return createMessage.error('请选择要生成的数据');
         }
         if (record.genType === '1') {
