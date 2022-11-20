@@ -1,8 +1,14 @@
 <template>
   <BasicTable @register="registerTable">
     <template #toolbar>
-      <a-button type="primary" @click="handleCreate"> 导入 </a-button>
-      <a-button type="primary" @click="handleGenCode"> 生成 </a-button>
+      <a-button type="primary" @click="handleImportTable">
+        <Icon icon="ant-design:import-outlined" />
+        导入
+      </a-button>
+      <a-button type="primary" @click="handleGenCode">
+        <Icon icon="ant-design:code-outlined" />
+        生成
+      </a-button>
     </template>
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'action'">
@@ -42,7 +48,7 @@
   </BasicTable>
 </template>
 <script lang="tsx">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref, unref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import {
@@ -51,20 +57,24 @@
     syncDbCodeGen,
     genCode,
     genCodeZip,
+    importDbTable,
   } from '/@/api/demo/monitor';
 
   import { columns, searchFormSchema } from './gen.data';
   import { BasicPageParams } from '/@/api/model/baseModel';
   import { router } from '/@/router';
-  import { createBasicDrawer } from '/@/components/Drawer';
+  import { createBasicDrawer, DrawerFooterAction } from '/@/components/Drawer';
   import PreviewCode from './PreviewCode.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { downloadByData } from '/@/utils/file/download';
   import { isEmpty } from '/@/utils/is';
+  import { createBasicModal } from '/@/components/Modal';
+  import ImportTable from './ImportTable.vue';
+  import Icon from '/@/components/Icon';
 
   export default defineComponent({
     name: 'CodeGenManagement',
-    components: { BasicTable, TableAction },
+    components: { BasicTable, TableAction, Icon },
     setup() {
       const { createConfirm, createMessage } = useMessage();
       const [registerTable, { reload, getForm, getSelectRows }] = useTable({
@@ -105,7 +115,33 @@
         },
       });
 
-      function handleCreate() {}
+      function handleImportTable() {
+        const formRef = ref<DrawerFooterAction>();
+        const obj = createBasicModal(
+          {
+            title: '导入代码',
+            useWrapper: true,
+            loading: true,
+            showOkBtn: true,
+            showCancelBtn: true,
+            onClose: () => {},
+            onOk: async () => {
+              const tableNames = unref(formRef)?.handleSubmit();
+              await importDbTable(tableNames);
+              // 关闭drawer
+              obj!.close();
+              // 提示成功
+              createMessage.success('导入成功');
+              // 刷新表格
+              reload();
+            },
+          },
+          {
+            default: () => <ImportTable ref={formRef} />,
+          },
+        );
+        obj!.open();
+      }
       async function handlePreview({ tableId }) {
         const obj = createBasicDrawer(
           {
@@ -164,7 +200,7 @@
 
       return {
         registerTable,
-        handleCreate,
+        handleImportTable,
         handleEdit,
         handleDelete,
         handleSuccess,

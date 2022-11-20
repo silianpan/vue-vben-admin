@@ -165,3 +165,19 @@ export const genCodeZip = (tableNames: string | string[]) =>
       isTransformResponse: false,
     },
   );
+
+// 数据库表分页列表
+export const getDbTableListByPage = (params?: CodeGenPageParams) =>
+  defHttp.get<CodeGenPageListGetResultModel>({ url: Api.AddCodeGen + '/db/list', params });
+
+// 导入数据库表
+export const importDbTable = (tableNames: string) =>
+  defHttp.post<void>(
+    { url: Api.AddCodeGen + '/importTable', params: { tables: tableNames } },
+    {
+      joinParamsToUrl: true,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );

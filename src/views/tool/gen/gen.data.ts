@@ -309,3 +309,41 @@ export const codeGenEditColumns: ColumnType[] = [
     width: '10%',
   },
 ];
+
+export const columnsImportTable: BasicColumn[] = [
+  {
+    title: '表名称',
+    dataIndex: 'tableName',
+    width: 120,
+  },
+  {
+    title: '表描述',
+    dataIndex: 'tableComment',
+    width: 120,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: 120,
+  },
+  {
+    title: '更新时间',
+    dataIndex: 'updateTime',
+    width: 120,
+  },
+];
+
+export const searchFormSchemaImportTable: FormSchema[] = [
+  {
+    field: 'tableName',
+    label: '表名称',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+  {
+    field: 'tableComment',
+    label: '表描述',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+];
