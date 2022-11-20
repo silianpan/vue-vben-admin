@@ -68,7 +68,6 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { downloadByData } from '/@/utils/file/download';
   import { isEmpty } from '/@/utils/is';
-  import { createBasicModal } from '/@/components/Modal';
   import ImportTable from './ImportTable.vue';
   import Icon from '/@/components/Icon';
 
@@ -117,14 +116,35 @@
 
       function handleImportTable() {
         const formRef = ref<DrawerFooterAction>();
-        const obj = createBasicModal(
+        // const obj = createBasicModal(
+        //   {
+        //     title: '导入代码',
+        //     useWrapper: true,
+        //     loading: true,
+        //     showOkBtn: true,
+        //     showCancelBtn: true,
+        //     onClose: () => {},
+        //     onOk: async () => {
+        //       const tableNames = unref(formRef)?.handleSubmit();
+        //       await importDbTable(tableNames);
+        //       // 关闭drawer
+        //       obj!.close();
+        //       // 提示成功
+        //       createMessage.success('导入成功');
+        //       // 刷新表格
+        //       reload();
+        //     },
+        //   },
+        //   {
+        //     default: () => <ImportTable ref={formRef} />,
+        //   },
+        // );
+        const obj = createBasicDrawer(
           {
             title: '导入代码',
-            useWrapper: true,
-            loading: true,
+            width: '80%',
             showOkBtn: true,
             showCancelBtn: true,
-            onClose: () => {},
             onOk: async () => {
               const tableNames = unref(formRef)?.handleSubmit();
               await importDbTable(tableNames);
