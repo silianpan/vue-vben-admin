@@ -68,7 +68,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { downloadByData } from '/@/utils/file/download';
   import { isEmpty } from '/@/utils/is';
-  import ImportTable from './ImportTable.vue';
+  import ImportTable from './ImportTableTemplate.vue';
   import Icon from '/@/components/Icon';
 
   export default defineComponent({

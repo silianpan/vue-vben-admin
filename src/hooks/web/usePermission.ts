@@ -19,15 +19,11 @@ import { useMultipleTabStore } from '/@/store/modules/multipleTab';
 
 // User permissions related operations
 export function usePermission() {
-  const userStore = useUserStore();
-  const appStore = useAppStore();
-  const permissionStore = usePermissionStore();
-  const { closeAll } = useTabs(router);
-
   /**
    * Change permission mode
    */
   async function togglePermissionMode() {
+    const appStore = useAppStore();
     appStore.setProjectConfig({
       permissionMode:
         projectSetting.permissionMode === PermissionModeEnum.BACK
@@ -46,11 +42,13 @@ export function usePermission() {
     const tabStore = useMultipleTabStore();
     tabStore.clearCacheTabs();
     resetRouter();
+    const permissionStore = usePermissionStore();
     const routes = await permissionStore.buildRoutesAction();
     routes.forEach((route) => {
       router.addRoute(route as unknown as RouteRecordRaw);
     });
     permissionStore.setLastBuildMenuTime();
+    const { closeAll } = useTabs(router);
     closeAll();
   }
 
@@ -66,6 +64,7 @@ export function usePermission() {
     const permMode = projectSetting.permissionMode;
 
     if ([PermissionModeEnum.ROUTE_MAPPING, PermissionModeEnum.ROLE].includes(permMode)) {
+      const userStore = useUserStore();
       if (!isArray(value)) {
         return userStore.getRoleList?.includes(value as RoleEnum);
       }
@@ -73,6 +72,7 @@ export function usePermission() {
     }
 
     if (PermissionModeEnum.BACK === permMode) {
+      const permissionStore = usePermissionStore();
       const allCodeList = permissionStore.getPermCodeList as string[];
       if (!isArray(value)) {
         return allCodeList.includes(value);
@@ -96,6 +96,7 @@ export function usePermission() {
     if (!isArray(roles)) {
       roles = [roles];
     }
+    const userStore = useUserStore();
     userStore.setRoleList(roles);
     await resume();
   }

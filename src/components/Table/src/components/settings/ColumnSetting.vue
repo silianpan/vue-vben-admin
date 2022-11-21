@@ -32,9 +32,9 @@
             {{ t('component.table.settingSelectColumnShow') }}
           </Checkbox>
 
-          <a-button size="small" type="link" @click="reset">
+          <Button size="small" type="link" @click="reset">
             {{ t('common.resetText') }}
-          </a-button>
+          </Button>
         </div>
       </template>
 
@@ -110,7 +110,7 @@
     unref,
     computed,
   } from 'vue';
-  import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue';
+  import { Tooltip, Popover, Checkbox, Divider, Button } from 'ant-design-vue';
   import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface';
   import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue';
   import { Icon } from '/@/components/Icon';
@@ -150,6 +150,7 @@
       ScrollContainer,
       Divider,
       Icon,
+      Button,
     },
     emits: ['columns-change'],
 
