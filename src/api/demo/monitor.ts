@@ -177,7 +177,4 @@ export const importDbTable = (tableNames: string) =>
     {
       joinParamsToUrl: true,
     },
-    {
-      joinParamsToUrl: true,
-    },
   );

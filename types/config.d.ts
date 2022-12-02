@@ -159,4 +159,6 @@ export interface GlobEnvConfig {
   VITE_GLOB_APP_SHORT_NAME: string;
   // Upload url
   VITE_GLOB_UPLOAD_URL?: string;
+  // Workflow url
+  VITE_GLOB_FLOW_URL?: string;
 }
