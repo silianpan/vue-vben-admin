@@ -60,3 +60,12 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
 ];
+
+export const formSchema: FormSchema[] = [
+  {
+    field: 'upload',
+    label: '上传',
+    required: true,
+    component: 'Upload',
+  },
+];

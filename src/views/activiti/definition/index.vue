@@ -33,7 +33,7 @@
   </BasicTable>
 </template>
 <script lang="tsx">
-  import { defineComponent, ref, unref } from 'vue';
+  import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import {
@@ -43,7 +43,7 @@
     getDefinitionListByPage,
   } from '/@/api/demo/activiti';
 
-  import { DrawerFooterAction } from '/@/components/Drawer';
+  import DefinitionForm from './DefinitionForm.vue';
 
   import { columns, searchFormSchema } from './definition.data';
   import { BasicPageParams } from '/@/api/model/baseDefinition';
@@ -57,8 +57,8 @@
       const { createMessage, createConfirm } = useMessage();
       const [registerTable, { reload, getForm }] = useTable({
         title: '流程定义列表',
-        api: (info) =>
-          getDefinitionListByPage(info).then((res) => ({
+        api: (info: any) =>
+          getDefinitionListByPage(info).then((res: any) => ({
             items: res.rows,
             total: res.total,
           })),
@@ -88,7 +88,6 @@
       });
 
       function handleDeploy() {
-        const formRef = ref<Nullable<DrawerFooterAction>>(null);
         const obj = createBasicModal(
           {
             title: '部署流程定义',
@@ -96,20 +95,13 @@
             loading: true,
             showOkBtn: true,
             showCancelBtn: true,
-            onClose: () => {},
             onOk: async () => {
-              // 调用提交
-              await unref(formRef)?.handleSubmit();
-              // 关闭drawer
               obj!.close();
-              // 提示成功
-              createMessage.success('新增成功');
-              // 刷新表格
               reload();
             },
           },
           {
-            default: () => <div></div>,
+            default: () => <DefinitionForm />,
           },
         );
         obj!.open();
