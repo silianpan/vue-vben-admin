@@ -1,25 +1,21 @@
 <template>
   <BasicTable @register="registerTable">
     <template #toolbar>
-      <a-button type="primary" @click="handleCreate"> 创建新模型 </a-button>
+      <a-button type="primary" @click="handleDeploy"> 部署流程定义 </a-button>
     </template>
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'action'">
         <TableAction
           :actions="[
             {
-              icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record),
-            },
-            {
               icon: 'ant-design:deployment-unit-outlined',
-              onClick: handleDeploy.bind(null, record),
-              tooltip: '部署',
+              onClick: handleSuspendOrActive.bind(null, record),
+              tooltip: record.suspendState === '2' ? '激活' : '挂起',
             },
             {
               icon: 'ant-design:export-outlined',
-              onClick: handleExport.bind(null, record),
-              tooltip: '导出',
+              onClick: handleConvert2Model.bind(null, record),
+              tooltip: '转模型',
             },
             {
               icon: 'ant-design:delete-outlined',
@@ -40,29 +36,29 @@
   import { defineComponent, ref, unref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { delModel, deployModel, exportModel, getModelListByPage } from '/@/api/demo/activiti';
+  import {
+    delDefinition,
+    convert2Model,
+    suspendOrActiveDefinition,
+    getDefinitionListByPage,
+  } from '/@/api/demo/activiti';
 
   import { DrawerFooterAction } from '/@/components/Drawer';
-  import ModelForm from './ModelForm.vue';
 
-  import { columns, searchFormSchema } from './model.data';
-  import { BasicPageParams } from '/@/api/model/baseModel';
+  import { columns, searchFormSchema } from './definition.data';
+  import { BasicPageParams } from '/@/api/model/baseDefinition';
   import { createBasicModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { getAppEnvConfig } from '/@/utils/env';
-  import { openWindow } from '/@/utils';
-  import { formatToDate } from '/@/utils/dateUtil';
-  import { downloadByData } from '/@/utils/file/download';
 
   export default defineComponent({
-    name: 'ModelManagement',
+    name: 'DefinitionManagement',
     components: { BasicTable, TableAction },
     setup() {
       const { createMessage, createConfirm } = useMessage();
       const [registerTable, { reload, getForm }] = useTable({
-        title: '模型列表',
+        title: '流程定义列表',
         api: (info) =>
-          getModelListByPage(info).then((res) => ({
+          getDefinitionListByPage(info).then((res) => ({
             items: res.rows,
             total: res.total,
           })),
@@ -83,7 +79,7 @@
         bordered: true,
         showIndexColumn: false,
         actionColumn: {
-          width: 200,
+          width: 120,
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
@@ -91,11 +87,11 @@
         },
       });
 
-      function handleCreate() {
+      function handleDeploy() {
         const formRef = ref<Nullable<DrawerFooterAction>>(null);
         const obj = createBasicModal(
           {
-            title: '新增模型',
+            title: '部署流程定义',
             useWrapper: true,
             loading: true,
             showOkBtn: true,
@@ -113,44 +109,42 @@
             },
           },
           {
-            default: () => <ModelForm isUpdate={false} ref={formRef} />,
+            default: () => <div></div>,
           },
         );
         obj!.open();
       }
 
-      function handleEdit(record: Recordable) {
-        const { VITE_GLOB_FLOW_URL } = getAppEnvConfig();
-        openWindow(`${VITE_GLOB_FLOW_URL}/modeler/modeler.html?modelId=${record.id}`);
-      }
-
-      async function handleDeploy(record: Recordable) {
+      async function handleSuspendOrActive(record: Recordable) {
+        const stateName = record.suspendState === '2' ? '激活' : '挂起';
         createConfirm({
           iconType: 'warning',
-          title: '部署',
-          content: `是否确认部署编号为${record.id}的模型?`,
+          title: stateName,
+          content: `是否确认${stateName}编号为${record.id}的流程定义?`,
           onOk: async () => {
-            await deployModel(record.id);
-            createMessage.success('部署成功');
+            const { id, suspendState } = record;
+            await suspendOrActiveDefinition({ id, suspendState });
+            createMessage.success(`${stateName}成功`);
             handleSuccess();
           },
         });
       }
 
-      async function handleExport(record: Recordable) {
+      async function handleConvert2Model(record: Recordable) {
         createConfirm({
           iconType: 'warning',
-          title: '导出',
-          content: `是否确认导出编号为${record.id}的模型?`,
+          title: '转模型',
+          content: `是否确认将编号为${record.id}的流程定义转为流程模型?`,
           onOk: async () => {
-            const res = await exportModel(record.id);
-            downloadByData(res, `流程模型-${formatToDate(new Date())}.bpmn`);
+            await convert2Model({ processDefinitionId: record.id });
+            createMessage.success('转模型成功');
+            handleSuccess();
           },
         });
       }
 
       async function handleDelete(record: Recordable) {
-        await delModel(record.id);
+        await delDefinition(record.deploymentId);
         handleSuccess();
       }
 
@@ -160,10 +154,9 @@
 
       return {
         registerTable,
-        handleCreate,
-        handleEdit,
         handleDeploy,
-        handleExport,
+        handleSuspendOrActive,
+        handleConvert2Model,
         handleDelete,
         handleSuccess,
       };

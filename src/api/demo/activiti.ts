@@ -1,9 +1,17 @@
-import { ModelListItem, ModelPageListGetResultModel, ModelPageParams } from './model/activitiModel';
+import {
+  DefinitionPageListGetResultModel,
+  DefinitionPageParams,
+  DefinitionParams,
+  ModelListItem,
+  ModelPageListGetResultModel,
+  ModelPageParams,
+} from './model/activitiModel';
 import { Result } from '/#/axios';
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
   Model = '/activiti/modeler',
+  Definition = '/activiti/definition',
 }
 
 // 流程模型分页列表
@@ -30,3 +38,29 @@ export const exportModel = (modelId: Number) =>
       isTransformResponse: false,
     },
   );
+
+// 流程定义分页列表
+export const getDefinitionListByPage = (params?: DefinitionPageParams) =>
+  defHttp.get<DefinitionPageListGetResultModel>({ url: Api.Definition + '/list', params });
+
+// 激活/挂起流程定义
+export const suspendOrActiveDefinition = (data: DefinitionParams) =>
+  defHttp.post<void>(
+    { url: Api.Definition + '/suspendOrActiveDefinition', data },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+// 流程定义转成模型
+export const convert2Model = (data: DefinitionParams) =>
+  defHttp.post<void>(
+    { url: Api.Definition + '/convert2Model', data },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+// 删除流程定义
+export const delDefinition = (deploymentId: Number) =>
+  defHttp.delete<void>({ url: Api.Definition + '/remove/' + deploymentId });
