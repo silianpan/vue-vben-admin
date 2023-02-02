@@ -26,7 +26,7 @@ export function usePermission() {
     const appStore = useAppStore();
     appStore.setProjectConfig({
       permissionMode:
-        projectSetting.permissionMode === PermissionModeEnum.BACK
+        appStore.projectConfig?.permissionMode === PermissionModeEnum.BACK
           ? PermissionModeEnum.ROUTE_MAPPING
           : PermissionModeEnum.BACK,
     });

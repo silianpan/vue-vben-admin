@@ -97,6 +97,9 @@
             key: '2',
           },
         ],
+        onChange: (value) => {
+          console.log(value, '123');
+        },
       },
       rules: [
         {
@@ -234,6 +237,7 @@
       function setFormValues() {
         setFieldsValue({
           field1: 1111,
+          field4: ['1'],
           field5: ['1'],
           field7: '1',
           field33: '2020-12-12',
