@@ -69,7 +69,7 @@
   import { downloadByData } from '/@/utils/file/download';
   import { isEmpty } from '/@/utils/is';
   import ImportTable from './ImportTableTemplate.vue';
-  import Icon from '/@/components/Icon';
+  import { Icon } from '/@/components/Icon';
 
   export default defineComponent({
     name: 'CodeGenManagement',

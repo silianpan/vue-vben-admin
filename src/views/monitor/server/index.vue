@@ -75,7 +75,7 @@
               <div :style="{ color: record.name == '使用率' && text > 80 ? 'red' : '' }">
                 <a-icon
                   type="warning"
-                  style="color: #ffcc00"
+                  style="color: #fc0"
                   v-if="record.name == '使用率' && text > 80"
                 />
                 {{ text }} &nbsp;
@@ -87,7 +87,7 @@
               <div :style="{ color: record.name == '使用率' && text > 80 ? 'red' : '' }">
                 <a-icon
                   type="warning"
-                  style="color: #ffcc00"
+                  style="color: #fc0"
                   v-if="record.name == '使用率' && text > 80"
                 />
                 {{ text }} &nbsp;
@@ -167,7 +167,7 @@
             </template>
             <template #usage="{ text }">
               <div :style="{ color: text > 80 ? 'red' : '' }">
-                <a-icon type="warning" style="color: #ffcc00" v-if="text > 80" />
+                <a-icon type="warning" style="color: #fc0" v-if="text > 80" />
                 {{ text }}<code>%</code>
               </div>
             </template>
@@ -190,7 +190,7 @@
     Space,
     Table,
   } from 'ant-design-vue';
-  import Icon from '/@/components/icon';
+  import { Icon } from '/@/components/Icon';
   import { getServer } from '/@/api/demo/monitor';
   import { ServerItem, SysFileItem } from '/@/api/demo/model/monitorModel';
 

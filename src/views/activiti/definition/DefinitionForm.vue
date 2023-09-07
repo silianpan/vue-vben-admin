@@ -12,7 +12,7 @@
   import { getToken } from '/@/utils/auth';
   import { getAppEnvConfig } from '/@/utils/env';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import Icon from '/@/components/icon';
+  import { Icon } from '/@/components/Icon';
 
   export default defineComponent({
     name: 'DefinitionForm',
