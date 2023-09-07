@@ -56,6 +56,7 @@
   </PageWrapper>
 </template>
 <script lang="ts">
+  import { type Recordable } from '@vben/types';
   import { computed, defineComponent, unref, ref } from 'vue';
   import { BasicForm, FormSchema, ApiSelect } from '/@/components/Form/index';
   import { CollapseContainer } from '/@/components/Container';
@@ -68,6 +69,7 @@
   import { Select } from 'ant-design-vue';
   import { cloneDeep } from 'lodash-es';
   import { areaRecord } from '/@/api/demo/cascader';
+  import { uploadApi } from '/@/api/sys/upload';
 
   const valueSelectA = ref<string[]>([]);
   const valueSelectB = ref<string[]>([]);
@@ -188,6 +190,18 @@
         },
       },
       suffix: '天',
+    },
+    {
+      field: 'fieldsc',
+      component: 'Upload',
+      label: '上传',
+      colProps: {
+        span: 8,
+      },
+      rules: [{ required: true, message: '请选择上传文件' }],
+      componentProps: {
+        api: uploadApi,
+      },
     },
     {
       field: 'field3',
@@ -611,10 +625,28 @@
     {
       field: '[startTime, endTime]',
       label: '时间范围',
+      component: 'TimeRangePicker',
+      componentProps: {
+        format: 'HH:mm:ss',
+        placeholder: ['开始时间', '结束时间'],
+      },
+    },
+    {
+      field: '[startDate, endDate]',
+      label: '日期范围',
+      component: 'RangePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD',
+        placeholder: ['开始日期', '结束日期'],
+      },
+    },
+    {
+      field: '[startDateTime, endDateTime]',
+      label: '日期时间范围',
       component: 'RangePicker',
       componentProps: {
         format: 'YYYY-MM-DD HH:mm:ss',
-        placeholder: ['开始时间', '结束时间'],
+        placeholder: ['开始日期、时间', '结束日期、时间'],
         showTime: { format: 'HH:mm:ss' },
       },
     },

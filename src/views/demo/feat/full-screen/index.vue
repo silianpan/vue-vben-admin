@@ -1,7 +1,9 @@
 <template>
   <PageWrapper title="全屏示例">
     <CollapseContainer class="w-full h-32 bg-white rounded-md" title="Window Full Screen">
-      <a-button type="primary" @click="enter" class="mr-2"> Enter Window Full Screen </a-button>
+      <a-button type="primary" :disabled="isFullscreen" @click="enter" class="mr-2">
+        Enter Window Full Screen
+      </a-button>
       <a-button color="success" @click="toggle" class="mr-2"> Toggle Window Full Screen </a-button>
 
       <a-button color="error" @click="exit" class="mr-2"> Exit Window Full Screen </a-button>
@@ -27,6 +29,7 @@
   import { useFullscreen } from '@vueuse/core';
 
   import { PageWrapper } from '/@/components/Page';
+  import { type Nullable } from '@vben/types';
 
   export default defineComponent({
     components: { CollapseContainer, PageWrapper },

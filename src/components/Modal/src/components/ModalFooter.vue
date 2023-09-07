@@ -22,6 +22,7 @@
   import { Button } from '/@/components/Button';
 
   import { basicProps } from '../props';
+
   export default defineComponent({
     name: 'BasicModalFooter',
     components: { Button },

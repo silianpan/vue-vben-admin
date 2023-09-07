@@ -1,6 +1,4 @@
 <!--
- * @Author: ypt
- * @Date: 2021/11/23
  * @Description: 工具栏
 -->
 <template>
@@ -10,20 +8,17 @@
     <div class="left-btn-box">
       <Tooltip v-for="item in toolbarsConfigs" :title="item.title" :key="item.icon">
         <a @click="$emit(item.event)" class="toolbar-text">
-          <!-- <a-icon :type="item.icon" /> -->
           <Icon :icon="item.icon" />
         </a>
       </Tooltip>
       <Divider type="vertical" />
       <Tooltip title="撤销">
         <a :class="{ disabled: !canUndo }" :disabled="!canUndo" @click="undo">
-          <!-- <a-icon type="undo" /> -->
           <Icon icon="ant-design:undo-outlined" />
         </a>
       </Tooltip>
       <Tooltip title="重做">
         <a :class="{ disabled: !canRedo }" :disabled="!canRedo" @click="redo">
-          <!-- <a-icon type="redo" /> -->
           <Icon icon="ant-design:redo-outlined" />
         </a>
       </Tooltip>
@@ -36,7 +31,7 @@
   import { UseRefHistoryReturn } from '@vueuse/core';
   import { IFormConfig } from '../../../typings/v-form-component';
   import { Tooltip, Divider } from 'ant-design-vue';
-  import Icon from '/@/components/Icon/index';
+  import Icon from '@/components/Icon/Icon.vue';
 
   interface IToolbarsConfig {
     type: string;
@@ -58,19 +53,19 @@
       }>({
         toolbarsConfigs: [
           {
-            title: '预览',
+            title: '预览-支持布局',
             type: 'preview',
             event: 'handlePreview',
             icon: 'ant-design:chrome-filled',
           },
           {
-            title: '预览2',
+            title: '预览-不支持布局',
             type: 'preview',
             event: 'handlePreview2',
             icon: 'ant-design:chrome-filled',
           },
           {
-            title: '导入',
+            title: '导入JSON',
             type: 'importJson',
             event: 'handleOpenImportJsonModal',
             icon: 'ant-design:import-outlined',
@@ -108,20 +103,20 @@
   @import url('../styles/variable.less');
 
   .operating-area {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    height: @operating-area-height;
+    padding: 0 12px;
+    padding-left: 30px;
     border-bottom: 2px solid @border-color;
     font-size: 16px;
-    text-align: left;
-    height: @operating-area-height;
     line-height: @operating-area-height;
-    padding: 0 12px;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    padding-left: 30px;
+    text-align: left;
 
     a {
-      color: #666;
       margin: 0 5px;
+      color: #666;
 
       &.disabled,
       &.disabled:hover {
@@ -133,8 +128,8 @@
       }
 
       > span {
-        font-size: 14px;
         padding-left: 2px;
+        font-size: 14px;
       }
     }
   }

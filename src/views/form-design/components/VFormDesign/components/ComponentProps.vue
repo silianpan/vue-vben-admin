@@ -1,6 +1,4 @@
 <!--
- * @Author: ypt
- * @Date: 2021/11/26
  * @Description: 组件属性控件
 -->
 <template>
@@ -33,7 +31,6 @@
               v-model:value="formConfig.currentItem.componentProps[item.name]"
             />
           </FormItem>
-          <!-- </Row> -->
           <FormItem label="控制属性">
             <Col v-for="item in controlOptions" :key="item.name">
               <Checkbox
@@ -88,9 +85,10 @@
     Select,
     InputNumber,
     RadioGroup,
+    Col,
+    Row,
   } from 'ant-design-vue';
   import RadioButtonGroup from '/@/components/Form/src/components/RadioButtonGroup.vue';
-  import { Col, Row } from 'ant-design-vue';
   import { computed, defineComponent, ref, watch } from 'vue';
   import { useFormDesignState } from '../../../hooks/useFormDesignState';
   import {
@@ -122,7 +120,6 @@
     },
     setup() {
       // 让compuated属性自动更新
-      // const dummyUpdate = ref(0);
 
       const allOptions = ref([] as Omit<IBaseFormAttrs, 'tag'>[]);
       const showControlAttrs = (includes: string[] | undefined) => {

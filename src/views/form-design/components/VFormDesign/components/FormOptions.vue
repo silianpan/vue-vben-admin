@@ -5,7 +5,6 @@
         <div class="options-box">
           <Input v-model:value="item.span" class="options-value" />
           <a class="options-delete" @click="deleteGridOptions(index)">
-            <!-- <a-icon type="delete" /> -->
             <Icon icon="ant-design:delete-outlined" />
           </a>
         </div>
@@ -21,7 +20,6 @@
           <Input v-model:value="item.label" />
           <Input v-model:value="item.value" class="options-value" />
           <a class="options-delete" @click="deleteOptions(index)">
-            <!-- <a-icon type="delete" /> -->
             <Icon icon="ant-design:delete-outlined" />
           </a>
         </div>
@@ -40,7 +38,8 @@
   import { remove } from '../../../utils';
   import message from '../../../utils/message';
   import { Input } from 'ant-design-vue';
-  import Icon from '/@/components/Icon/index';
+  import Icon from '@/components/Icon/Icon.vue';
+
   export default defineComponent({
     name: 'FormOptions',
     components: { Input, Icon },
@@ -97,14 +96,14 @@
     }
 
     .options-delete {
+      flex-shrink: 0;
       width: 30px;
       height: 30px;
-      flex-shrink: 0;
-      line-height: 30px;
-      text-align: center;
       border-radius: 50%;
       background: #f5f5f5;
       color: #666;
+      line-height: 30px;
+      text-align: center;
 
       &:hover {
         background: #ff4d4f;

@@ -1,6 +1,4 @@
 <!--
- * @Author: ypt
- * @Date: 2021/11/18
  * @Description: 中间表单布局面板
  * https://github.com/SortableJS/vue.draggable.next/issues/138
 -->
@@ -40,8 +38,8 @@
 </template>
 <script lang="ts">
   import draggable from 'vuedraggable';
-  import { defineComponent, computed } from 'vue';
   import LayoutItem from '../components/LayoutItem.vue';
+  import { defineComponent, computed } from 'vue';
   import { cloneDeep } from 'lodash-es';
   import { useFormDesignState } from '../../../hooks/useFormDesignState';
   import { Form, Empty } from 'ant-design-vue';
@@ -56,7 +54,7 @@
     },
     emits: ['handleSetSelectItem'],
     setup(_, { emit }) {
-      const { formConfig } = useFormDesignState() as Recordable;
+      const { formConfig } = useFormDesignState();
 
       /**
        * 拖拽完成事件
@@ -96,8 +94,8 @@
 </script>
 
 <style lang="less" scoped>
-  @import url(../styles/variable.less);
-  @import url(../styles/drag.less);
+  @import url('../styles/variable.less');
+  @import url('../styles/drag.less');
 
   .v-form-container {
     // 内联布局样式
@@ -105,8 +103,8 @@
       .list-main {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
         align-content: flex-start;
+        justify-content: flex-start;
 
         .layout-width {
           width: 100%;
@@ -124,27 +122,25 @@
     height: 100%;
 
     .empty-text {
-      color: #aaa;
-      height: 150px;
-      top: -10%;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
       position: absolute;
       z-index: 100;
+      inset: -10% 0 0;
+      height: 150px;
+      margin: auto;
+      color: #aaa;
     }
 
     .draggable-box {
+      height: calc(100vh - 200px);
       // width: 100%;
+      overflow: auto;
+
       .drag-move {
-        cursor: move;
         min-height: 62px;
+        cursor: move;
       }
 
       .list-main {
-        overflow: auto;
-        height: 100%;
         // 列表动画
         .list-enter-active {
           transition: all 0.5s;
@@ -156,8 +152,8 @@
 
         .list-enter,
         .list-leave-to {
-          opacity: 0;
           transform: translateX(-100px);
+          opacity: 0;
         }
 
         .list-enter {

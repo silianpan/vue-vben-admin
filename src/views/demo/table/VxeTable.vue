@@ -38,6 +38,7 @@
             name: 'AButton',
             props: {
               type: 'primary',
+              preIcon: 'mdi:page-next-outline',
             },
             events: {
               click: () => {
@@ -72,7 +73,7 @@
       ajax: {
         query: async ({ page, form }) => {
           return demoListApi({
-            pageNum: page.currentPage,
+            page: page.currentPage,
             pageSize: page.pageSize,
             ...form,
           });

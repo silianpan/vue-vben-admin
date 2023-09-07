@@ -1,6 +1,4 @@
 <!--
- * @Author: ypt
- * @Date: 2021/11/19
  * @Description: 表单项布局控件
  * 千万不要在template下面的第一行加注释，因为这里拖动的第一个元素
 -->
@@ -20,8 +18,6 @@
             :key="index"
             :span="colItem.span"
           >
-            <!-- <div class="draggable-box"> -->
-            <!-- <div class="list-main"> -->
             <draggable
               class="list-main draggable-box"
               :component-data="{ name: 'list', tag: 'div', type: 'transition-group' }"
@@ -36,7 +32,6 @@
               @start="$emit('dragStart', $event, colItem.children)"
               @add="$emit('handleColAdd', $event, colItem.children)"
             >
-              <!-- <transition-group tag="div" name="list" class="list-main"> -->
               <template #item="{ element }">
                 <LayoutItem
                   class="drag-move"
@@ -46,10 +41,7 @@
                   @handle-delete="$emit('handle-delete')"
                 />
               </template>
-              <!-- </transition-group> -->
             </draggable>
-            <!-- </div> -->
-            <!-- </div> -->
           </Col>
         </Row>
         <FormNodeOperate :schema="schema" :currentItem="currentItem" />
@@ -73,6 +65,7 @@
   import { useFormDesignState } from '../../../hooks/useFormDesignState';
   import { IVFormComponent } from '../../../typings/v-form-component';
   import { Row, Col } from 'ant-design-vue';
+
   export default defineComponent({
     name: 'LayoutItem',
     components: {
@@ -122,14 +115,13 @@
   });
 </script>
 <style lang="less">
-  @import url(../styles/variable.less);
+  @import url('../styles/variable.less');
 
   .layout-width {
     width: 100%;
   }
 
   .hidden-item {
-    background-color: rgb(240, 191, 195);
-    //opacity: 0.5;
+    background-color: rgb(240 191 195);
   }
 </style>

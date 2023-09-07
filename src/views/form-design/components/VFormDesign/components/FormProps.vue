@@ -1,6 +1,4 @@
 <!--
- * @Author: ypt
- * @Date: 2021/11/23
  * @Description: 右侧属性面板控件 表单属性面板
 -->
 <template>
@@ -80,16 +78,23 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { useFormDesignState } from '../../../hooks/useFormDesignState';
-  import { InputNumber, Slider, Checkbox, Col, RadioChangeEvent } from 'ant-design-vue';
-  // import RadioButtonGroup from '/@/components/RadioButtonGroup.vue';
-  import { Form, FormItem, Radio } from 'ant-design-vue';
+  import {
+    InputNumber,
+    Slider,
+    Checkbox,
+    Col,
+    RadioChangeEvent,
+    Form,
+    FormItem,
+    Radio,
+  } from 'ant-design-vue';
+
   export default defineComponent({
     name: 'FormProps',
     components: {
       InputNumber,
       Slider,
       Checkbox,
-      // RadioButtonGroup,
       RadioGroup: Radio.Group,
       RadioButton: Radio.Button,
       Form,
@@ -97,7 +102,6 @@
       Col,
     },
     setup() {
-      // const labelColspan = computed(()=>)
       const { formConfig } = useFormDesignState();
 
       formConfig.value = formConfig.value || {
