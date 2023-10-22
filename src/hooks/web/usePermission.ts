@@ -61,7 +61,7 @@ export function usePermission() {
       return def;
     }
 
-    const permMode = projectSetting.permissionMode;
+    const permMode = appStore.getProjectConfig.permissionMode;
 
     if ([PermissionModeEnum.ROUTE_MAPPING, PermissionModeEnum.ROLE].includes(permMode)) {
       const userStore = useUserStore();
@@ -75,6 +75,14 @@ export function usePermission() {
       const permissionStore = usePermissionStore();
       const allCodeList = permissionStore.getPermCodeList as string[];
       if (!isArray(value)) {
+        const splits = ['||', '&&'];
+        const splitName = splits.find((item) => value.includes(item));
+        if (splitName) {
+          const splitCodes = value.split(splitName);
+          return splitName === splits[0]
+            ? intersection(splitCodes, allCodeList).length > 0
+            : intersection(splitCodes, allCodeList).length === splitCodes.length;
+        }
         return allCodeList.includes(value);
       }
       return (intersection(value, allCodeList) as string[]).length > 0;

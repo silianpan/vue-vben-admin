@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref } from 'vue';
-import type { FormProps, FormSchema, FormActionType } from '../types/form';
+import type { FormProps, FormSchemaInner as FormSchema, FormActionType } from '../types/form';
 import type { NamePath } from 'ant-design-vue/lib/form/interface';
 import { unref, toRaw, nextTick } from 'vue';
 import {
@@ -335,12 +335,13 @@ export function useFormEvents({
    */
   function itemIsDateType(key: string) {
     return unref(getSchema).some((item) => {
-      return item.field === key ? dateItemType.includes(item.component) : false;
+      return item.field === key && item.component ? dateItemType.includes(item.component) : false;
     });
   }
 
   async function validateFields(nameList?: NamePath[] | undefined) {
-    return unref(formElRef)?.validateFields(nameList);
+    const values = unref(formElRef)?.validateFields(nameList);
+    return handleFormValues(values);
   }
 
   async function validate(nameList?: NamePath[] | false | undefined) {
@@ -350,7 +351,8 @@ export function useFormEvents({
     } else {
       _nameList = nameList === Array.isArray(nameList) ? nameList : undefined;
     }
-    return await unref(formElRef)?.validate(_nameList);
+    const values = await unref(formElRef)?.validate(_nameList);
+    return handleFormValues(values);
   }
 
   async function clearValidate(name?: string | string[]) {
@@ -375,8 +377,7 @@ export function useFormEvents({
     if (!formEl) return;
     try {
       const values = await validate();
-      const res = handleFormValues(values);
-      emit('submit', res);
+      emit('submit', values);
     } catch (error: any) {
       if (error?.outOfDate === false && error?.errorFields) {
         return;
@@ -414,11 +415,14 @@ function getDefaultValue(
   if (!defaultValue && schema && checkIsRangeSlider(schema)) {
     defaultValue = [0, 0];
   }
+  if (!defaultValue && schema && schema.component === 'ApiTree') {
+    defaultValue = [];
+  }
   return defaultValue;
 }
 
 function checkIsRangeSlider(schema: FormSchema) {
-  if (schema.component === 'Slider' && schema.componentProps && schema.componentProps.range) {
+  if (schema.component === 'Slider' && schema.componentProps && 'range' in schema.componentProps) {
     return true;
   }
 }

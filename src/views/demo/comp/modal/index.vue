@@ -31,7 +31,12 @@
     />
     <a-button type="primary" class="my-4" @click="handleCreatePrompt"> Prompt </a-button>
 
-    <component :is="currentModal" v-model:visible="modalVisible" :userData="userData" />
+    <component
+      v-if="currentModal"
+      :is="currentModal"
+      v-model:open="modalOpen"
+      :userData="userData"
+    />
 
     <Modal1 @register="register1" :minHeight="100" />
     <Modal2 @register="register2" />
@@ -59,7 +64,7 @@
       const [register2, { openModal: openModal2 }] = useModal();
       const [register3, { openModal: openModal3 }] = useModal();
       const [register4, { openModal: openModal4 }] = useModal();
-      const modalVisible = ref<Boolean>(false);
+      const modalOpen = ref<Boolean>(false);
       const userData = ref<any>(null);
 
       function send() {
@@ -76,19 +81,19 @@
         // }, 2000);
       }
 
-      function openTargetModal(index) {
+      function openTargetModal(index: number) {
         switch (index) {
           case 1:
-            currentModal.value = Modal1;
+            currentModal.value = Modal1 as ComponentOptions;
             break;
           case 2:
-            currentModal.value = Modal2;
+            currentModal.value = Modal2 as ComponentOptions;
             break;
           case 3:
-            currentModal.value = Modal3;
+            currentModal.value = Modal3 as ComponentOptions;
             break;
           default:
-            currentModal.value = Modal4;
+            currentModal.value = Modal4 as ComponentOptions;
             break;
         }
         nextTick(() => {
@@ -96,7 +101,7 @@
           // passing data through `userData` prop
           userData.value = { data: Math.random(), info: 'Info222' };
           // open the target modal
-          modalVisible.value = true;
+          modalOpen.value = true;
         });
       }
 
@@ -122,7 +127,7 @@
         openModal3,
         register4,
         openModal4,
-        modalVisible,
+        modalOpen,
         userData,
         openTargetModal,
         send,

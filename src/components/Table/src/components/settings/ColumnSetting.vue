@@ -6,7 +6,7 @@
     <Popover
       placement="bottomLeft"
       trigger="click"
-      @visible-change="handleVisibleChange"
+      @open-change="handleVisibleChange"
       :overlayClassName="`${prefixCls}__cloumn-list`"
       :getPopupContainer="getPopupContainer"
     >
@@ -503,6 +503,7 @@
       }
 
       .ant-checkbox-group {
+        display: inline-block;
         width: 100%;
         min-width: 260px;
         // flex-wrap: wrap;
